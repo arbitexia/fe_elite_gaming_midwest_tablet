@@ -1,5 +1,4 @@
 import React from 'react';
-import { CssBaseline } from '@mui/material';
 import { AppSEO } from '@/components/App';
 import { UIAppLayoutWrapper, UIContainer } from '@/components/UI';
 
@@ -14,7 +13,6 @@ const AppLayout = (props: Props) => {
   return (
     <UIAppLayoutWrapper sx={{ background: props.bg }}>
       <AppSEO title={props.title || ''} description={props.description || ''} />
-      <CssBaseline />
       <UIContainer sx={{ py: 3 }}>{props.children}</UIContainer>
     </UIAppLayoutWrapper>
   );

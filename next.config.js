@@ -15,7 +15,7 @@ module.exports = withImages({
   images: {
     loader: 'imgix',
     path: '/',
-    domains: ['assets.gate4dev.net'],
+    domains: ['assets.elitegaming.rpatdev.com'],
   },
   eslint: {
     dirs: ['pages', 'components', 'lib'],

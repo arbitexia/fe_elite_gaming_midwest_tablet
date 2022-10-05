@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: yarn build
         env:
-          NODE_ENV: production
+          NODE_ENV: 'production'
           API_URL: '${{ secrets.API_URL }}'
           HOSTING_URL: '${{ secrets.HOSTING_URL }}'
 

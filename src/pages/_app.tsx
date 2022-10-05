@@ -10,7 +10,11 @@ function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const router = useRouter();
   const env = process.env.NODE_ENV;
-  if (env !== 'development')
+  if (
+    env !== 'development' &&
+    !router.pathname.includes('.html') &&
+    router.pathname !== '/'
+  )
     router.push(`${router.pathname}.html`, { query: router.query });
   return (
     <AppThemeProvider>

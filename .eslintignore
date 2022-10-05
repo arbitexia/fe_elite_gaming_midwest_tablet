@@ -42,6 +42,8 @@ yarn-error.log*
 /.fab
 /fab.zip
 
+/i18n
+
 .vercel
 
 next.config.js

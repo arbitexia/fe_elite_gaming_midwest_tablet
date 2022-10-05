@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const webpack = require('webpack');
 const withImages = require('next-images');
-const { i18n } = require('./next-i18next.config');
 
 const { parsed: appEnv } = require('dotenv').config({
   path: `./.env.${process.env.NODE_ENV}`,
@@ -21,5 +20,4 @@ module.exports = withImages({
     dirs: ['pages', 'components', 'lib'],
   },
   reactStrictMode: false,
-  i18n,
 });

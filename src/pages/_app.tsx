@@ -3,7 +3,6 @@ import { useStore } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { wrapper } from '@/redux/store';
-import { appWithTranslation } from 'next-i18next';
 import { AppToastProvider, AppThemeProvider } from '@/providers';
 
 function EliteApp({ Component, pageProps }: AppProps) {
@@ -19,4 +18,4 @@ function EliteApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default wrapper.withRedux(appWithTranslation(EliteApp));
+export default wrapper.withRedux(EliteApp);

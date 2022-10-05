@@ -1,16 +1,21 @@
+import { Box, Button } from '@mui/material';
 import { AppLayout } from '@/layouts';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation, LanguageSwitcher } from 'next-export-i18n';
 
 const LoginPage = () => {
-  const { t } = useTranslation('common');
-  return <AppLayout>{t('login.login')}</AppLayout>;
+  const { t } = useTranslation();
+  return (
+    <AppLayout>
+      <LanguageSwitcher lang="es">
+        <Button variant="outlined">es</Button>
+      </LanguageSwitcher>{' '}
+      |{' '}
+      <LanguageSwitcher lang="en">
+        <Button variant="outlined">en</Button>
+      </LanguageSwitcher>
+      <Box>{t('login.login')}</Box>
+    </AppLayout>
+  );
 };
 
 export default LoginPage;
-
-export const getStaticProps = async ({ locale }: { locale: string }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-});

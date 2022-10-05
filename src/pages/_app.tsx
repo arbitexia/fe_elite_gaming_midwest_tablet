@@ -9,7 +9,9 @@ import { AppToastProvider, AppThemeProvider } from '@/providers';
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const router = useRouter();
-  router.push(`${router.pathname}.html`, { query: router.query });
+  const env = process.env.NODE_ENV;
+  if (env !== 'development')
+    router.push(`${router.pathname}.html`, { query: router.query });
   return (
     <AppThemeProvider>
       <AppToastProvider>

@@ -5,9 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "gen:env": "node ./scripts/env.js",
-    "build": "next build",
-    "build:prod": "npm-run-all gen:env build export",
-    "export": "next export",
+    "build": "next build && next export",
+    "build:prod": "npm-run-all gen:env build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",

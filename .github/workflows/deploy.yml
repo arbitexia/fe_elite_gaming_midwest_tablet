@@ -8,6 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: 'production'
+      API_URL: ${{ secrets.APP_API_URL }}
+      HOSTING_URL: ${{ secrets.APP_HOSTING_URL }}
 
     steps:
       - name: Checkout
@@ -22,11 +26,7 @@ jobs:
         run: CI=false && yarn install
 
       - name: Build
-        run: yarn build
-        env:
-          NODE_ENV: 'production'
-          API_URL: '${{ secrets.API_URL }}'
-          HOSTING_URL: '${{ secrets.HOSTING_URL }}'
+        run: yarn build:prod
 
       - name: Deploy
         env:

@@ -8,15 +8,7 @@ const { parsed: appEnv } = require('dotenv').config({
 
 module.exports = withImages({
   webpack(config) {
-    if (!appEnv) {
-      config.plugins.push(
-        new webpack.EnvironmentPlugin({
-          NODE_ENV: process.env.NODE_ENV,
-          API_URL: process.env.API_URL,
-          HOSTING_URL: process.env.HOSTING_URL,
-        })
-      );
-    } else config.plugins.push(new webpack.EnvironmentPlugin(appEnv));
+    config.plugins.push(new webpack.EnvironmentPlugin(appEnv));
     return config;
   },
   images: {

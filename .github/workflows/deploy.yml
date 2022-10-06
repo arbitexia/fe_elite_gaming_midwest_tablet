@@ -26,7 +26,7 @@ jobs:
         run: CI=false && yarn install
       
       - name: Generate prod env file
-        run: yarn geb:env
+        run: yarn gen:env
 
       - name: Build
         run: yarn build

@@ -24,9 +24,12 @@ jobs:
 
       - name: Install Dependencies
         run: CI=false && yarn install
+      
+      - name: Generate prod env file
+        run: yarn geb:env
 
       - name: Build
-        run: yarn build:prod
+        run: yarn build
 
       - name: Deploy
         env:

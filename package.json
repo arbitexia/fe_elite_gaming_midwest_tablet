@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "gen:env": "node ./scripts/env.js",
-    "build": " next build",
+    "build": "next build",
     "build:prod": "npm-run-all gen:env build export",
     "export": "next export",
     "start": "next start",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
-    "@types/node": "18.8.1",
+    "@types/node": "^18.8.2",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
@@ -48,7 +48,7 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "typescript": "4.8.4"
+    "typescript": "^4.8.4"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [

@@ -10,6 +10,7 @@ function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
   const router = useRouter();
   const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
+  alert(router.asPath);
   if (path) {
     router.replace(path, { query: router.query });
   }

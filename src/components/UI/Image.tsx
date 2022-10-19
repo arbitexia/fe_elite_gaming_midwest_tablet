@@ -8,13 +8,13 @@ interface Props {
   height?: number;
 }
 
-export const UIImage = (props: Props) => {
+export const UIImage = ({ src, alt, width, height }: Props) => {
   return (
     <Image
-      src={props.src}
-      alt={props.alt}
-      width={props.width}
-      height={props.height}
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
       loader={appImageLoader}
     />
   );

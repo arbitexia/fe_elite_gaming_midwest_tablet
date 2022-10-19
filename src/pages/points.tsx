@@ -29,6 +29,7 @@ const MyPoints = () => {
         <Box
           sx={{
             top: 0,
+            left: 0,
             width: '100vw',
             height: '100vh',
             position: 'absolute',
@@ -57,8 +58,6 @@ const MyPoints = () => {
                   fontWeight: '700',
                   fontSize: '106px',
                   lineHeight: '110%',
-                  display: 'flex',
-                  alignItems: 'center',
                   textAlign: 'center',
                   background:
                     'linear-gradient(166.49deg, #FFE600 9.69%, #00F0FF 84.46%)',
@@ -68,9 +67,14 @@ const MyPoints = () => {
                   WebkitTextStroke: '5px rgba(139, 127, 16, 0.7)',
                   borderImageSource:
                     'radial-gradient(68.72% 68.72% at 50% 38.27%, rgba(255, 153, 0, 0.7) 0%, rgba(139, 127, 16, 0.7) 100%)',
+                  span: {
+                    fontSize: '64px',
+                    mt: '-50px',
+                  },
                 }}
               >
-                9500 points
+                9500 <br />
+                <span>points</span>
               </Typography>
             </Box>
           </Box>

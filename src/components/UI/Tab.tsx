@@ -44,7 +44,7 @@ export const UIAuthTabs = ({ isCheckIn }: UIAuthTabsProps) => {
       <Typography
         sx={{ width: '50%', zIndex: 2, cursor: 'pointer' }}
         onClick={() => {
-          router.push('/auth/checkin');
+          router.push('/');
         }}
       >
         Check In
@@ -52,7 +52,7 @@ export const UIAuthTabs = ({ isCheckIn }: UIAuthTabsProps) => {
       <Typography
         sx={{ width: '50%', zIndex: 2, cursor: 'pointer' }}
         onClick={() => {
-          router.push('/auth/signup');
+          router.push('/?path=signup');
         }}
       >
         Sign Up

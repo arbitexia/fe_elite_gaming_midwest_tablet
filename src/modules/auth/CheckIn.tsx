@@ -7,7 +7,7 @@ import { Verify } from '@/modules/auth';
 
 export const CheckIn = () => {
   const router = useRouter();
-  const { type } = router.query;
+  const { path: type } = router.query;
   const [isShowVerify, setIsShowVerify] = useState(false);
 
   const handleSend = () => {
@@ -16,8 +16,8 @@ export const CheckIn = () => {
 
   return (
     <Box>
-      <Box sx={{ mt: '115px', width: '100%' }}>
-        <UIAuthTabs isCheckIn={type === 'checkin'} />
+      <Box sx={{ width: '100%' }}>
+        <UIAuthTabs isCheckIn={type !== 'signup'} />
       </Box>
       {isShowVerify ? (
         <Verify />

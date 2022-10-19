@@ -32,7 +32,7 @@ export const LanguageSelector = () => {
             textTransform: 'none',
           }}
         >
-          {lang === 'en' ? 'English' : 'Spain'}
+          {lang === 'en' ? 'English' : 'Español'}
         </Typography>
       </Button>
       <Menu

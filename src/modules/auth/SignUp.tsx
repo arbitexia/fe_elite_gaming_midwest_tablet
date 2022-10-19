@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Checkbox, Typography, Stack } from '@mui/material';
 import {
   UIAuthTabs,
@@ -10,18 +10,25 @@ import { Verify } from '@/modules/auth';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useAppToast } from '@/providers';
+
+const phoneRegExp = /^[0-9]{3}[0-9]{3}[0-9]{4}$/;
 
 export const SignUpSchema = yup.object({
-  phoneNumber: yup.string().required('Phone Number is Required'),
-  email: yup.string().required('Email is required'),
-  birthday: yup.string().required('Birthday is required'),
+  phoneNumber: yup
+    .string()
+    .matches(phoneRegExp, 'Phonenumber is not valid')
+    .required('Phonenumber is required'),
+  email: yup.string().email().required('Email is required'),
+  birthday: yup.date().required('Birthday is required'),
 });
 
 export const SignUp = () => {
   const router = useRouter();
+  const appToast = useAppToast();
   const [checked, setChecked] = useState(false);
   const [isShowVerify, setIsShowVerify] = useState(false);
-  const { type } = router.query;
+  const { path: type } = router.query;
 
   const formik = useFormik({
     initialValues: {
@@ -43,10 +50,19 @@ export const SignUp = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
+
+  useEffect(() => {
+    if (formik.errors.phoneNumber)
+      appToast({ severity: 'error', message: formik.errors.phoneNumber });
+    else if (formik.errors.email)
+      appToast({ severity: 'error', message: formik.errors.email });
+    else if (formik.errors.birthday)
+      appToast({ severity: 'error', message: formik.errors.birthday });
+  });
   return (
     <>
-      <Box sx={{ mt: '115px', width: '100%' }}>
-        <UIAuthTabs isCheckIn={type === 'checkin'} />
+      <Box sx={{ width: '100%' }}>
+        <UIAuthTabs isCheckIn={type !== 'signup'} />
       </Box>
       {isShowVerify ? (
         <Verify />
@@ -59,12 +75,6 @@ export const SignUp = () => {
               name="phoneNumber"
               value={formik.values.phoneNumber}
               onChange={formik.handleChange}
-              error={
-                formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
-              }
-              helperText={
-                formik.touched.phoneNumber && formik.errors.phoneNumber
-              }
             />
             <UIDefaultTextField
               placeholder="Email"
@@ -72,8 +82,6 @@ export const SignUp = () => {
               name="email"
               value={formik.values.email}
               onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
             />
             <UIDefaultTextField
               placeholder="Birthday"
@@ -81,8 +89,6 @@ export const SignUp = () => {
               name="birthday"
               value={formik.values.birthday}
               onChange={formik.handleChange}
-              error={formik.touched.birthday && Boolean(formik.errors.birthday)}
-              helperText={formik.touched.birthday && formik.errors.birthday}
             />
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ mt: '30px' }}>

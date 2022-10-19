@@ -10,7 +10,7 @@ interface AppTimeoutProviderProps {
   children: ReactNode | ReactNode[];
 }
 
-const whitelist = ['/auth/[type]', '/points'];
+const whitelist = ['/'];
 
 function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const router = useRouter();
@@ -36,11 +36,11 @@ function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   };
   const handleNo = () => {
     setOpen(false);
-    router.push('/auth/checkin');
+    router.push('/');
   };
   useEffect(() => {
     let preventReset = false;
-
+    console.log(router.pathname);
     for (const path of whitelist) {
       if (path === router.pathname) {
         preventReset = true;

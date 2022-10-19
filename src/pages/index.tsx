@@ -21,11 +21,24 @@ const HomePage: NextPage = () => {
       sx={{
         height: '100vh',
         width: '100vw',
-        background:
-          'linear-gradient(0deg, rgba(6, 27, 47, 0.25), rgba(6, 27, 47, 0.25)), url("../images/back.png")',
-        backgroundSize: 'contain',
       }}
     >
+      <video
+        autoPlay
+        loop
+        muted
+        id="video"
+        style={{
+          position: 'fixed',
+          right: 0,
+          bottom: 0,
+          objectFit: 'cover',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <source src="/images/bg.mp4" type="video/mp4"></source>
+      </video>
       <UIFlexCenterBox sx={{ height: '100%' }}>
         <Paper
           elevation={0}

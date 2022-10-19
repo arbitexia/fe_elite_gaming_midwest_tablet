@@ -12,7 +12,7 @@ import * as yup from 'yup';
 
 export const SignUpSchema = yup.object({
   phonenumber: yup.string().required('Phone Number is Required'),
-  email: yup.string().email().required('Email is required'),
+  email: yup.string().required('Email is required'),
   birthday: yup.string().required('Birthday is required'),
 });
 
@@ -28,9 +28,10 @@ export const SignUp = () => {
       birthday: '',
     },
     validationSchema: SignUpSchema,
+    validate: () => {},
     onSubmit: (values) => {
       console.log(values);
-      checked && router.push('/auth/verify');
+      router.push('/auth/verify');
       // onLogin(values.username);
     },
   });
@@ -98,11 +99,7 @@ export const SignUp = () => {
         </Typography>
       </UIFlexWrapBox>
 
-      <UIDefaultButton
-        type="submit"
-        sx={{ mt: '40px' }}
-        onClick={() => formik.handleSubmit()}
-      >
+      <UIDefaultButton type="submit" sx={{ mt: '40px' }}>
         Join Now
       </UIDefaultButton>
     </Stack>

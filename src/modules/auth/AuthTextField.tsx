@@ -6,30 +6,23 @@ import {
   UIBackButton,
   UIImage,
 } from '@/components/UI';
+import { buttons } from '@/_mock/checkin';
 
 export type UIAuthTextFieldProps = {
   placeholder: string;
   mask: string;
+  isVerify?: boolean;
 };
 
-export const buttons = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '0',
-  '+',
-  'back',
-];
-
-export const AuthTextField = ({ placeholder, mask }: UIAuthTextFieldProps) => {
+export const AuthTextField = ({
+  placeholder,
+  mask,
+  isVerify,
+}: UIAuthTextFieldProps) => {
   const [value, setValue] = useState('');
-  const keyCount = (mask.match(/X/g) || []).length;
+  const keyCount = isVerify
+    ? (mask.match(/_/g) || []).length
+    : (mask.match(/X/g) || []).length;
   const onButtonClick = (key: string) => {
     if (key === 'back') setValue(value.slice(0, value.length - 1));
     else if (key !== '+' && value.length < keyCount) setValue(`${value}${key}`);
@@ -40,7 +33,7 @@ export const AuthTextField = ({ placeholder, mask }: UIAuthTextFieldProps) => {
     let numberPos = 0;
     for (let j = 0; j < mask.length; j++) {
       const currentMaskChar = mask[j];
-      if (currentMaskChar == 'X' && str.charAt(numberPos)) {
+      if (currentMaskChar == (isVerify ? '_' : 'X') && str.charAt(numberPos)) {
         formattedString += str.charAt(numberPos);
         numberPos++;
       } else {
@@ -65,9 +58,10 @@ export const AuthTextField = ({ placeholder, mask }: UIAuthTextFieldProps) => {
       >
         <Typography
           sx={{
-            fontWeight: '400',
-            fontSize: '22px',
-            lineHeight: '33px',
+            fontWeight: isVerify && value.length > 0 ? '500' : '400',
+            fontSize: isVerify && value.length > 0 ? '42px' : '22px',
+            letterSpacing: isVerify && value.length > 0 ? '37px' : '100%',
+            lineHeight: isVerify && value.length > 0 ? '63px' : '33px',
             textAlign: 'center',
             width: '290px',
             color: value.length > 0 ? 'white' : 'rgba(131, 169, 168, 0.5)',

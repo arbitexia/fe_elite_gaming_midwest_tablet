@@ -14,7 +14,8 @@ export const Verify = () => {
       <Box sx={{ marginTop: '40px', width: '100%' }}>
         <AuthTextField
           placeholder="Enter the code we sent to your phone number"
-          mask="X-X-X-X"
+          mask="____"
+          isVerify={true}
         />
       </Box>
 

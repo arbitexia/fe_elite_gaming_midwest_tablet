@@ -29,3 +29,11 @@ export const UIFlexColumnBox = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   gap: theme.spacing(1),
 }));
+
+export const UILayoutMain = styled('main')({
+  minHeight: '100vh',
+  width: `calc(100% - 96px)`,
+  marginLeft: `96px`,
+  overflowY: 'auto',
+  background: 'url("../images/back2.png")',
+});

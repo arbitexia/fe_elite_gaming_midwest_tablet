@@ -3,6 +3,7 @@ export {
   UIFlexCenterBox,
   UIFlexColumnBox,
   UIFlexWrapBox,
+  UILayoutMain,
 } from './Box';
 export { UIContainer } from './Container';
 export { UIImage } from './Image';

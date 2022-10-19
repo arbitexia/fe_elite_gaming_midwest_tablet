@@ -58,12 +58,11 @@ export const AuthTextField = ({
       >
         <Typography
           sx={{
-            fontWeight: isVerify && value.length > 0 ? '500' : '400',
-            fontSize: isVerify && value.length > 0 ? '42px' : '22px',
+            fontWeight: value.length > 0 ? '500' : '400',
+            fontSize: value.length > 0 ? '42px' : '22px',
             letterSpacing: isVerify && value.length > 0 ? '37px' : '100%',
-            lineHeight: isVerify && value.length > 0 ? '63px' : '33px',
+            lineHeight: value.length > 0 ? '63px' : '33px',
             textAlign: 'center',
-            width: '290px',
             color: value.length > 0 ? 'white' : 'rgba(131, 169, 168, 0.5)',
           }}
         >

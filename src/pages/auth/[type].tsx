@@ -8,7 +8,7 @@ import {
   UIFlexWrapBox,
   UIImage,
 } from '@/components/UI';
-import { CheckIn, SignUp, Verify, LanguageSelector } from '@/modules/auth';
+import { CheckIn, SignUp, LanguageSelector } from '@/modules/auth';
 
 const AuthPage: NextPage = () => {
   const router = useRouter();
@@ -68,7 +68,6 @@ const AuthPage: NextPage = () => {
             <UIFlexWrapBox sx={{ width: '410px', gap: 0 }}>
               {pageType === 'checkin' && <CheckIn />}
               {pageType === 'signup' && <SignUp />}
-              {pageType === 'verify' && <Verify />}
             </UIFlexWrapBox>
           </UIFlexWrapBox>
         </Paper>

@@ -1,14 +1,17 @@
+import { useState } from 'react';
 import { Box } from '@mui/material';
 import { UIAuthTabs, UIDefaultButton } from '@/components/UI';
 import { AuthTextField } from './AuthTextField';
 import { useRouter } from 'next/router';
+import { Verify } from '@/modules/auth';
 
 export const CheckIn = () => {
   const router = useRouter();
   const { type } = router.query;
+  const [isShowVerify, setIsShowVerify] = useState(false);
 
   const handleSend = () => {
-    router.push('/auth/verify');
+    setIsShowVerify(true);
   };
 
   return (
@@ -16,16 +19,22 @@ export const CheckIn = () => {
       <Box sx={{ mt: '115px', width: '100%' }}>
         <UIAuthTabs isCheckIn={type === 'checkin'} />
       </Box>
-      <Box sx={{ marginTop: '40px', width: '100%' }}>
-        <AuthTextField
-          placeholder="Enter your phone number"
-          mask="(XXX) XXX-XXXX"
-        />
-      </Box>
+      {isShowVerify ? (
+        <Verify />
+      ) : (
+        <>
+          <Box sx={{ marginTop: '40px', width: '100%' }}>
+            <AuthTextField
+              placeholder="Enter your phone number"
+              mask="(XXX) XXX-XXXX"
+            />
+          </Box>
 
-      <UIDefaultButton sx={{ mt: '50px' }} onClick={handleSend}>
-        Send Code
-      </UIDefaultButton>
+          <UIDefaultButton sx={{ mt: '50px' }} onClick={handleSend}>
+            Send Code
+          </UIDefaultButton>
+        </>
+      )}
     </Box>
   );
 };

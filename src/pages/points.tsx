@@ -40,7 +40,7 @@ const MyPoints = () => {
           }}
         >
           <Box sx={{ position: 'relative' }}>
-            <UIImage src="/images/PointBack.png" width={615} height={390} />
+            <UIImage src="images/PointBack.png" width={615} height={390} />
             <Box
               sx={{
                 position: 'absolute',

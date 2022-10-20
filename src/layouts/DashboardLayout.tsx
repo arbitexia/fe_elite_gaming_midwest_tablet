@@ -24,8 +24,6 @@ function DashboardLayout(props: Props) {
         }}
       >
         <AppSEO title={props.title} description="" />
-        <AppNavbar />
-        {props.children}
         <Box
           sx={{
             position: 'absolute',
@@ -35,6 +33,8 @@ function DashboardLayout(props: Props) {
             height: 'calc(100vh - 100px)',
           }}
         />
+        <AppNavbar />
+        {props.children}
       </Box>
     </UIAppLayoutWrapper>
   );

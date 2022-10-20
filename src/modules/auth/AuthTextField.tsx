@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Typography } from '@mui/material';
 import {
   UIFlexWrapBox,
@@ -11,15 +11,18 @@ import { buttons } from '@/_mock/checkin';
 export type UIAuthTextFieldProps = {
   placeholder: string;
   mask: string;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
   isVerify?: boolean;
 };
 
 export const AuthTextField = ({
   placeholder,
   mask,
+  value,
+  setValue,
   isVerify,
 }: UIAuthTextFieldProps) => {
-  const [value, setValue] = useState('');
   const keyCount = isVerify
     ? (mask.match(/_/g) || []).length
     : (mask.match(/X/g) || []).length;

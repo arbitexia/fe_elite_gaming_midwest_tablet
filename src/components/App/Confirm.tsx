@@ -15,13 +15,14 @@ interface AppConfirmProps {
 }
 
 export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
-  const [value, setValue] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const time = 30;
   useEffect(() => {
     if (!open) return;
-    setValue(0);
+    setProgress(0);
     const timer = setInterval(() => {
-      setValue((prevProgress) =>
-        prevProgress >= 100 ? 0 : prevProgress + 100 / 30
+      setProgress((prevProgress) =>
+        prevProgress >= 100 ? 0 : prevProgress + 100 / time
       );
     }, 1000);
     return () => {
@@ -30,8 +31,8 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
   }, [open]);
 
   useEffect(() => {
-    if (value >= 100) handleNo();
-  }, [value]);
+    if (progress >= 99) handleNo();
+  }, [progress]);
 
   return (
     <Dialog
@@ -57,7 +58,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
         <Box sx={{ position: 'relative', display: 'inline-flex' }}>
           <CircularProgress
             variant="determinate"
-            value={value}
+            value={progress}
             size={65}
             sx={{ color: 'rgba(255, 255, 255, 0.4)' }}
           />
@@ -83,7 +84,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
                 textAlign: 'center',
                 color: 'rgba(255, 255, 255, 0.5)',
               }}
-            >{`${30 - Math.round((value * 30) / 100)}`}</Typography>
+            >{`${time - Math.round((progress * time) / 100)}`}</Typography>
           </Box>
         </Box>
       </Box>

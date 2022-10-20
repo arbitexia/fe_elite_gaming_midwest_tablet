@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAppToast } from '@/providers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 
 const phoneRegExp = /^[0-9]{3}[0-9]{3}[0-9]{4}$/;
 
@@ -18,6 +20,7 @@ export const SignUpSchema = yup.object({
   phoneNumber: yup
     .string()
     .matches(phoneRegExp, 'Phonenumber is not valid')
+    .min(10)
     .required('Phonenumber is required'),
   email: yup.string().email().required('Email is required'),
   birthday: yup.date().required('Birthday is required'),
@@ -37,12 +40,7 @@ export const SignUp = () => {
       birthday: '',
     },
     validationSchema: SignUpSchema,
-    onSubmit: (values) => {
-      console.log(values);
-
-      //Handle Register
-
-      //Show Verify
+    onSubmit: () => {
       checked && setIsShowVerify(true);
     },
   });
@@ -54,9 +52,9 @@ export const SignUp = () => {
   useEffect(() => {
     if (formik.errors.phoneNumber)
       appToast({ severity: 'error', message: formik.errors.phoneNumber });
-    else if (formik.errors.email)
+    if (formik.errors.email)
       appToast({ severity: 'error', message: formik.errors.email });
-    else if (formik.errors.birthday)
+    if (formik.errors.birthday)
       appToast({ severity: 'error', message: formik.errors.birthday });
   });
   return (
@@ -83,13 +81,20 @@ export const SignUp = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
             />
-            <UIDefaultTextField
-              placeholder="Birthday"
-              id="birthday"
-              name="birthday"
-              value={formik.values.birthday}
-              onChange={formik.handleChange}
-            />
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <MobileDatePicker
+                inputFormat="MM/DD/YYYY"
+                value={formik.values.birthday}
+                onChange={(value) => {
+                  value && formik.setFieldValue('birthday', Date.parse(value));
+                }}
+                renderInput={(params) => {
+                  return (
+                    <UIDefaultTextField {...params} placeholder="Birthday" />
+                  );
+                }}
+              />
+            </LocalizationProvider>
           </UIFlexWrapBox>
           <UIFlexWrapBox sx={{ mt: '30px' }}>
             <Checkbox

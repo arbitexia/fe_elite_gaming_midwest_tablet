@@ -5,7 +5,7 @@ import { DashboardLayout } from '@/layouts';
 const MyPoints = () => {
   return (
     <DashboardLayout title="My Points">
-      <UIContainer>
+      <UIContainer sx={{ height: 'calc(100vh - 86px)' }}>
         <Typography
           sx={{
             mt: '30px',
@@ -28,15 +28,13 @@ const MyPoints = () => {
         />
         <Box
           sx={{
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            position: 'absolute',
+            mt: '30px',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
             display: 'flex',
+            gap: '10vh',
+            height: 'calc(100% - 122px)',
           }}
         >
           <Box sx={{ position: 'relative' }}>
@@ -60,27 +58,39 @@ const MyPoints = () => {
                   lineHeight: '110%',
                   textAlign: 'center',
                   background:
-                    'linear-gradient(166.49deg, #FFE600 9.69%, #00F0FF 84.46%)',
+                    'linear-gradient(166.49deg, #FFE600 9.69%, #88eb78 84.46%)',
                   backgroundClip: 'text',
                   textFillColor: 'transparent',
                   textShadow: '0px 4px 30px rgba(23, 52, 51, 0.15)',
                   WebkitTextStroke: '5px rgba(139, 127, 16, 0.7)',
                   borderImageSource:
-                    'radial-gradient(68.72% 68.72% at 50% 38.27%, rgba(255, 153, 0, 0.7) 0%, rgba(139, 127, 16, 0.7) 100%)',
-                  span: {
-                    fontSize: '64px',
-                    mt: '-50px',
-                  },
+                    'radial-gradient(68.72% 68.72% at 50% 38.27%, #fce502 0%, #88eb78 100%)',
                 }}
               >
-                9500 <br />
-                <span>points</span>
+                9500
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: '700',
+                  fontSize: '64px',
+                  lineHeight: '110%',
+                  textAlign: 'center',
+                  background:
+                    'linear-gradient(166.49deg, #4eecb1 9.69%, #00F0FF 84.46%)',
+                  backgroundClip: 'text',
+                  textFillColor: 'transparent',
+                  textShadow: '0px 4px 30px rgba(23, 52, 51, 0.15)',
+                  WebkitTextStroke: '5px rgba(139, 127, 16, 0.7)',
+                  borderImageSource:
+                    'radial-gradient(68.72% 68.72% at 50% 38.27%, #4eecb1 0%, #01efff 100%)',
+                }}
+              >
+                points
               </Typography>
             </Box>
           </Box>
           <Button
             sx={{
-              mt: '100px',
               background:
                 'linear-gradient(86.57deg, #1D8E7A 25.92%, #0EA59C 98.39%)',
               boxShadow: '0px 6.3px 8.19px rgba(0, 0, 0, 0.21)',

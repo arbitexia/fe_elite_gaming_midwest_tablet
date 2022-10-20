@@ -1,6 +1,5 @@
 import { SyntheticEvent } from 'react';
 import {
-  ClickAwayListener,
   Snackbar,
   Alert,
   AlertColor,
@@ -17,41 +16,28 @@ interface AppToastProps {
         reason?: SnackbarCloseReason
       ) => void)
     | undefined;
-  onClickAway: (event?: MouseEvent | TouchEvent) => void;
 }
 
-const AppToast = ({
-  open,
-  message,
-  severity,
-  onClose,
-  onClickAway,
-}: AppToastProps) => {
+const AppToast = ({ open, message, severity, onClose }: AppToastProps) => {
   return (
-    <ClickAwayListener
-      onClickAway={() => {
-        if (onClickAway) onClickAway();
+    <Snackbar
+      open={open}
+      autoHideDuration={6000}
+      onClose={onClose}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
       }}
     >
-      <Snackbar
-        open={open}
-        // autoHideDuration={6000}
+      <Alert
+        elevation={6}
+        variant="filled"
         onClose={onClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
+        severity={severity}
       >
-        <Alert
-          elevation={6}
-          variant="filled"
-          onClose={onClose}
-          severity={severity}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
-    </ClickAwayListener>
+        {message}
+      </Alert>
+    </Snackbar>
   );
 };
 

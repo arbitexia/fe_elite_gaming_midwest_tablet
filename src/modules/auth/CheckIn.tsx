@@ -4,14 +4,19 @@ import { UIAuthTabs, UIDefaultButton } from '@/components/UI';
 import { AuthTextField } from './AuthTextField';
 import { useRouter } from 'next/router';
 import { Verify } from '@/modules/auth';
+import { useAppToast } from '@/providers';
 
 export const CheckIn = () => {
   const router = useRouter();
+  const appToast = useAppToast();
   const { path: type } = router.query;
   const [isShowVerify, setIsShowVerify] = useState(false);
+  const [value, setValue] = useState('');
 
   const handleSend = () => {
-    setIsShowVerify(true);
+    if (value.length < 10)
+      appToast({ severity: 'error', message: 'Phone number is invalid' });
+    else setIsShowVerify(true);
   };
 
   return (
@@ -27,6 +32,8 @@ export const CheckIn = () => {
             <AuthTextField
               placeholder="Enter your phone number"
               mask="(XXX) XXX-XXXX"
+              value={value}
+              setValue={setValue}
             />
           </Box>
 

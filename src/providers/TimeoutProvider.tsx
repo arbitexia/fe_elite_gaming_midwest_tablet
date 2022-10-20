@@ -15,6 +15,7 @@ const whitelist = ['/'];
 function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
+  const time = 15;
   let timeout: NodeJS.Timeout | null = null;
 
   const restartAutoReset = () => {
@@ -23,7 +24,7 @@ function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
     }
     timeout = setTimeout(() => {
       setOpen(true);
-    }, 1000 * 15);
+    }, 1000 * time);
   };
 
   const onMouseMove = () => {
@@ -40,7 +41,6 @@ function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   };
   useEffect(() => {
     let preventReset = false;
-    console.log(router.pathname);
     for (const path of whitelist) {
       if (path === router.pathname) {
         preventReset = true;

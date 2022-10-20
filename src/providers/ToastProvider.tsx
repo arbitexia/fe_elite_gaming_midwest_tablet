@@ -33,7 +33,6 @@ function AppToastProvider({ children, ...rest }: AppToastProviderProps) {
         message={message}
         severity={severity}
         onClose={() => setOpen(false)}
-        onClickAway={() => setOpen(false)}
       />
       {children}
     </AppToastContext.Provider>

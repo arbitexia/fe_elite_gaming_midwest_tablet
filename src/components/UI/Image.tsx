@@ -6,9 +6,10 @@ interface Props {
   alt?: string;
   width?: number;
   height?: number;
+  sx?: object;
 }
 
-export const UIImage = ({ src, alt, width, height }: Props) => {
+export const UIImage = ({ src, alt, width, height, sx }: Props) => {
   return (
     <Image
       src={src}
@@ -16,6 +17,7 @@ export const UIImage = ({ src, alt, width, height }: Props) => {
       width={width}
       height={height}
       loader={appImageLoader}
+      style={{ ...sx }}
     />
   );
 };

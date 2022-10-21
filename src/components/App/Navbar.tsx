@@ -15,6 +15,7 @@ const AppNavbar = () => {
         border: '2px solid rgba(137, 200, 198, 0.05)',
         borderRadius: '0px 0px 20px 20px',
         alignItems: 'center',
+        backdropFilter: 'blur(20px)',
       }}
     >
       <UIImage src={'images/icons/logo.svg'} width={56} height={54} />

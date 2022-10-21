@@ -18,21 +18,12 @@ function DashboardLayout(props: Props) {
     <UIAppLayoutWrapper>
       <Box
         sx={{
-          height: '100vh',
+          minHeight: '100vh',
           background:
-            'radial-gradient(166.33% 97.17% at 85.18% 5.81%, rgba(0, 255, 148, 0.16) 0%, rgba(255, 255, 255, 0.002) 100%) , radial-gradient(97.73% 173.91% at -3.15% 77.15%, rgba(14, 71, 112, 0.2) 0%, rgba(24, 77, 89, 0.2) 23.15%, rgba(17, 54, 81, 0) 100%), #001817',
+            'url("../images/Stars.png"), radial-gradient(166.33% 97.17% at 85.18% 5.81%, rgba(0, 255, 148, 0.16) 0%, rgba(255, 255, 255, 0.002) 100%) , radial-gradient(97.73% 173.91% at -3.15% 77.15%, rgba(14, 71, 112, 0.2) 0%, rgba(24, 77, 89, 0.2) 23.15%, rgba(17, 54, 81, 0) 100%), #001817',
         }}
       >
         <AppSEO title={props.title} description="" />
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '86px',
-            background: 'url("../images/Stars.png")',
-            width: '100%',
-            height: 'calc(100vh - 100px)',
-          }}
-        />
         <AppNavbar />
         {props.children}
       </Box>

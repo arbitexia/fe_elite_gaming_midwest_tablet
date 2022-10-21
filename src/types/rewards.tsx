@@ -4,5 +4,5 @@ export type RewardItemType = {
   url: string;
   location: string;
   point: number;
-  specifications: [];
+  specifications: object;
 };

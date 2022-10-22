@@ -10,7 +10,7 @@ interface AppTimeoutProviderProps {
   children: ReactNode | ReactNode[];
 }
 
-const whitelist = ['/', '/rewards'];
+const whitelist = ['/', '/rewards', '/points'];
 
 function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import { RewardItemType } from '@/types';
 
-export const rewardsItems: RewardItemType[] = [
+export const rewardsData: RewardItemType[] = [
   {
     id: 1,
     name: 'AirPods 2',

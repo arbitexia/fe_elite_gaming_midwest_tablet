@@ -6,7 +6,7 @@ import {
   RewardsCard,
 } from '@/modules/rewards';
 import { DashboardLayout } from '@/layouts';
-import { rewardsItems } from '@/_mock/rewards';
+import { rewardsData } from '@/_mock/rewards';
 
 const Rewards = () => {
   return (
@@ -21,7 +21,7 @@ const Rewards = () => {
         />
         <RewardsFilterBox />
         <UIFlexWrapBox sx={{ gap: '40px', py: '60px' }}>
-          {rewardsItems.map((item) => {
+          {rewardsData.map((item) => {
             return <RewardsCard key={item.id} point={29000} item={item} />;
           })}
         </UIFlexWrapBox>

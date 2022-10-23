@@ -1,6 +1,10 @@
+import { useRouter } from 'next/router';
 import { UIFlexWrapBox, UIImage } from '@/components/UI';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { RewardItemType } from '@/types';
+import { RewardsCardProgress } from './cardProgress';
+import { RewardsCardPoint } from './cardPoint';
+import { StyledRewardsCardPoint } from './ui';
 
 export type RewardsCardProps = {
   point: number;
@@ -8,6 +12,7 @@ export type RewardsCardProps = {
 };
 
 export const RewardsCard = ({ point, item }: RewardsCardProps) => {
+  const router = useRouter();
   return (
     <UIFlexWrapBox
       sx={{
@@ -22,83 +27,15 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
       }}
     >
       <UIImage src={item.url} width={220} height={235} />
-      <UIFlexWrapBox
-        sx={{
-          mt: '18px',
-          background: 'rgba(137, 200, 198, 0.3)',
-          border: '1px solid rgba(47, 16, 16, 0.05)',
-          backdropFilter: 'blur(95.4109px)',
-          borderRadius: '15px',
-          width: '210px',
-          height: '30px',
-          padding: '3px',
-          position: 'relative',
-        }}
-      >
-        <UIFlexWrapBox
-          sx={{
-            background:
-              point >= item.point / 2
-                ? 'linear-gradient(165.13deg, #37D099 -18.62%, #008A83 99.26%)'
-                : 'rgba(82, 192, 199, 0.2)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '11px',
-            width:
-              point >= item.point ? '100%' : `${(point / item.point) * 100}%`,
-            height: '100%',
-          }}
-        />
-        <Box
-          sx={{
-            position: 'absolute',
-            right: -10,
-            top: -5,
-            filter:
-              point >= item.point
-                ? 'drop-shadow(0px 5.60991px 8.41486px rgba(234, 176, 32, 0.4))'
-                : 'none',
-          }}
-        >
-          <UIImage
-            src={`images/icons/star-${
-              point >= item.point ? 'light' : 'dark'
-            }.svg`}
-            width={36}
-            height={36}
-          />
-        </Box>
-      </UIFlexWrapBox>
-      <UIFlexWrapBox
-        sx={{
-          mt: '14px',
-          alignItems: 'center',
-          fontWeight: '600',
-          fontSize: '18px',
-          lineHeight: '27px',
-          display: 'flex',
-          color: '#FFFFFF',
-        }}
-      >
-        <UIImage src="images/icons/coin.png" width={20} height={20} />
-        <Typography>{item.point} points</Typography>
-      </UIFlexWrapBox>
-      <Typography
-        sx={{
-          mt: '10px',
-          fontWeight: '600',
-          fontSize: '12px',
-          lineHeight: '14px',
-          color: 'rgba(137, 200, 198, 0.5)',
-          span: {
-            color: 'rgba(137, 200, 198, 0.8)',
-          },
-        }}
-      >
+      <RewardsCardProgress myPoint={point} itemPoint={item.point} />
+      <RewardsCardPoint itemPoint={item.point} />
+      <StyledRewardsCardPoint>
         Points Completion:{' '}
         <span>
           {point}/{item.point}
         </span>
-      </Typography>
+      </StyledRewardsCardPoint>
+      <Typography sx={{}}></Typography>
       <Button
         sx={{
           mt: '30px',
@@ -113,6 +50,7 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
           color: '#83A9A8',
           textTransform: 'none',
         }}
+        onClick={() => router.push(`/rewards/${item.id}`)}
       >
         Exchange Offer
       </Button>

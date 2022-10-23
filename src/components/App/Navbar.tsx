@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 const AppNavbar = () => {
   const router = useRouter();
-  // const isPointPage = router.pathname === '/points';
+  const isPointPage = router.pathname === '/points';
   return (
     <UIFlexSpaceBox
       px="30px"
@@ -18,7 +18,9 @@ const AppNavbar = () => {
         backdropFilter: 'blur(20px)',
       }}
     >
-      <UIImage src={'images/icons/logo.svg'} width={56} height={54} />
+      <Box onClick={() => router.push('/points')} sx={{ cursor: 'pointer' }}>
+        <UIImage src={'images/icons/logo.svg'} width={56} height={54} />
+      </Box>
       <UIFlexWrapBox>
         <Box sx={{ display: 'flex' }}>
           <Box
@@ -34,7 +36,11 @@ const AppNavbar = () => {
               gap: '12px',
             }}
           >
-            <UIImage src={'images/icons/points.svg'} width={29} height={23} />
+            <UIImage
+              src={`images/icons/points${isPointPage ? '' : '-dark'}.svg`}
+              width={29}
+              height={23}
+            />
             <Typography>My Points</Typography>
           </Box>
           <Box
@@ -50,7 +56,11 @@ const AppNavbar = () => {
               gap: '12px',
             }}
           >
-            <UIImage src={'images/icons/rewards.svg'} width={29} height={23} />
+            <UIImage
+              src={`images/icons/rewards${isPointPage ? '-dark' : ''}.svg`}
+              width={29}
+              height={23}
+            />
             <Typography>Rewards</Typography>
           </Box>
           <Typography

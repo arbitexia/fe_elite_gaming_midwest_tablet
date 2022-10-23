@@ -10,7 +10,6 @@ const PointsMain = () => {
   const [second, setSecond] = useState(1);
   const rotateAngle = 360 / locationData.length;
   const handleNext = () => {
-    console.log(currDeg);
     if (currDeg - rotateAngle <= -360) {
       setSecond(0);
       setCurrDeg(rotateAngle);
@@ -26,7 +25,6 @@ const PointsMain = () => {
     }
   };
   const handlePrev = () => {
-    console.log(currDeg);
     if (currDeg + rotateAngle >= 360) {
       setSecond(0);
       setCurrDeg(-rotateAngle);

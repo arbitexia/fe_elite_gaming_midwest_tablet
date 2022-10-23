@@ -21,7 +21,7 @@ const RewardsFilterBox = () => {
         }}
       >
         <UIImage src={'images/icons/points.svg'} width={29} height={23} />
-        <Typography>My Points : 59000</Typography>
+        <Typography>My Points : 29000</Typography>
       </Box>
       <UIFlexWrapBox sx={{ gap: '30px' }}>
         <StyledFilterBox>

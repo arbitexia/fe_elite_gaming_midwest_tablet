@@ -1,4 +1,4 @@
-import { styled, Container, ContainerProps } from '@mui/material';
+import { styled, Container, ContainerProps, Toolbar } from '@mui/material';
 
 const UIContentWrapper = styled(Container)(({ theme }) => ({
   padding: theme.spacing(2, 6),
@@ -9,6 +9,7 @@ const UIContentWrapper = styled(Container)(({ theme }) => ({
 export const UIContainer = ({ children, ...rest }: ContainerProps) => {
   return (
     <UIContentWrapper maxWidth="xl" {...rest}>
+      <Toolbar sx={{ height: '86px' }} />
       {children}
     </UIContentWrapper>
   );

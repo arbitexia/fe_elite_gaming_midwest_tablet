@@ -1,5 +1,18 @@
 import { RewardItemType } from '@/types';
 
+export const locationData = [
+  { value: '0', label: 'any' },
+  { value: '1', label: 'Mariland' },
+];
+export const pointData = [
+  { value: '0', label: 'any' },
+  { value: '1', label: '0 - 1000' },
+  { value: '2', label: '1000 - 2000' },
+  { value: '3', label: '3000 - 4000' },
+  { value: '4', label: '4000 - 5000' },
+  { value: '5', label: '5000 -' },
+];
+
 export const rewardsData: RewardItemType[] = [
   {
     id: 1,

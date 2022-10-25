@@ -16,6 +16,8 @@ const AppNavbar = () => {
         borderRadius: '0px 0px 20px 20px',
         alignItems: 'center',
         backdropFilter: 'blur(20px)',
+        position: 'fixed',
+        zIndex: '10',
       }}
     >
       <Box onClick={() => router.push('/points')} sx={{ cursor: 'pointer' }}>

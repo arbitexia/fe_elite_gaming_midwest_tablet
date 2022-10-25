@@ -81,6 +81,7 @@ export const UISelectBox = ({ items }: UISelectBoxProps) => {
       id="input-with-icon-textfield"
       placeholder="Search"
       select
+      defaultValue={0}
       sx={{
         '.MuiOutlinedInput-input': {
           '::placeholder': { color: 'white' },

@@ -9,22 +9,11 @@ import {
 import { Verify } from '@/modules/auth';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { useAppToast } from '@/providers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-
-const phoneRegExp = /^[0-9]{3}[0-9]{3}[0-9]{4}$/;
-
-export const SignUpSchema = yup.object({
-  phoneNumber: yup
-    .string()
-    .matches(phoneRegExp, 'Phonenumber is not valid')
-    .min(10)
-    .required('Phonenumber is required'),
-  email: yup.string().email('Email is not valid').required('Email is required'),
-  birthday: yup.date().required('Birthday is required'),
-});
+import InputMask from 'react-input-mask';
+import { Moment } from 'moment';
 
 export const SignUp = () => {
   const router = useRouter();
@@ -40,35 +29,48 @@ export const SignUp = () => {
       birthday: '',
     },
     validateOnChange: false,
-    validationSchema: SignUpSchema,
-    onSubmit: () => {
-      checked && setIsShowVerify(true);
+    validateOnBlur: false,
+    onSubmit: (values) => {
+      if (handleFormikChange('phoneNumber', values.phoneNumber)) return;
+      if (handleFormikChange('email', values.email)) return;
+      if (handleFormikChange('birthday', values.birthday)) return;
+      setIsShowVerify(true);
     },
   });
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value: string = e.target.value;
-    if (!value)
-      appToast({ severity: 'error', message: 'Phonenumber is required' });
-    else if (value.match(phoneRegExp))
-      appToast({ severity: 'error', message: 'Phonenumber is not valid' });
-    else if (value.length < 10)
-      appToast({ severity: 'error', message: 'Phonenumber is not valid' });
-    else formik.handleChange(e);
+  const handleFormikChange = (name: string, value: string) => {
+    let error = '';
+    if (name === 'phoneNumber') {
+      const phoneRegExp = /^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i;
+      if (!value) error = 'Phonenumber is required';
+      else if (!value.match(phoneRegExp) || value.length < 10)
+        error = 'Phonenumber is not valid';
+    }
+    if (name === 'email') {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+      if (!value) {
+        error = 'Email is required';
+      } else if (!regex.test(value)) {
+        error = 'Invalid Email';
+      }
+    }
+    if (name === 'birthday') {
+      const regex =
+        /^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/i;
+      if (!value) {
+        error = 'Birthday is required';
+      } else if (!regex.test(value)) {
+        error = 'Invalid Birthday';
+      }
+    }
+    if (error) appToast({ severity: 'error', message: error });
+    return error;
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
 
-  // useEffect(() => {
-  //   if (formik.touched.phoneNumber && formik.errors.phoneNumber)
-  //     appToast({ severity: 'error', message: formik.errors.phoneNumber });
-  //   if (formik.touched.email && formik.errors.email)
-  //     appToast({ severity: 'error', message: formik.errors.email });
-  //   if (formik.touched.birthday && formik.errors.birthday)
-  //     appToast({ severity: 'error', message: formik.errors.birthday });
-  // });
   return (
     <>
       <Box sx={{ width: '100%' }}>
@@ -79,26 +81,49 @@ export const SignUp = () => {
       ) : (
         <Stack component="form" onSubmit={formik.handleSubmit}>
           <UIFlexWrapBox sx={{ marginTop: '50px', width: '100%', gap: '15px' }}>
-            <UIDefaultTextField
-              placeholder="Phone Number"
+            <InputMask
               id="phoneNumber"
-              name="phoneNumber"
+              mask="(999) 999 9999"
               value={formik.values.phoneNumber}
-              onChange={handlePhoneChange}
-            />
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleFormikChange('phoneNumber', e.target.value);
+                formik.handleChange(e);
+              }}
+              disabled={false}
+              maskChar="X"
+            >
+              {(inputProps: any) => (
+                <UIDefaultTextField
+                  {...inputProps}
+                  name="phoneNumber"
+                  placeholder="Phone Number"
+                />
+              )}
+            </InputMask>
+
             <UIDefaultTextField
               placeholder="Email"
               id="email"
               name="email"
               value={formik.values.email}
-              onChange={formik.handleChange}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleFormikChange('email', e.target.value);
+                formik.handleChange(e);
+              }}
             />
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <MobileDatePicker
                 inputFormat="MM/DD/YYYY"
                 value={formik.values.birthday}
-                onChange={(value) => {
-                  value && formik.setFieldValue('birthday', value);
+                onChange={(value: Moment | null) => {
+                  handleFormikChange(
+                    'birthday',
+                    value ? value.format('MM/DD/YYYY') : ''
+                  );
+                  formik.setFieldValue(
+                    'birthday',
+                    value ? value.format('MM/DD/YYYY') : ''
+                  );
                 }}
                 renderInput={(params) => {
                   return (
@@ -132,7 +157,11 @@ export const SignUp = () => {
             </Typography>
           </UIFlexWrapBox>
 
-          <UIDefaultButton type="submit" sx={{ mt: '40px' }}>
+          <UIDefaultButton
+            disabled={!checked}
+            type="submit"
+            sx={{ mt: '40px' }}
+          >
             Join Now
           </UIDefaultButton>
         </Stack>

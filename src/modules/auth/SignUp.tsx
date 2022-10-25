@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, Checkbox, Typography, Stack } from '@mui/material';
 import {
   UIAuthTabs,
@@ -46,11 +46,15 @@ export const SignUp = () => {
     },
   });
 
-  const handlePhoneChange = (e) => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value: string = e.target.value;
-    !value.match(phoneRegExp) &&
+    if (!value)
+      appToast({ severity: 'error', message: 'Phonenumber is required' });
+    else if (value.match(phoneRegExp))
       appToast({ severity: 'error', message: 'Phonenumber is not valid' });
-    formik.handleChange(e);
+    else if (value.length < 10)
+      appToast({ severity: 'error', message: 'Phonenumber is not valid' });
+    else formik.handleChange(e);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -22,7 +22,7 @@ export const SignUpSchema = yup.object({
     .matches(phoneRegExp, 'Phonenumber is not valid')
     .min(10)
     .required('Phonenumber is required'),
-  email: yup.string().email().required('Email is required'),
+  email: yup.string().email('Email is not valid').required('Email is required'),
   birthday: yup.date().required('Birthday is required'),
 });
 
@@ -39,24 +39,32 @@ export const SignUp = () => {
       email: '',
       birthday: '',
     },
+    validateOnChange: false,
     validationSchema: SignUpSchema,
     onSubmit: () => {
       checked && setIsShowVerify(true);
     },
   });
 
+  const handlePhoneChange = (e) => {
+    const value: string = e.target.value;
+    !value.match(phoneRegExp) &&
+      appToast({ severity: 'error', message: 'Phonenumber is not valid' });
+    formik.handleChange(e);
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
 
-  useEffect(() => {
-    if (formik.errors.phoneNumber)
-      appToast({ severity: 'error', message: formik.errors.phoneNumber });
-    if (formik.errors.email)
-      appToast({ severity: 'error', message: formik.errors.email });
-    if (formik.errors.birthday)
-      appToast({ severity: 'error', message: formik.errors.birthday });
-  });
+  // useEffect(() => {
+  //   if (formik.touched.phoneNumber && formik.errors.phoneNumber)
+  //     appToast({ severity: 'error', message: formik.errors.phoneNumber });
+  //   if (formik.touched.email && formik.errors.email)
+  //     appToast({ severity: 'error', message: formik.errors.email });
+  //   if (formik.touched.birthday && formik.errors.birthday)
+  //     appToast({ severity: 'error', message: formik.errors.birthday });
+  // });
   return (
     <>
       <Box sx={{ width: '100%' }}>
@@ -72,7 +80,7 @@ export const SignUp = () => {
               id="phoneNumber"
               name="phoneNumber"
               value={formik.values.phoneNumber}
-              onChange={formik.handleChange}
+              onChange={handlePhoneChange}
             />
             <UIDefaultTextField
               placeholder="Email"
@@ -86,7 +94,7 @@ export const SignUp = () => {
                 inputFormat="MM/DD/YYYY"
                 value={formik.values.birthday}
                 onChange={(value) => {
-                  value && formik.setFieldValue('birthday', Date.parse(value));
+                  value && formik.setFieldValue('birthday', value);
                 }}
                 renderInput={(params) => {
                   return (

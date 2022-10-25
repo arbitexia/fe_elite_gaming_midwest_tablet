@@ -1,13 +1,20 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { UIFlexSpaceBox, UISearchBox, UIImage } from '@/components/UI';
+import {
+  UIFlexSpaceBox,
+  UISelectBox,
+  UIImage,
+  UIFlexWrapBox,
+} from '@/components/UI';
+import { StyledFilterBox } from './ui';
 import { Typography, Button } from '@mui/material';
+import { locationData, pointData } from '@/_mock/rewards';
 
 const RewardsHeader = () => {
-  const [value, setValue] = useState('');
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+  // const [value, setValue] = useState('');
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setValue(event.target.value);
+  // };
 
   const router = useRouter();
   const { id } = router.query;
@@ -40,7 +47,16 @@ const RewardsHeader = () => {
           Rewards
         </Typography>
       )}
-      <UISearchBox value={value} onChange={handleChange} />
+      <UIFlexWrapBox sx={{ gap: '30px' }}>
+        <StyledFilterBox>
+          <Typography>Location</Typography>
+          <UISelectBox items={locationData} />
+        </StyledFilterBox>
+        <StyledFilterBox>
+          <Typography>Points</Typography>
+          <UISelectBox items={pointData} />
+        </StyledFilterBox>
+      </UIFlexWrapBox>
     </UIFlexSpaceBox>
   );
 };

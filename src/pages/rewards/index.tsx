@@ -20,7 +20,9 @@ const Rewards = () => {
           }}
         />
         <RewardsFilterBox />
-        <UIFlexWrapBox sx={{ gap: '40px', py: '60px' }}>
+        <UIFlexWrapBox
+          sx={{ gap: '40px', py: '60px', justifyContent: 'center' }}
+        >
           {rewardsData.map((item) => {
             return <RewardsCard key={item.id} point={29000} item={item} />;
           })}

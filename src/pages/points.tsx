@@ -1,24 +1,48 @@
 import { Box, Typography, Button } from '@mui/material';
-import { UIContainer, UIFlexColumnBox } from '@/components/UI';
+import {
+  UIContainer,
+  UIFlexColumnBox,
+  UIFlexSpaceBox,
+  UIFlexWrapBox,
+} from '@/components/UI';
 import { DashboardLayout } from '@/layouts';
 import { PointsMain } from '@/modules/points';
+import { MyLocation as MyLocationIcon } from '@mui/icons-material';
 
 const MyPoints = () => {
   return (
     <DashboardLayout title="My Points">
       <UIContainer sx={{ height: 'calc(100vh - 86px)' }}>
-        <Typography
-          sx={{
-            mt: '30px',
-            fontWeight: '600',
-            fontSize: '36px',
-            lineHeight: '54px',
-            alignItems: 'center',
-            color: '#89C8C6',
-          }}
-        >
-          My Points
-        </Typography>
+        <UIFlexSpaceBox>
+          <Typography
+            sx={{
+              mt: '30px',
+              fontWeight: '600',
+              fontSize: '36px',
+              lineHeight: '54px',
+              alignItems: 'center',
+              color: '#89C8C6',
+            }}
+          >
+            My Points
+          </Typography>
+          <UIFlexWrapBox sx={{ mt: '30px', alignItems: 'center', gap: '12px' }}>
+            <MyLocationIcon
+              sx={{ fontSize: '36px', color: 'rgba(255, 255, 255, 0.57);' }}
+            />
+            <Typography
+              sx={{
+                fontWeight: '600',
+                fontSize: '28px',
+                lineHeight: '54px',
+                alignItems: 'center',
+                color: 'rgba(255, 255, 255, 0.57);',
+              }}
+            >
+              Mariland, USA
+            </Typography>
+          </UIFlexWrapBox>
+        </UIFlexSpaceBox>
         <Box
           sx={{
             mt: '20px',

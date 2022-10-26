@@ -51,7 +51,7 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "react-input-mask": "^3.0.1"
+    "react-input-mask": "^3.0.0-alpha.2"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [

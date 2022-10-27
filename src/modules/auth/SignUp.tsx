@@ -89,12 +89,17 @@ export const SignUp = () => {
                 handleFormikChange('phoneNumber', e.target.value);
                 formik.handleChange(e);
               }}
-              maskPlaceholder="X"
+              maskChar="X"
             >
-              <UIDefaultTextField
-                name="phoneNumber"
-                placeholder="Phone Number"
-              />
+              {(inputProps:) => {
+                return (
+                  <UIDefaultTextField
+                    {...inputProps}
+                    name="phoneNumber"
+                    placeholder="Phone Number"
+                  />
+                );
+              }}
             </InputMask>
 
             <UIDefaultTextField

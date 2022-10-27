@@ -89,7 +89,6 @@ export const SignUp = () => {
                 handleFormikChange('phoneNumber', e.target.value);
                 formik.handleChange(e);
               }}
-              disabled={false}
               maskPlaceholder="X"
             >
               <UIDefaultTextField

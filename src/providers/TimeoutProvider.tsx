@@ -16,7 +16,7 @@ const whitelist = ['/'];
 function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
-  const time = 90;
+  const time = 60;
   let timeout: NodeJS.Timeout | null = null;
 
   const restartAutoReset = () => {

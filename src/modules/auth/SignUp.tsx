@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Checkbox, Typography, Stack } from '@mui/material';
 import {
   UIAuthTabs,
@@ -81,7 +81,7 @@ export const SignUp = () => {
       ) : (
         <Stack component="form" onSubmit={formik.handleSubmit}>
           <UIFlexWrapBox sx={{ marginTop: '50px', width: '100%', gap: '15px' }}>
-            <InputMask
+            {/* <InputMask
               id="phoneNumber"
               mask="(999) 999 9999"
               value={formik.values.phoneNumber}
@@ -91,16 +91,28 @@ export const SignUp = () => {
               }}
               maskChar="X"
             >
-              {(inputProps:) => {
+              {(): ReactInputMask => {
                 return (
                   <UIDefaultTextField
-                    {...inputProps}
                     name="phoneNumber"
                     placeholder="Phone Number"
                   />
                 );
               }}
-            </InputMask>
+            </InputMask> */}
+
+            <UIDefaultTextField
+              name="phoneNumber"
+              placeholder="Phone Number"
+              value={formik.values.phoneNumber}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleFormikChange('phoneNumber', e.target.value);
+                formik.handleChange(e);
+              }}
+              InputProps={{
+                inputComponent: TextMaskCustom as any,
+              }}
+            />
 
             <UIDefaultTextField
               placeholder="Email"
@@ -170,3 +182,23 @@ export const SignUp = () => {
     </>
   );
 };
+
+interface CustomProps {
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  name: string;
+}
+const TextMaskCustom = React.forwardRef<HTMLElement, CustomProps>(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function TextMaskCustom(props, ref) {
+    const { onChange, ...other } = props;
+    return (
+      <InputMask
+        id="phoneNumber"
+        mask="(999) 999 9999"
+        onChange={onChange}
+        maskChar="X"
+        {...other}
+      />
+    );
+  }
+);

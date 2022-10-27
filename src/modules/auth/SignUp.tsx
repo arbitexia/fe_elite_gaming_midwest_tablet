@@ -1,4 +1,4 @@
-import { useState, ReactNode } from 'react';
+import { useState } from 'react';
 import { Box, Checkbox, Typography, Stack } from '@mui/material';
 import {
   UIAuthTabs,
@@ -12,7 +12,7 @@ import { useFormik } from 'formik';
 import { useAppToast } from '@/providers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import InputMask, { Props, ReactInputMask } from 'react-input-mask';
+import InputMask from 'react-input-mask';
 import { Moment } from 'moment';
 
 export const SignUp = () => {
@@ -89,7 +89,6 @@ export const SignUp = () => {
                 handleFormikChange('phoneNumber', e.target.value);
                 formik.handleChange(e);
               }}
-              disabled={false}
               maskPlaceholder="X"
             >
               <UIDefaultTextField

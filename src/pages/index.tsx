@@ -26,7 +26,7 @@ const HomePage: NextPage = () => {
           background: 'url("/images/back.png")',
         }}
       >
-        <video
+        {/* <video
           autoPlay
           loop
           muted
@@ -41,7 +41,7 @@ const HomePage: NextPage = () => {
           }}
         >
           <source src="/images/bg.mp4" type="video/mp4"></source>
-        </video>
+        </video> */}
         <UIFlexCenterBox sx={{ height: '100%' }}>
           <Paper
             elevation={0}

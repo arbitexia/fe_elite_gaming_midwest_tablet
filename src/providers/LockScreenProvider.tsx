@@ -14,8 +14,8 @@ function AppLockScreenProvider({
   ...rest
 }: AppLockScreenProviderProps) {
   const [open, setOpen] = useState<boolean>(false);
-  const value = ({ open }) => {
-    setOpen(open);
+  const value = () => {
+    setOpen(true);
   };
   return (
     <AppLockScreenContext.Provider value={value} {...rest}>

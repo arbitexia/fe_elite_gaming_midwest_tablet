@@ -24,7 +24,7 @@ const AuthLayout = (props: Props) => {
   const { isTabletAuthenticated } = useAuth();
   const appLockScreen = useAppLockScreen();
   useEffect(() => {
-    if (!isTabletAuthenticated) appLockScreen({ open: true });
+    if (!isTabletAuthenticated) appLockScreen();
   }, [isTabletAuthenticated]);
 
   return (

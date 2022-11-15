@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/redux/store';
 
 export interface AuthState {
-  authToken: string;
+  authTabletToken: string;
+  authUserToken: string;
 }
 
 // Initial state
 const initialState: AuthState = {
-  authToken: '',
+  authTabletToken: '',
+  authUserToken: '',
 };
 
 // Actual Slice
@@ -16,13 +18,16 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     // Action to set the authentication status
-    setAuthState(state, action) {
-      state.authToken = action.payload;
+    setTabletAuthState(state, action) {
+      state.authTabletToken = action.payload;
+    },
+    setUserAuthState(state, action) {
+      state.authUserToken = action.payload;
     },
   },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { setTabletAuthState, setUserAuthState } = authSlice.actions;
 
 export const authSelector = (state: RootState) => state.auth;
 

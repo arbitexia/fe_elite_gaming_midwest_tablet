@@ -81,26 +81,6 @@ export const SignUp = () => {
       ) : (
         <Stack component="form" onSubmit={formik.handleSubmit}>
           <UIFlexWrapBox sx={{ marginTop: '50px', width: '100%', gap: '15px' }}>
-            {/* <InputMask
-              id="phoneNumber"
-              mask="(999) 999 9999"
-              value={formik.values.phoneNumber}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormikChange('phoneNumber', e.target.value);
-                formik.handleChange(e);
-              }}
-              maskChar="X"
-            >
-              {(): ReactInputMask => {
-                return (
-                  <UIDefaultTextField
-                    name="phoneNumber"
-                    placeholder="Phone Number"
-                  />
-                );
-              }}
-            </InputMask> */}
-
             <UIDefaultTextField
               name="phoneNumber"
               placeholder="Phone Number"

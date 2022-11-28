@@ -7,6 +7,7 @@ import {
   StyledRewardsCardPoint,
   StyledRewardsSpecKey,
   StyledRewardsSpecValue,
+  StyledDetailExchangeOfferButton,
 } from './ui';
 import { UIFlexWrapBox } from '@/components/UI';
 import { Box } from '@mui/material';
@@ -54,6 +55,9 @@ export const RewardsInfoBox = ({
           })}
         </Box>
       </UIFlexWrapBox>
+      <StyledDetailExchangeOfferButton>
+        Exchange Offer
+      </StyledDetailExchangeOfferButton>
     </>
   );
 };

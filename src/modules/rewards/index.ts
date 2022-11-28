@@ -1,3 +1,3 @@
 export { default as RewardsHeader } from './header';
-export { default as RewardsFilterBox } from './filter';
+export { default as RewardsPointsBox } from './myPoints';
 export { RewardsCard } from './card';

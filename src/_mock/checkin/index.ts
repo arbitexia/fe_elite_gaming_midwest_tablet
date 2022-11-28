@@ -3,7 +3,7 @@ export const languageMenuItems = [
   { icon: 'images/icons/es.svg', key: 'es', text: 'Español' },
 ];
 
-export const buttons = [
+export const buttons: string[] = [
   '1',
   '2',
   '3',

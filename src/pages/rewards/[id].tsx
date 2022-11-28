@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '@/layouts';
 import { UIContainer, UIFlexWrapBox, UIImage } from '@/components/UI';
-import { RewardsHeader, RewardsFilterBox } from '@/modules/rewards';
+import { RewardsHeader, RewardsPointsBox } from '@/modules/rewards';
 import { rewardsData } from '@/_mock/rewards';
 import { RewardItemType } from '@/types';
-import { Divider, Box, Button } from '@mui/material';
+import { Divider, Box } from '@mui/material';
 import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
 
 const RewardsById = () => {
@@ -30,7 +30,7 @@ const RewardsById = () => {
             borderColor: 'rgba(137, 200, 198, 0.5)',
           }}
         />
-        <RewardsFilterBox />
+        <RewardsPointsBox />
         {rewardItem && (
           <UIFlexWrapBox
             sx={{
@@ -46,24 +46,6 @@ const RewardsById = () => {
             <UIImage src={rewardItem.url} width={477} height={510} />
             <Box mt="35px">
               <RewardsInfoBox rewardItem={rewardItem} myPoint={29000} />
-              <Button
-                sx={{
-                  mt: '40px',
-                  background:
-                    'linear-gradient(165.13deg, #37D099 -18.62%, #008A83 99.26%)',
-                  border: '1px solid rgba(191, 215, 225, 0.05)',
-                  borderRadius: '12px',
-                  fontWeight: '500',
-                  fontSize: '24px',
-                  lineHeight: '36px',
-                  color: '#FFFFFF',
-                  width: '310px',
-                  height: '68px',
-                  textTransform: 'none',
-                }}
-              >
-                Exchange Offer
-              </Button>
             </Box>
           </UIFlexWrapBox>
         )}

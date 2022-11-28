@@ -2,7 +2,7 @@ import { Divider } from '@mui/material';
 import { UIContainer, UIFlexWrapBox } from '@/components/UI';
 import {
   RewardsHeader,
-  RewardsFilterBox,
+  RewardsPointsBox,
   RewardsCard,
 } from '@/modules/rewards';
 import { DashboardLayout } from '@/layouts';
@@ -19,7 +19,7 @@ const Rewards = () => {
             borderColor: 'rgba(137, 200, 198, 0.5)',
           }}
         />
-        <RewardsFilterBox />
+        <RewardsPointsBox />
         <UIFlexWrapBox
           sx={{ gap: '40px', py: '60px', justifyContent: 'center' }}
         >

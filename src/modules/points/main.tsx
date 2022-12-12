@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import { Box } from '@mui/material';
 import PointsCard from './card';
+import { Typography } from '@mui/material';
 import { UIImage } from '@/components/UI';
-import { StyledArrowButton } from './ui';
+import {
+  StyledArrowButton,
+  StyledPointsCardArea,
+  StyledAnimationBox,
+  StyledSendButton,
+} from './ui';
 import { locationData } from '@/_mock/points';
 
 const PointsMain = () => {
@@ -40,58 +45,56 @@ const PointsMain = () => {
     }
   };
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        width: '50vw',
-        height: 'calc(50vw / 615 * 390)',
-        maxWidth: '615px',
-        maxHeight: '390px',
-        margin: '0',
-        color: 'white',
-        perspective: '1000px',
-        transformOrigin: 'center',
-      }}
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          transformOrigin: 'center',
-          transformStyle: 'preserve-3d',
-          transform: `translateZ(-30vw) rotateY(${currDeg}deg)`,
-          transition: `transform ${second}s`,
-        }}
-      >
-        {locationData.map((item, index) => {
-          return (
-            <PointsCard
-              key={item.id}
-              index={index}
-              deg={rotateAngle}
-              item={item}
-            />
-          );
-        })}
-      </Box>
-      <StyledArrowButton
-        sx={{
-          left: 'calc(140% - 34px)',
-        }}
-        onClick={handleNext}
-      >
-        <UIImage src="images/icons/next.svg" width={30} height={52} />
-      </StyledArrowButton>
-      <StyledArrowButton
-        sx={{
-          left: 'calc(-40% - 34px)',
-        }}
-        onClick={handlePrev}
-      >
-        <UIImage src="images/icons/prev.svg" width={30} height={52} />
-      </StyledArrowButton>
-    </Box>
+    <>
+      <StyledPointsCardArea>
+        <StyledAnimationBox
+          sx={{
+            transform: `translateZ(-30vw) rotateY(${currDeg}deg)`,
+            transition: `transform ${second}s`,
+          }}
+        >
+          {locationData.map((item, index) => {
+            return (
+              <PointsCard
+                key={item.id}
+                index={index}
+                deg={rotateAngle}
+                item={item}
+              />
+            );
+          })}
+        </StyledAnimationBox>
+        <StyledArrowButton
+          sx={{
+            left: 'calc(140% - 34px)',
+          }}
+          onClick={handleNext}
+        >
+          <UIImage src="images/icons/next.svg" width={30} height={52} />
+        </StyledArrowButton>
+        <StyledArrowButton
+          sx={{
+            left: 'calc(-40% - 34px)',
+          }}
+          onClick={handlePrev}
+        >
+          <UIImage src="images/icons/prev.svg" width={30} height={52} />
+        </StyledArrowButton>
+      </StyledPointsCardArea>
+      <StyledSendButton>
+        <Typography
+          sx={{
+            fontWeight: '600',
+            fontSize: '20px',
+            lineHeight: '30px',
+            color: '#FAFF00',
+            WebkitTextStroke: '1px rgba(19, 90, 86, 0.56)',
+          }}
+        >
+          Send Email
+        </Typography>
+      </StyledSendButton>
+    </>
   );
 };
 

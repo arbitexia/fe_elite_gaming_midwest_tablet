@@ -6,8 +6,8 @@ import {
   UIImage,
   UIFlexWrapBox,
 } from '@/components/UI';
-import { StyledFilterBox } from './ui';
-import { Typography, Button } from '@mui/material';
+import { StyledFilterBox, StyledPrevButton } from './ui';
+import { Typography } from '@mui/material';
 import { locationData, pointData } from '@/_mock/rewards';
 
 const RewardsHeader = () => {
@@ -22,18 +22,9 @@ const RewardsHeader = () => {
   return (
     <UIFlexSpaceBox sx={{ mt: '30px' }}>
       {id ? (
-        <Button
-          sx={{
-            width: '85px',
-            height: '70px',
-            background: 'rgba(0, 0, 0, 0.15)',
-            border: '1px solid rgba(139, 149, 148, 0.2)',
-            borderRadius: '12px',
-          }}
-          onClick={() => router.push('/rewards')}
-        >
+        <StyledPrevButton onClick={() => router.push('/rewards')}>
           <UIImage src="images/icons/prev.svg" width={15} height={34} />
-        </Button>
+        </StyledPrevButton>
       ) : (
         <Typography
           sx={{

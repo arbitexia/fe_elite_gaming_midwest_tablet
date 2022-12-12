@@ -1,6 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { UIFlexCenterBox, UIFlexColumnBox } from '@/components/UI';
 import { LocationType } from '@/types';
+import { StyledCardWrapper, StyledLocationBox } from './ui';
 
 export type PointsCardProps = {
   index: number;
@@ -10,42 +11,13 @@ export type PointsCardProps = {
 
 const PointsCard = ({ index, deg, item }: PointsCardProps) => {
   return (
-    <Box
+    <StyledCardWrapper
       sx={{
-        background: 'url(images/PointBack.png)',
-        backgroundSize: 'cover',
-        position: 'absolute',
-        width: '50vw',
-        height: 'calc(50vw / 615 * 390)',
-        maxWidth: '615px',
-        maxHeight: '390px',
-        boxShadow: '0 5px 20px rgba(0,0,0,.1)',
-        borderRadius: '6px',
-        transformOrigin: 'center',
         transform: `rotateY(${deg * index}deg) translateZ(35vw)`,
-        transition: 'transform 1s',
       }}
     >
       <UIFlexCenterBox sx={{ position: 'relative', height: '100%' }}>
-        <UIFlexCenterBox
-          sx={{
-            position: 'absolute',
-            background: 'rgba(114, 239, 232, 0.5)',
-            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-            backdropFilter: 'blur(10px)',
-            width: '196px',
-            height: '50px',
-            borderRadius: '30px 0px 30px 0px',
-            fontWeight: '500',
-            fontSize: '16px',
-            lineHeight: '24px',
-            color: '#184D59',
-            top: '6px',
-            left: '8px',
-          }}
-        >
-          {item.location}
-        </UIFlexCenterBox>
+        <StyledLocationBox>{item.location}</StyledLocationBox>
         <UIFlexColumnBox
           sx={{
             height: '100%',
@@ -91,7 +63,7 @@ const PointsCard = ({ index, deg, item }: PointsCardProps) => {
           </Typography>
         </UIFlexColumnBox>
       </UIFlexCenterBox>
-    </Box>
+    </StyledCardWrapper>
   );
 };
 

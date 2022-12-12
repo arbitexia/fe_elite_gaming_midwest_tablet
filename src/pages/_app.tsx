@@ -8,6 +8,7 @@ import {
   AppToastProvider,
   AppThemeProvider,
   AppTimeoutProvider,
+  AppLockScreenProvider,
 } from '@/providers';
 
 function EliteApp({ Component, pageProps }: AppProps) {
@@ -19,13 +20,15 @@ function EliteApp({ Component, pageProps }: AppProps) {
   }
   return (
     <AppThemeProvider>
-      <AppTimeoutProvider>
-        <AppToastProvider>
-          <PersistGate loading={null} persistor={persistStore(store)}>
-            <Component {...pageProps} />
-          </PersistGate>
-        </AppToastProvider>
-      </AppTimeoutProvider>
+      <AppToastProvider>
+        <AppLockScreenProvider>
+          <AppTimeoutProvider>
+            <PersistGate loading={null} persistor={persistStore(store)}>
+              <Component {...pageProps} />
+            </PersistGate>
+          </AppTimeoutProvider>
+        </AppLockScreenProvider>
+      </AppToastProvider>
     </AppThemeProvider>
   );
 }

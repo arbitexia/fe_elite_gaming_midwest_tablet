@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "gen:env": "node ./scripts/env.js",
     "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",

@@ -8,5 +8,6 @@ export {
 export {
   default as authReducer,
   authSelector,
-  setAuthState,
+  setTabletAuthState,
+  setUserAuthState,
 } from './auth.slice';

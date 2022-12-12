@@ -11,3 +11,4 @@ export { UIAppLayoutWrapper } from './Wrapper';
 export { UIDefaultTextField, UISearchBox, UISelectBox } from './TextField';
 export { UIDefaultButton, UIBackButton, UINumberButton } from './Button';
 export { UIAuthTabs } from './Tab';
+export { UIAuthContent, UIAuthLogoContent, UIAuthMainContent } from './Auth';

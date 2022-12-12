@@ -1,4 +1,8 @@
-import { authSelector, setAuthState } from '@/redux/slices';
+import {
+  authSelector,
+  setUserAuthState,
+  setTabletAuthState,
+} from '@/redux/slices';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from './redux';
 
@@ -7,18 +11,32 @@ export const useAuth = () => {
   const authState = useAppSelector(authSelector);
   const dispatch = useAppDispatch();
 
-  const onLogin = (authToken: string) => {
-    dispatch(setAuthState(authToken));
+  const onLoginWithTablet = (authToken: string): boolean => {
+    dispatch(setTabletAuthState(authToken));
+    return true;
+  };
+
+  const onLoginWithUser = (authToken: string) => {
+    dispatch(setUserAuthState(authToken));
+    router.push('/');
+  };
+
+  const onLogoutFromTablet = () => {
+    dispatch(setTabletAuthState(''));
     router.push('/');
   };
 
   return {
-    isAuthenticated: authState.authToken ? true : false,
-    authToken: authState.authToken,
-    onLogin,
+    isTabletAuthenticated: authState.authTabletToken ? true : false,
+    isUserAuthenticated: authState.authUserToken ? true : false,
+    authUserToken: authState.authUserToken,
+    authTabletToken: authState.authTabletToken,
+    onLoginWithTablet,
+    onLoginWithUser,
+    onLogoutFromTablet,
     onLogout: () => {
-      dispatch(setAuthState(''));
-      router.push('/login');
+      dispatch(setUserAuthState(''));
+      router.push('/');
     },
   };
 };

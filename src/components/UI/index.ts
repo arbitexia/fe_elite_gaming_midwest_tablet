@@ -7,6 +7,7 @@ export {
 } from './Box';
 export { UIContainer } from './Container';
 export { UIImage } from './Image';
+export { UIWrapPanel } from './WrapPanel';
 export { UIAppLayoutWrapper } from './Wrapper';
 export { UIDefaultTextField, UISearchBox, UISelectBox } from './TextField';
 export { UIDefaultButton, UIBackButton, UINumberButton } from './Button';

@@ -20,7 +20,7 @@ const Rewards = () => {
           }}
         />
         <RewardsPointsBox />
-        <UIWrapPanel childWidth={260} gap={40} py={60}>
+        <UIWrapPanel itemSpacing={40} paddingY={60}>
           {rewardsData.map((item) => {
             return <RewardsCard key={item.id} point={29000} item={item} />;
           })}

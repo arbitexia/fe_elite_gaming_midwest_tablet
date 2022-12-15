@@ -1,37 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
-import { styled, Box } from '@mui/material';
-
-export const UIWrapPanelBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'left',
-  alignItems: 'flex-start',
-  flexWrap: 'wrap',
-  gap: theme.spacing(1),
-}));
+import { UIFlexWrapBox } from '../UI';
 
 export type UIWrapPanelProps = {
-  childWidth: number;
-  py: number;
-  gap: number;
+  itemSpacing: number;
+  paddingY: number;
   children: React.ReactNode | React.ReactNode[];
 };
 
 export const UIWrapPanel = ({
-  childWidth,
+  itemSpacing,
+  paddingY,
   children,
-  py,
-  gap,
 }: UIWrapPanelProps) => {
   const ref = useRef(null);
 
-  const [px, setPx] = useState(0);
+  const [paddingX, setPaddingX] = useState(0);
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
+    const updateLayout = () => {
       if (!ref.current) return;
+
       const current = ref.current as HTMLElement;
       if (!current.parentElement) return;
+
       const parent = current.parentElement as HTMLElement;
+
+      let childWidth = 0;
+      if (current.hasChildNodes()) {
+        childWidth = (current.childNodes[0] as HTMLElement).offsetWidth;
+      } else {
+        return;
+      }
+
       let count = 1;
       let padding = 0;
       let pl = parseInt(
@@ -40,36 +40,44 @@ export const UIWrapPanel = ({
       let pr = parseInt(
         window.getComputedStyle(parent, null).getPropertyValue('padding-right')
       );
-      console.log(pl, pr);
+
       while (
-        childWidth * count + gap * (count - 1) <
+        childWidth * count + itemSpacing * (count - 1) <
         current.parentElement.offsetWidth - pl - pr
       ) {
         count++;
       }
+
       count--;
       padding =
         (current.parentElement.offsetWidth -
           pl -
           pr -
           childWidth * count -
-          gap * (count - 1)) /
+          itemSpacing * (count - 1)) /
         2;
-      setPx(padding);
-    });
+      setPaddingX(padding);
+    };
+
+    window.addEventListener('resize', updateLayout);
+
+    updateLayout();
 
     return () => {
-      window.removeEventListener('resize', () => {
-        return;
-      });
+      window.removeEventListener('resize', updateLayout);
     };
   }, []);
   return (
-    <UIWrapPanelBox
+    <UIFlexWrapBox
       ref={ref}
-      sx={{ px: `${px}px`, py: `${py}px`, gap: `${gap}px` }}
+      sx={{
+        px: `${paddingX}px`,
+        py: `${paddingY}px`,
+        gap: `${itemSpacing}px`,
+        justifyContent: 'left',
+      }}
     >
       {children}
-    </UIWrapPanelBox>
+    </UIFlexWrapBox>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { UIFlexWrapBox } from '../UI';
 
 export type UIWrapPanelProps = {
@@ -16,7 +16,7 @@ export const UIWrapPanel = ({
 
   const [paddingX, setPaddingX] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const updateLayout = () => {
       if (!ref.current) return;
 

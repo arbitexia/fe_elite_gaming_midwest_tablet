@@ -4,17 +4,25 @@ import { UIDefaultButton } from '@/components/UI';
 import { AuthTextField } from './AuthTextField';
 import { useRouter } from 'next/router';
 import { useAppToast } from '@/providers';
+import { useAuth } from '@/hooks/auth';
 
 export const Verify = () => {
   const router = useRouter();
   const appToast = useAppToast();
   const [value, setValue] = useState('');
+
+  const { onVerifyPhone } = useAuth({
+    handleAuthVerifySuccess: () => {
+      router.push('/points');
+    },
+  });
   const handleVerify = () => {
     if (value.length < 4) {
       appToast({ severity: 'error', message: 'Invalid Code' });
       return;
+    } else {
+      onVerifyPhone(value);
     }
-    router.push('/points');
   };
   return (
     <Box>

@@ -5,6 +5,7 @@ import { AuthTextField } from './AuthTextField';
 import { useRouter } from 'next/router';
 import { Verify } from '@/modules/auth';
 import { useAppToast } from '@/providers';
+import { useAuth } from '@/hooks/auth';
 
 export const CheckIn = () => {
   const router = useRouter();
@@ -12,11 +13,16 @@ export const CheckIn = () => {
   const { path: type } = router.query;
   const [isShowVerify, setIsShowVerify] = useState(false);
   const [value, setValue] = useState('');
+  const { onLoginWithUser } = useAuth({
+    handleAuthUserSuccess: () => {
+      setIsShowVerify(true);
+    },
+  });
 
   const handleSend = () => {
     if (value.length < 10)
       appToast({ severity: 'error', message: 'Phone number is invalid' });
-    else setIsShowVerify(true);
+    else onLoginWithUser(value);
   };
 
   return (

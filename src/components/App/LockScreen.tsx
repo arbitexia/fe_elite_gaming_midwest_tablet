@@ -20,11 +20,11 @@ export interface AppLockScreenProps {
 
 export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
   const appToast = useAppToast();
-  const { onLoginWithTablet } = useAuth();
-  const handleLogin = () => {
-    onLoginWithTablet('Tablet Token');
-    handleClose();
-  };
+  const { onLoginWithTablet } = useAuth({
+    handleAuthTabletSuccess: () => {
+      handleClose();
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +36,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
     onSubmit: (values) => {
       if (handleFormikChange('identifier', values.identifier)) return;
       if (handleFormikChange('password', values.password)) return;
-      handleLogin();
+      onLoginWithTablet(values.identifier, values.password);
     },
   });
 

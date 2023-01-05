@@ -22,11 +22,20 @@ const headers = {
   'Access-Control-Allow-Methods': 'GET,POST',
 };
 
-const authHeader = {
+let authHeader = {
   'Access-Control-Allow-Origin': config.API_URL || '',
   'Access-Control-Allow-Methods': 'GET,POST',
-  Authorization: localStorage.getItem('accessToken'),
+  Authorization: 'Bearer ',
 };
+
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  authHeader = {
+    'Access-Control-Allow-Origin': config.API_URL || '',
+    'Access-Control-Allow-Methods': 'GET,POST',
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  };
+}
 
 export const authorizeTablet = async (params: TabletAuthParams) => {
   const response = await axios.post(`${baseUrl}/api/authorizeTablet`, params, {

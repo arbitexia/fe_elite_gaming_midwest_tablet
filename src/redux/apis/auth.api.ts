@@ -22,6 +22,12 @@ const headers = {
   'Access-Control-Allow-Methods': 'GET,POST',
 };
 
+const authHeader = {
+  'Access-Control-Allow-Origin': config.API_URL || '',
+  'Access-Control-Allow-Methods': 'GET,POST',
+  Authorization: localStorage.getItem('accessToken'),
+};
+
 export const authorizeTablet = async (params: TabletAuthParams) => {
   const response = await axios.post(`${baseUrl}/api/authorizeTablet`, params, {
     headers,
@@ -34,7 +40,7 @@ export const authorizeCustomer = async (params: CustomerAuthParams) => {
     `${baseUrl}/api/authorizeCustomer`,
     params,
     {
-      headers,
+      headers: authHeader,
     }
   );
   return response.data;
@@ -42,14 +48,14 @@ export const authorizeCustomer = async (params: CustomerAuthParams) => {
 
 export const register = async (params: RegisterParams) => {
   const response = await axios.post(`${baseUrl}/api/register`, params, {
-    headers,
+    headers: authHeader,
   });
   return response.data;
 };
 
 export const verifyPhone = async (params: VerifyPhoneParams) => {
   const response = await axios.post(`${baseUrl}/api/verifyPhone`, params, {
-    headers,
+    headers: authHeader,
   });
   return response.data;
 };

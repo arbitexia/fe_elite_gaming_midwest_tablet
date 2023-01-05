@@ -123,6 +123,7 @@ export const authSlice = createSlice({
           state.status = ResponseStatus.SUCCESS;
           state.message = 'Login Success';
           state.accessToken = payload.accessToken;
+          localStorage.setItem('accessToken', payload.accessToken);
         }
       )
       .addCase(authorizeTablet.rejected, (state, { payload }) => {

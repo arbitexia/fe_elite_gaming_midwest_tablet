@@ -6,11 +6,16 @@ import { SignUp, CheckIn } from '@/modules/auth';
 const HomePage: NextPage = () => {
   const router = useRouter();
   const { path: pageType } = router.query;
-  return (
-    <AuthLayout title={pageType === 'signup' ? 'Sign Up' : 'Check In'}>
-      {pageType === 'signup' ? <SignUp /> : <CheckIn />}
-    </AuthLayout>
-  );
+  if (router.pathname === '/') {
+    return (
+      <AuthLayout title={pageType === 'signup' ? 'Sign Up' : 'Check In'}>
+        {pageType === 'signup' ? <SignUp /> : <CheckIn />}
+      </AuthLayout>
+    );
+  } else {
+    router.replace(router.asPath);
+    return <></>;
+  }
 };
 
 export default HomePage;

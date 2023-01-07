@@ -1,6 +1,8 @@
 import { useState, useEffect, createContext, ReactNode } from 'react';
 import { AppConfirm } from '@/components/App';
 import { useRouter } from 'next/router';
+import { useAppDispatch } from '@/hooks';
+import { logoutUser } from '@/redux/slices/auth.slice';
 
 const AppTimeoutContext = createContext<any>(null);
 
@@ -15,8 +17,9 @@ const whitelist = ['/'];
 
 function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const time = 60;
+  const time = 30;
   let timeout: NodeJS.Timeout | null = null;
 
   const restartAutoReset = () => {
@@ -38,6 +41,7 @@ function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   };
   const handleNo = () => {
     setOpen(false);
+    dispatch(logoutUser());
     router.push('/');
   };
   useEffect(() => {

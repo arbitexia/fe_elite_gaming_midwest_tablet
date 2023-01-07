@@ -12,6 +12,7 @@ import {
 import { Box, Typography } from '@mui/material';
 import { useAuth } from '@/hooks/auth';
 import { useAppLockScreen } from '@/providers';
+import { useRouter } from 'next/router';
 
 interface Props {
   bg?: string;
@@ -21,11 +22,12 @@ interface Props {
 }
 
 const AuthLayout = (props: Props) => {
-  const { isTabletAuthenticated } = useAuth();
+  const { isTabletAuthenticated } = useAuth({});
+  const router = useRouter();
   const appLockScreen = useAppLockScreen();
   useEffect(() => {
     if (!isTabletAuthenticated) appLockScreen();
-  }, [isTabletAuthenticated]);
+  }, [isTabletAuthenticated, router]);
 
   return (
     <UIAppLayoutWrapper sx={{ background: props.bg }}>

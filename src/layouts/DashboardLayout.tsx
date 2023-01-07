@@ -1,9 +1,10 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UIAppLayoutWrapper } from '@/components/UI';
 import { Box } from '@mui/material';
 import { AppSEO, AppNavbar } from '@/components/App';
-// import { useAuth } from '@/hooks';
+import { useAuth } from '@/hooks/auth';
+import { useAppLockScreen } from '@/providers';
 
 interface Props {
   title: string;
@@ -13,8 +14,12 @@ interface Props {
 function DashboardLayout(props: Props) {
   const router = useRouter();
   const isPointPage = router.pathname === '/points';
-  // const { isAuthenticated } = useAuth();
-  // if (!isAuthenticated) router.push('/');
+  const { isTabletAuthenticated, isUserAuthenticated } = useAuth({});
+  const appLockScreen = useAppLockScreen();
+  useEffect(() => {
+    if (!isTabletAuthenticated) appLockScreen();
+    if (!isUserAuthenticated) router.push('/');
+  }, [isTabletAuthenticated, isUserAuthenticated, router]);
   return (
     <UIAppLayoutWrapper>
       <Box

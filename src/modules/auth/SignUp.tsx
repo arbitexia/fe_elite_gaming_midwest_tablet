@@ -14,6 +14,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import InputMask from 'react-input-mask';
 import { Moment } from 'moment';
+import { useAuth } from '@/hooks/auth';
 
 export const SignUp = () => {
   const router = useRouter();
@@ -21,6 +22,11 @@ export const SignUp = () => {
   const [checked, setChecked] = useState(false);
   const [isShowVerify, setIsShowVerify] = useState(false);
   const { path: type } = router.query;
+  const { onRegister } = useAuth({
+    handleAuthRegisterSuccess: () => {
+      setIsShowVerify(true);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +40,7 @@ export const SignUp = () => {
       if (handleFormikChange('phoneNumber', values.phoneNumber)) return;
       if (handleFormikChange('email', values.email)) return;
       if (handleFormikChange('birthday', values.birthday)) return;
-      setIsShowVerify(true);
+      onRegister(values.phoneNumber, values.email, values.birthday);
     },
   });
 

@@ -46,7 +46,7 @@ export const authorizeTablet = async (params: TabletAuthParams) => {
 
 export const authorizeCustomer = async (params: CustomerAuthParams) => {
   const response = await axios.post(
-    `${baseUrl}/tablet/authorizeCustomer`,
+    `${baseUrl}/api/tablet/authorizeCustomer`,
     params,
     {
       headers: authHeader,
@@ -56,15 +56,19 @@ export const authorizeCustomer = async (params: CustomerAuthParams) => {
 };
 
 export const register = async (params: RegisterParams) => {
-  const response = await axios.post(`${baseUrl}/tablet/register`, params, {
+  const response = await axios.post(`${baseUrl}/api/tablet/register`, params, {
     headers: authHeader,
   });
   return response.data;
 };
 
 export const verifyPhone = async (params: VerifyPhoneParams) => {
-  const response = await axios.post(`${baseUrl}/tablet/verifyPhone`, params, {
-    headers: authHeader,
-  });
+  const response = await axios.post(
+    `${baseUrl}/api/tablet/verifyPhone`,
+    params,
+    {
+      headers: authHeader,
+    }
+  );
   return response.data;
 };

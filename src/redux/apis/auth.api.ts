@@ -22,21 +22,6 @@ const headers = {
   'Access-Control-Allow-Methods': 'GET,POST',
 };
 
-let authHeader = {
-  'Access-Control-Allow-Origin': config.API_URL || '',
-  'Access-Control-Allow-Methods': 'GET,POST',
-  Authorization: 'Bearer ',
-};
-
-if (typeof window !== 'undefined') {
-  // Perform localStorage action
-  authHeader = {
-    'Access-Control-Allow-Origin': config.API_URL || '',
-    'Access-Control-Allow-Methods': 'GET,POST',
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
-}
-
 export const authorizeTablet = async (params: TabletAuthParams) => {
   const response = await axios.post(`${baseUrl}/api/authorizeTablet`, params, {
     headers,
@@ -49,7 +34,11 @@ export const authorizeCustomer = async (params: CustomerAuthParams) => {
     `${baseUrl}/api/tablet/authorizeCustomer`,
     params,
     {
-      headers: authHeader,
+      headers: {
+        'Access-Control-Allow-Origin': config.API_URL || '',
+        'Access-Control-Allow-Methods': 'GET,POST',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     }
   );
   return response.data;
@@ -57,7 +46,11 @@ export const authorizeCustomer = async (params: CustomerAuthParams) => {
 
 export const register = async (params: RegisterParams) => {
   const response = await axios.post(`${baseUrl}/api/tablet/register`, params, {
-    headers: authHeader,
+    headers: {
+      'Access-Control-Allow-Origin': config.API_URL || '',
+      'Access-Control-Allow-Methods': 'GET,POST',
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
   });
   return response.data;
 };
@@ -67,7 +60,11 @@ export const verifyPhone = async (params: VerifyPhoneParams) => {
     `${baseUrl}/api/tablet/verifyPhone`,
     params,
     {
-      headers: authHeader,
+      headers: {
+        'Access-Control-Allow-Origin': config.API_URL || '',
+        'Access-Control-Allow-Methods': 'GET,POST',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
     }
   );
   return response.data;

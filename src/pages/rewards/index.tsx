@@ -1,5 +1,5 @@
 import { Divider } from '@mui/material';
-import { UIContainer, UIFlexWrapBox } from '@/components/UI';
+import { UIContainer, UIWrapPanel } from '@/components/UI';
 import {
   RewardsHeader,
   RewardsPointsBox,
@@ -20,13 +20,11 @@ const Rewards = () => {
           }}
         />
         <RewardsPointsBox />
-        <UIFlexWrapBox
-          sx={{ gap: '40px', py: '60px', justifyContent: 'center' }}
-        >
+        <UIWrapPanel itemSpacing={40} paddingY={60}>
           {rewardsData.map((item) => {
             return <RewardsCard key={item.id} point={29000} item={item} />;
           })}
-        </UIFlexWrapBox>
+        </UIWrapPanel>
       </UIContainer>
     </DashboardLayout>
   );

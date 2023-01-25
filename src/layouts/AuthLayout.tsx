@@ -10,9 +10,10 @@ import {
   UIAuthMainContent,
 } from '@/components/UI';
 import { Box, Typography } from '@mui/material';
-import { useAuth } from '@/hooks/auth';
+
 import { useAppLockScreen } from '@/providers';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/hooks';
 
 interface Props {
   bg?: string;
@@ -53,7 +54,7 @@ const AuthLayout = (props: Props) => {
             height: '100%',
           }}
         >
-          <source src="/images/bg.mp4" type="video/mp4"></source>
+          {/* <source src="/images/bg.mp4" type="video/mp4"></source> */}
         </video>
         <UIFlexCenterBox sx={{ height: '100%' }}>
           <UIAuthContent>

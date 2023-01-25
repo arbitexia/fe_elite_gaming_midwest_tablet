@@ -16,4 +16,6 @@ export {
   getMe,
   getRole,
   clearAuthMessage,
+  refreshToken,
+  logoutTablet,
 } from './auth.slice';

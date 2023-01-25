@@ -11,42 +11,28 @@ import {
   CustomerAuthParams,
   RegisterParams,
   VerifyPhoneParams,
+  RefreshTokenPrams,
 } from '@/types';
 import axios from 'axios';
 import config from '@/config';
+import { getAuthorizeHeader, getHeader } from '@/libs/data-helper';
 
 const baseUrl: string = config.API_URL || '';
-
-const headers = {
-  'Access-Control-Allow-Origin': config.API_URL || '',
-  'Access-Control-Allow-Methods': 'GET,POST',
-};
-
-let authHeader = {
-  'Access-Control-Allow-Origin': config.API_URL || '',
-  'Access-Control-Allow-Methods': 'GET,POST',
-  Authorization: 'Bearer ',
-};
-
-if (typeof window !== 'undefined') {
-  // Perform localStorage action
-  authHeader = {
-    'Access-Control-Allow-Origin': config.API_URL || '',
-    'Access-Control-Allow-Methods': 'GET,POST',
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  };
-}
+const headers = getHeader();
+const authHeader = getAuthorizeHeader();
 
 export const authorizeTablet = async (params: TabletAuthParams) => {
-  const response = await axios.post(`${baseUrl}/api/authorizeTablet`, params, {
-    headers,
-  });
+  const response = await axios.post(
+    `${baseUrl}/api/authorize_tablet`,
+    params,
+    headers
+  );
   return response.data;
 };
 
 export const authorizeCustomer = async (params: CustomerAuthParams) => {
   const response = await axios.post(
-    `${baseUrl}/api/authorizeCustomer`,
+    `${baseUrl}/api/authorize_customer`,
     params,
     {
       headers: authHeader,
@@ -63,8 +49,13 @@ export const register = async (params: RegisterParams) => {
 };
 
 export const verifyPhone = async (params: VerifyPhoneParams) => {
-  const response = await axios.post(`${baseUrl}/api/verifyPhone`, params, {
+  const response = await axios.post(`${baseUrl}/api/verify_phone`, params, {
     headers: authHeader,
   });
+  return response.data;
+};
+
+export const refreshToken = async (params: RefreshTokenPrams) => {
+  const response = await axios.post(`${baseUrl}/api/refresh`, params, headers);
   return response.data;
 };

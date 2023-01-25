@@ -39,3 +39,7 @@ export type VerifyPhoneType = {
 export type RegisterType = {
   message: string;
 };
+
+export type RefreshTokenPrams = {
+  refreshToken: string;
+};

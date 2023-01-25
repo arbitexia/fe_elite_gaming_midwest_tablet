@@ -97,16 +97,27 @@ export const authSlice = createSlice({
       state.errorMessage = payload;
       state.message = payload;
     },
+    refreshToken: (
+      state: ReduxJson.AuthState,
+      { payload }: PayloadAction<string>
+    ) => {
+      state.accessToken = payload;
+      console.log(payload);
+      localStorage.setItem('accessToken', payload);
+    },
     logoutUser: (state: ReduxJson.AuthState) => {
       state.user = null;
       state.role = {};
     },
     logoutTablet: (
-      state: ReduxJson.AuthState,
+      state: ReduxJson.AuthState
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      { payload }: PayloadAction<string>
+      // { payload }: PayloadAction<string>
     ) => {
       state.accessToken = '';
+      state.refreshToken = '';
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
     },
   },
   extraReducers: (builder) => {
@@ -123,7 +134,9 @@ export const authSlice = createSlice({
           state.status = ResponseStatus.SUCCESS;
           state.message = 'Login Success';
           state.accessToken = payload.accessToken;
+          state.refreshToken = payload.refreshToken;
           localStorage.setItem('accessToken', payload.accessToken);
+          localStorage.setItem('refreshToken', payload.refreshToken);
         }
       )
       .addCase(authorizeTablet.rejected, (state, { payload }) => {
@@ -195,7 +208,8 @@ export const authSlice = createSlice({
   },
 });
 
-export const { clearAuthMessage, logoutUser, logoutTablet } = authSlice.actions;
+export const { clearAuthMessage, logoutUser, logoutTablet, refreshToken } =
+  authSlice.actions;
 
 export const getReturnMessage = (state: RootState) => state.auth?.message;
 export const getMe = (state: RootState) => state.auth?.user;

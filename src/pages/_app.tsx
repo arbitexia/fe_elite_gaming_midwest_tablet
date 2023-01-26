@@ -9,9 +9,11 @@ import {
   AppTimeoutProvider,
   AppLockScreenProvider,
 } from '@/providers';
+import { setupJwt } from '@/redux/apis/axios.api';
 
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
+  setupJwt(store);
   return (
     <AppThemeProvider>
       <AppToastProvider>

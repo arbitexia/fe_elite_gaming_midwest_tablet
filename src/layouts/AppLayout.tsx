@@ -35,7 +35,7 @@ const AppLayout = (props: Props) => {
             height: '100%',
           }}
         >
-          <source src="/images/bg.mp4" type="video/mp4"></source>
+          {/* <source src="/images/bg.mp4" type="video/mp4"></source> */}
         </video>
         {props.children}
       </Box>

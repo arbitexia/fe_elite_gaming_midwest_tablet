@@ -18,6 +18,7 @@ export declare namespace CommonType {
     city: string;
     state: string;
     zipcode: string;
+    country?: string;
   };
   export type PageInfo = {
     page: number;

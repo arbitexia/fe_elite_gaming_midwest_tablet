@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
 import { UIFlexCenterBox, UIFlexColumnBox } from '@/components/UI';
-import { LocationType } from '@/types';
+import { PointType } from '@/types';
 import { StyledCardWrapper, StyledLocationBox } from './ui';
 
 export type PointsCardProps = {
   index: number;
   deg: number;
-  item: LocationType;
+  item: PointType;
 };
 
 const PointsCard = ({ index, deg, item }: PointsCardProps) => {
@@ -17,7 +17,9 @@ const PointsCard = ({ index, deg, item }: PointsCardProps) => {
       }}
     >
       <UIFlexCenterBox sx={{ position: 'relative', height: '100%' }}>
-        <StyledLocationBox>{item.location}</StyledLocationBox>
+        <StyledLocationBox>
+          {item.userLocation?.location?.name ?? ''}
+        </StyledLocationBox>
         <UIFlexColumnBox
           sx={{
             height: '100%',

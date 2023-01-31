@@ -1,8 +1,10 @@
 import { UIFlexWrapBox, UIFlexSpaceBox } from '@/components/UI';
 import { Typography } from '@mui/material';
 import { MyLocation as MyLocationIcon } from '@mui/icons-material';
+import { useAuth } from '@/hooks';
 
 const PointsHeader = () => {
+  const { tabletLocation } = useAuth({});
   return (
     <UIFlexSpaceBox>
       <Typography
@@ -30,7 +32,7 @@ const PointsHeader = () => {
             color: 'rgba(255, 255, 255, 0.57);',
           }}
         >
-          Mariland, USA
+          {`${tabletLocation?.name ?? ''}`}
         </Typography>
       </UIFlexWrapBox>
     </UIFlexSpaceBox>

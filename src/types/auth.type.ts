@@ -1,5 +1,6 @@
 import { UserType } from './user.type';
 import { RoleType } from './role.type';
+import { LocationType } from './location.type';
 
 export type TabletAuthParams = {
   identifier: string;
@@ -23,6 +24,7 @@ export type VerifyPhoneParams = {
 export type TabletAuthType = {
   accessToken: string;
   refreshToken: string;
+  location: LocationType;
 };
 
 export type CustomerAuthType = {

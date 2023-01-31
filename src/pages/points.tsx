@@ -1,9 +1,23 @@
+import { useEffect } from 'react';
 import { Divider } from '@mui/material';
 import { UIContainer, UIFlexColumnBox } from '@/components/UI';
 import { DashboardLayout } from '@/layouts';
 import { PointsMain, PointsHeader } from '@/modules/points';
+import { usePoint, useAuth } from '@/hooks';
+import { GetPointParam, UserType } from '@/types';
 
 const MyPoints = () => {
+  const { points, onGetPoints } = usePoint();
+  const { me } = useAuth({});
+
+  useEffect(() => {
+    if (!me) return;
+    let param: GetPointParam = {
+      userId: parseInt((me as UserType.User).id),
+    };
+    onGetPoints(param);
+  }, [me]);
+
   return (
     <DashboardLayout title="My Points">
       <UIContainer sx={{ height: 'calc(100vh - 86px)' }}>
@@ -16,7 +30,7 @@ const MyPoints = () => {
             height: 'calc(100% - 122px)',
           }}
         >
-          <PointsMain />
+          <PointsMain points={points} />
         </UIFlexColumnBox>
       </UIContainer>
     </DashboardLayout>

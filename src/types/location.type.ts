@@ -1,7 +1,12 @@
+import { CommonType } from './common.type';
+
 export type LocationType = {
+  name: string;
+  coordinates: { lat: number; lng: number };
   id: number;
-  location: string;
-  point: number;
+  address: CommonType.Address;
+  status: boolean;
+  type: string;
 };
 
 export type GetLocationsParam = {

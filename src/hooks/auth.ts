@@ -83,6 +83,8 @@ export const useAuth = ({
     isTabletAuthenticated: authState.accessToken ? true : false,
     isUserAuthenticated: authState.user ? true : false,
     authTabletToken: authState.accessToken,
+    me: authState.user,
+    tabletLocation: authState.location,
     onLoginWithTablet,
     onLoginWithUser,
     onVerifyPhone,

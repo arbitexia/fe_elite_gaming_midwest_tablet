@@ -29,6 +29,7 @@ const initialState: ReduxJson.AuthState = {
   message: '',
   errorMessage: null,
   user: null,
+  location: null,
   role: {},
 };
 
@@ -135,6 +136,7 @@ export const authSlice = createSlice({
           state.message = 'Login Success';
           state.accessToken = payload.accessToken;
           state.refreshToken = payload.refreshToken;
+          state.location = payload.location;
           localStorage.setItem('accessToken', payload.accessToken);
           localStorage.setItem('refreshToken', payload.refreshToken);
         }

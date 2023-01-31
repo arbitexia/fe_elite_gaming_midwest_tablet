@@ -19,3 +19,10 @@ export {
   refreshToken,
   logoutTablet,
 } from './auth.slice';
+
+export {
+  default as pointReducer,
+  pointSelector,
+  getPoints,
+  resetPointMessage,
+} from './point.slice';

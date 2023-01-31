@@ -1,7 +1,7 @@
 export type { CommonType } from './common.type';
 export { ResponseStatus, AuthCallbackStatus } from './common.type';
 export type { RewardItemType } from './rewards.type';
-export type { LocationType, GetLocationsParam } from './points.type';
+export type { LocationType, GetLocationsParam } from './location.type';
 export type {
   TabletAuthParams,
   CustomerAuthParams,
@@ -17,3 +17,4 @@ export type {
 export type { ReduxJson } from './redux.type';
 export type { UserType } from './user.type';
 export type { RoleType } from './role.type';
+export type { UserLocation, PointType, GetPointParam } from './point.type';

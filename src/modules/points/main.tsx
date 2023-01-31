@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PointsCard from './card';
 import { Typography } from '@mui/material';
 import { UIImage } from '@/components/UI';
@@ -8,12 +8,29 @@ import {
   StyledAnimationBox,
   StyledSendButton,
 } from './ui';
-import { locationData } from '@/_mock/points';
+import { PointType } from '@/types';
+import { useAuth } from '@/hooks';
 
-const PointsMain = () => {
+interface PointsMainProps {
+  points: PointType[];
+}
+
+const PointsMain = ({ points }: PointsMainProps) => {
+  const { tabletLocation } = useAuth({});
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
-  const rotateAngle = 360 / locationData.length;
+  const rotateAngle = 360 / (points.length == 0 ? 1 : points.length);
+
+  const index = points.findIndex(
+    (x) => x.userLocation?.locationId == tabletLocation?.id
+  );
+
+  useEffect(() => {
+    if (index >= 0) {
+      setCurrDeg(rotateAngle * index);
+    }
+  }, [index]);
+
   const handleNext = () => {
     if (currDeg - rotateAngle <= -360) {
       setSecond(0);
@@ -53,7 +70,7 @@ const PointsMain = () => {
             transition: `transform ${second}s`,
           }}
         >
-          {locationData.map((item, index) => {
+          {points.map((item, index) => {
             return (
               <PointsCard
                 key={item.id}

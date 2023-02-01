@@ -44,7 +44,11 @@ export const SignUp = () => {
     },
   });
 
-  const handleFormikChange = (name: string, value: string) => {
+  const handleFormikChange = (
+    name: string,
+    value: string,
+    isOnBlur: boolean = false
+  ) => {
     let error = '';
     if (name === 'phoneNumber') {
       const phoneRegExp = /^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i;
@@ -69,7 +73,7 @@ export const SignUp = () => {
         error = 'Invalid Birthday';
       }
     }
-    if (error) appToast({ severity: 'error', message: error });
+    if (error) appToast({ severity: 'error', message: error, isOnBlur });
     return error;
   };
 
@@ -92,8 +96,11 @@ export const SignUp = () => {
               placeholder="Phone Number"
               value={formik.values.phoneNumber}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormikChange('phoneNumber', e.target.value);
                 formik.handleChange(e);
+              }}
+              onBlur={(e) => {
+                e.preventDefault();
+                handleFormikChange('phoneNumber', e.target.value, true);
               }}
               InputProps={{
                 inputComponent: TextMaskCustom as any,
@@ -106,8 +113,10 @@ export const SignUp = () => {
               name="email"
               value={formik.values.email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleFormikChange('email', e.target.value);
                 formik.handleChange(e);
+              }}
+              onBlur={(e) => {
+                handleFormikChange('email', e.target.value, true);
               }}
             />
             <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -115,10 +124,6 @@ export const SignUp = () => {
                 inputFormat="MM/DD/YYYY"
                 value={formik.values.birthday}
                 onChange={(value: Moment | null) => {
-                  handleFormikChange(
-                    'birthday',
-                    value ? value.format('MM/DD/YYYY') : ''
-                  );
                   formik.setFieldValue(
                     'birthday',
                     value ? value.format('MM/DD/YYYY') : ''

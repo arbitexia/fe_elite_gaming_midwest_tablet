@@ -6,6 +6,7 @@ import { AppToast } from '@/components/App';
 type ToastContextType = {
   severity?: AlertColor | null;
   message?: string | null;
+  isOnBlur?: boolean;
 };
 
 const AppToastContext = createContext<any>(null);
@@ -19,11 +20,13 @@ function AppToastProvider({ children, ...rest }: AppToastProviderProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [severity, setSeverity] = useState<AlertColor>('success');
+  const [blurStatus, setBlurStatus] = useState<boolean>(false);
 
-  const value = ({ severity, message }: ToastContextType) => {
+  const value = ({ severity, message, isOnBlur }: ToastContextType) => {
     setOpen(true);
     setMessage(message || '');
     setSeverity(severity || 'success');
+    setBlurStatus(isOnBlur || false);
   };
 
   return (
@@ -32,7 +35,15 @@ function AppToastProvider({ children, ...rest }: AppToastProviderProps) {
         open={open}
         message={message}
         severity={severity}
-        onClose={() => setOpen(false)}
+        onClose={(e, r) => {
+          if (blurStatus && r === 'clickaway') {
+            setTimeout(() => {
+              setOpen(false);
+            }, 3000);
+          } else {
+            setOpen(false);
+          }
+        }}
       />
       {children}
     </AppToastContext.Provider>

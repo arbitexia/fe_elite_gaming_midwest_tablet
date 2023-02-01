@@ -40,7 +40,11 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
     },
   });
 
-  const handleFormikChange = (name: string, value: string) => {
+  const handleFormikChange = (
+    name: string,
+    value: string,
+    isOnBlur: boolean = false
+  ) => {
     let error = '';
     if (name === 'identifier') {
       if (!value) error = 'ID is required';
@@ -53,7 +57,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
       }
     }
 
-    if (error) appToast({ severity: 'error', message: error });
+    if (error) appToast({ severity: 'error', message: error, isOnBlur });
     return error;
   };
 
@@ -84,9 +88,11 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
               name="identifier"
               value={formik.values.identifier}
               placeholder="Talbet ID"
+              onBlur={(e) => {
+                handleFormikChange('identifier', e.target.value, true);
+              }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 formik.handleChange(e);
-                handleFormikChange('identifier', e.target.value);
               }}
             />
             <UIDefaultTextField
@@ -97,7 +103,9 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
               sx={{ mt: '15px' }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 formik.handleChange(e);
-                handleFormikChange('password', e.target.value);
+              }}
+              onBlur={(e) => {
+                handleFormikChange('password', e.target.value, true);
               }}
             />
             <UIDefaultButton type="submit" sx={{ mt: '70px' }}>

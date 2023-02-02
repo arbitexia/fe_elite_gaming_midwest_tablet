@@ -47,7 +47,7 @@ export const SignUp = () => {
   const handleFormikChange = (
     name: string,
     value: string,
-    isOnBlur: boolean = false
+    isOnBlur = false
   ) => {
     let error = '';
     if (name === 'phoneNumber') {

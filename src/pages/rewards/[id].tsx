@@ -1,36 +1,51 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '@/layouts';
-import { UIContainer, UIFlexWrapBox, UIImage } from '@/components/UI';
-import { RewardsHeader, RewardsPointsBox } from '@/modules/rewards';
-import { rewardsData } from '@/_mock/rewards';
-import { RewardItemType } from '@/types';
-import { Divider, Box } from '@mui/material';
-import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
+import { UIContainer, UIFlexWrapBox } from '@/components/UI';
+import { RewardsDetailHeader, RewardsFilterBox } from '@/modules/rewards';
+import { PointType, ProductType } from '@/types';
+import { Divider } from '@mui/material';
+import { RewardDetailCard } from '@/modules/rewards/detailCard';
+import { useProduct, usePoint } from '@/hooks';
 
 const RewardsById = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [rewardItem, setRewardItem] = useState<
-    RewardItemType | undefined | null
-  >(null);
+  const { products } = useProduct();
+  const { points } = usePoint();
+  const [rewardItem, setRewardItem] = useState<ProductType | undefined | null>(
+    null
+  );
+
+  const [myPoint, setMyPoint] = useState<PointType | undefined | null>(null);
+  const [totalPoint, setTotalPoint] = useState(0);
+
   useEffect(() => {
-    setRewardItem(
-      rewardsData.find((item) => item.id === parseInt(id as string))
+    let sum = 0;
+    points.forEach((x) => (sum += x.point));
+    setTotalPoint(sum);
+  }, [points]);
+
+  useEffect(() => {
+    setRewardItem(products.find((item) => item.id === parseInt(id as string)));
+    setMyPoint(
+      points.find(
+        (item) => item.userLocation?.locationId === rewardItem?.locationId
+      )
     );
   }, [id]);
 
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title={rewardItem ? rewardItem.name : 'Rewards'}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
-        <RewardsHeader />
+        <RewardsDetailHeader />
         <Divider
           sx={{
             mt: '26px',
             borderColor: 'rgba(137, 200, 198, 0.5)',
           }}
         />
-        <RewardsPointsBox />
+        <RewardsFilterBox totalPoint={totalPoint} />
         {rewardItem && (
           <UIFlexWrapBox
             sx={{
@@ -40,13 +55,12 @@ const RewardsById = () => {
               backdropFilter: 'blur(20px)',
               borderRadius: '30px',
               padding: '25px 30px',
-              gap: '90px',
             }}
           >
-            <UIImage src={rewardItem.url} width={477} height={510} />
-            <Box mt="35px">
-              <RewardsInfoBox rewardItem={rewardItem} myPoint={29000} />
-            </Box>
+            <RewardDetailCard
+              rewardItem={rewardItem}
+              myPoint={myPoint?.point}
+            />
           </UIFlexWrapBox>
         )}
       </UIContainer>

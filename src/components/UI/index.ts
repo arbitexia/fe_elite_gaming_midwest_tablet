@@ -10,6 +10,11 @@ export { UIImage } from './Image';
 export { UIAppLayoutWrapper } from './Wrapper';
 export { UIWrapPanel } from './WrapPanel';
 export { UIDefaultTextField, UISearchBox, UISelectBox } from './TextField';
-export { UIDefaultButton, UIBackButton, UINumberButton } from './Button';
+export {
+  UIDefaultButton,
+  UIHoverButton,
+  UIBackButton,
+  UINumberButton,
+} from './Button';
 export { UIAuthTabs } from './Tab';
 export { UIAuthContent, UIAuthLogoContent, UIAuthMainContent } from './Auth';

@@ -1,47 +1,47 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { locationApi } from '@/redux/apis';
+import { productApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
   ReduxJson,
-  GetLocationsParam,
-  GetLocationParam,
+  GetProductsParam,
   ResponseStatus,
-  LocationType,
+  ProductType,
+  CommonType,
 } from '@/types';
 
 // Initial state
-const initialState: ReduxJson.LocationState = {
+const initialState: ReduxJson.ProductState = {
   loading: true,
   status: null,
-  locations: [],
+  products: [],
   pageInfo: null,
-  // currentId: 0,
-  // currentLocation: null,
+  currentId: 0,
+  currentProduct: null,
   message: null,
   error: null,
 };
 
-export const getLocations = createAsyncThunk<
-  LocationType[],
-  GetLocationsParam,
+export const getProducts = createAsyncThunk<
+  CommonType.Pagination<ProductType>,
+  GetProductsParam,
   { dispatch: AppDispatch; state: RootState }
->('location/getLocations', async (params: GetLocationsParam, thunkAPI) => {
+>('product/getProducts', async (params: GetProductsParam, thunkAPI) => {
   try {
-    return await locationApi.getLocations(params);
+    return await productApi.getProducts(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
   }
 });
 
-export const getLocation = createAsyncThunk<
-  LocationType,
-  GetLocationParam,
+export const getProduct = createAsyncThunk<
+  ProductType,
+  number,
   { dispatch: AppDispatch; state: RootState }
->('location/getLocation', async (params: GetLocationParam, thunkAPI) => {
+>('product/getProduct', async (params: number, thunkAPI) => {
   try {
-    return await locationApi.getLocation(params);
+    return await productApi.getProduct(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -49,52 +49,57 @@ export const getLocation = createAsyncThunk<
 });
 
 // Actual Slice
-export const locationSlice = createSlice({
-  name: 'location',
+export const productSlice = createSlice({
+  name: 'product',
   initialState,
   reducers: {
-    resetLocationMessage: (state: ReduxJson.LocationState, _payload) => {
+    resetProductMessage: (state: ReduxJson.ProductState, _payload) => {
       state.error = null;
       state.message = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getLocations.pending, (state) => {
+      .addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
         state.error = null;
         state.message = null;
       })
       .addCase(
-        getLocations.fulfilled,
-        (state, { payload }: PayloadAction<LocationType[]>) => {
+        getProducts.fulfilled,
+        (
+          state,
+          { payload }: PayloadAction<CommonType.Pagination<ProductType>>
+        ) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          state.locations = payload;
+          state.pageInfo = payload.pageInfo;
+          state.products = payload.data;
         }
       )
-      .addCase(getLocations.rejected, (state, { payload }) => {
+      .addCase(getProducts.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
         state.message = null;
       })
-      .addCase(getLocation.pending, (state) => {
+      .addCase(getProduct.pending, (state) => {
         state.loading = true;
         state.status = ResponseStatus.PENDING;
         state.error = null;
         state.message = null;
       })
       .addCase(
-        getLocation.fulfilled,
-        (state, { payload }: PayloadAction<LocationType>) => {
+        getProduct.fulfilled,
+        (state, { payload }: PayloadAction<ProductType>) => {
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
-          console.log(payload);
+          state.currentProduct = payload;
+          state.currentId = payload.id;
         }
       )
-      .addCase(getLocation.rejected, (state, { payload }) => {
+      .addCase(getProduct.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;
@@ -103,8 +108,8 @@ export const locationSlice = createSlice({
   },
 });
 
-export const { resetLocationMessage } = locationSlice.actions;
+export const { resetProductMessage } = productSlice.actions;
 
-export const locationSelector = (state: RootState) => state.location;
+export const productSelector = (state: RootState) => state.product;
 
-export default locationSlice.reducer;
+export default productSlice.reducer;

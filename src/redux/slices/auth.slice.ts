@@ -215,6 +215,7 @@ export const { clearAuthMessage, logoutUser, logoutTablet, refreshToken } =
 
 export const getReturnMessage = (state: RootState) => state.auth?.message;
 export const getMe = (state: RootState) => state.auth?.user;
+export const getMyLocation = (state: RootState) => state.auth?.location;
 export const getRole = (state: RootState) => state.auth?.role;
 export const authSelector = (state: RootState) => state.auth;
 

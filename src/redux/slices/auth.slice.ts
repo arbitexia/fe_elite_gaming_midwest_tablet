@@ -158,6 +158,9 @@ export const authSlice = createSlice({
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.message = payload.message;
+          state.user = payload.user;
+          state.role = payload.role;
+          state.refreshToken = payload.refreshToken;
         }
       )
       .addCase(authorizeCustomer.rejected, (state, { payload }) => {

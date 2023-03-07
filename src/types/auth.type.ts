@@ -29,6 +29,10 @@ export type TabletAuthType = {
 
 export type CustomerAuthType = {
   message: string;
+  user: UserType.User;
+  role: RoleType.Role;
+  accessToken: string;
+  refreshToken: string;
 };
 
 export type VerifyPhoneType = {

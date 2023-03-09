@@ -32,7 +32,7 @@ export const authorizeTablet = async (params: TabletAuthParams) => {
 
 export const authorizeCustomer = async (params: CustomerAuthParams) => {
   const response = await axios.post(
-    `${baseUrl}/api/authorize_customer`,
+    `${baseUrl}/api/authorize_customer_from_tablet`,
     params,
     {
       headers: authHeader,

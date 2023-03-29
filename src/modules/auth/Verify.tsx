@@ -11,7 +11,7 @@ export const Verify = () => {
   const appToast = useAppToast();
   const [value, setValue] = useState('');
 
-  const { onVerifyPhone } = useAuth({
+  const { onVerifyPhone, tabletLocation } = useAuth({
     handleAuthVerifySuccess: () => {
       router.push('/points');
     },
@@ -21,7 +21,7 @@ export const Verify = () => {
       appToast({ severity: 'error', message: 'Invalid Code' });
       return;
     } else {
-      onVerifyPhone(value);
+      onVerifyPhone(value, tabletLocation?.id ?? 0);
     }
   };
   return (

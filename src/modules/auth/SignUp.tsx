@@ -22,7 +22,7 @@ export const SignUp = () => {
   const [checked, setChecked] = useState(false);
   const [isShowVerify, setIsShowVerify] = useState(false);
   const { path: type } = router.query;
-  const { onRegister } = useAuth({
+  const { onRegister, tabletLocation } = useAuth({
     handleAuthRegisterSuccess: () => {
       setIsShowVerify(true);
     },
@@ -40,7 +40,12 @@ export const SignUp = () => {
       if (handleFormikChange('phoneNumber', values.phoneNumber)) return;
       if (handleFormikChange('email', values.email)) return;
       if (handleFormikChange('birthday', values.birthday)) return;
-      onRegister(values.phoneNumber, values.email, values.birthday);
+      onRegister(
+        values.phoneNumber,
+        values.email,
+        values.birthday,
+        tabletLocation?.id
+      );
     },
   });
 

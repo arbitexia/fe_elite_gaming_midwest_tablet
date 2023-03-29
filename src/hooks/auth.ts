@@ -65,14 +65,19 @@ export const useAuth = ({
     dispatch(authorizeCustomer({ identifier }));
   };
 
-  const onVerifyPhone = (token: string) => {
+  const onVerifyPhone = (token: string, locationId: number) => {
     setCallbackNo(AuthCallbackStatus.VERIFY);
-    dispatch(verifyPhone({ token }));
+    dispatch(verifyPhone({ token, locationId }));
   };
 
-  const onRegister = (phone: string, email: string, birthday: string) => {
+  const onRegister = (
+    phone: string,
+    email: string,
+    birthday: string,
+    locationId?: number
+  ) => {
     setCallbackNo(AuthCallbackStatus.REGISTER);
-    dispatch(register({ phone, email, birthday }));
+    dispatch(register({ phone, email, birthday, locationId }));
   };
 
   const onLogoutFromTablet = () => {

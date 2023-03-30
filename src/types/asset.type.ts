@@ -1,9 +1,17 @@
 export declare namespace AssetType {
-  enum AssetType {
+  enum AssetItemType {
     IMAGE = 'IMAGE',
     VIDEO = 'VIDEO',
     DOCUMENT = 'DOCUMENT',
   }
+
+  type Gallery = {
+    id: number;
+    assetId: number;
+    victimId: number;
+    model: number;
+    asset?: Asset;
+  };
 
   type Asset = {
     name: string;

@@ -15,12 +15,22 @@ import {
 } from 'redux-persist';
 import { createWrapper } from 'next-redux-wrapper';
 import storage from './storage';
-import { authReducer, appReducer, pointReducer } from './slices';
+import {
+  assetReducer,
+  authReducer,
+  appReducer,
+  locationReducer,
+  pointReducer,
+  productReducer,
+} from './slices';
 
 const combinedReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
+  location: locationReducer,
+  asset: assetReducer,
   point: pointReducer,
+  product: productReducer,
 });
 
 const createStore = () => {
@@ -28,7 +38,7 @@ const createStore = () => {
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['auth', 'app', 'point'],
+    whitelist: ['auth', 'app', 'point', 'product'],
   };
 
   const persistedReducer = persistReducer(persistConfig, combinedReducer);

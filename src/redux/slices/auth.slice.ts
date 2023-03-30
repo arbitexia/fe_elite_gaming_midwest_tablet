@@ -103,7 +103,6 @@ export const authSlice = createSlice({
       { payload }: PayloadAction<string>
     ) => {
       state.accessToken = payload;
-      console.log(payload);
       localStorage.setItem('accessToken', payload);
     },
     logoutUser: (state: ReduxJson.AuthState) => {
@@ -131,7 +130,6 @@ export const authSlice = createSlice({
       .addCase(
         authorizeTablet.fulfilled,
         (state, { payload }: PayloadAction<TabletAuthType>) => {
-          console.log(payload, '****');
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.message = 'Login Success';

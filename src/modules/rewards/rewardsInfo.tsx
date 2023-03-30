@@ -21,7 +21,6 @@ export const RewardsInfoBox = ({
   myPoint,
   rewardItem,
 }: RewardsInfoBoxProps) => {
-  console.log(rewardItem.specifications);
   return (
     <>
       <StyledRewardsName>{rewardItem?.name}</StyledRewardsName>

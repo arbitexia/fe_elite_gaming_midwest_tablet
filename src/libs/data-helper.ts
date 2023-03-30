@@ -26,3 +26,7 @@ export const getAuthorizeHeader = () => {
   }
   return authHeader;
 };
+
+export const phoneNumberToString = (str: string) => {
+  return ('' + str).replace(/\D/g, '');
+};

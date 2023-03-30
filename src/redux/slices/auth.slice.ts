@@ -131,6 +131,7 @@ export const authSlice = createSlice({
       .addCase(
         authorizeTablet.fulfilled,
         (state, { payload }: PayloadAction<TabletAuthType>) => {
+          console.log(payload, '****');
           state.loading = false;
           state.status = ResponseStatus.SUCCESS;
           state.message = 'Login Success';

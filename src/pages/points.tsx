@@ -9,10 +9,9 @@ import { GetPointParam, UserType } from '@/types';
 const MyPoints = () => {
   const { points, onGetPoints } = usePoint();
   const { me } = useAuth({});
-
   useEffect(() => {
     if (!me) return;
-    let param: GetPointParam = {
+    const param: GetPointParam = {
       userId: parseInt((me as UserType.User).id),
     };
     onGetPoints(param);

@@ -15,10 +15,12 @@ export type RegisterParams = {
   phone: string;
   email: string;
   birthday: string;
+  locationId?: number;
 };
 
 export type VerifyPhoneParams = {
   token: string;
+  locationId: number;
 };
 
 export type TabletAuthType = {

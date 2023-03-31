@@ -9,6 +9,7 @@ export type TabletAuthParams = {
 
 export type CustomerAuthParams = {
   identifier: string;
+  locationId: number;
 };
 
 export type RegisterParams = {

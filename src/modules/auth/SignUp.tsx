@@ -15,6 +15,7 @@ import { MobileDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import InputMask from 'react-input-mask';
 import { Moment } from 'moment';
 import { useAuth } from '@/hooks/auth';
+import { phoneNumberToString } from '@/libs/data-helper';
 
 export const SignUp = () => {
   const router = useRouter();
@@ -41,7 +42,7 @@ export const SignUp = () => {
       if (handleFormikChange('email', values.email)) return;
       if (handleFormikChange('birthday', values.birthday)) return;
       onRegister(
-        values.phoneNumber,
+        phoneNumberToString(values.phoneNumber),
         values.email,
         values.birthday,
         tabletLocation?.id

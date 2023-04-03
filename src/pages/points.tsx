@@ -16,7 +16,7 @@ const MyPoints = () => {
     };
     onGetPoints(param);
   }, [me]);
-
+  console.log(points);
   return (
     <DashboardLayout title="My Points">
       <UIContainer sx={{ height: 'calc(100vh - 86px)' }}>

@@ -60,9 +60,9 @@ export const useAuth = ({
     dispatch(authorizeTablet({ identifier, password }));
   };
 
-  const onLoginWithUser = (identifier: string) => {
+  const onLoginWithUser = (identifier: string, locationId: number) => {
     setCallbackNo(AuthCallbackStatus.CUSTOMER);
-    dispatch(authorizeCustomer({ identifier }));
+    dispatch(authorizeCustomer({ identifier, locationId }));
   };
 
   const onVerifyPhone = (token: string, locationId: number) => {

@@ -20,7 +20,6 @@ const PointsMain = ({ points }: PointsMainProps) => {
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
   const rotateAngle = 360 / (points.length == 0 ? 1 : points.length);
-
   const index = points.findIndex(
     (x) => x.userLocation?.locationId == tabletLocation?.id
   );

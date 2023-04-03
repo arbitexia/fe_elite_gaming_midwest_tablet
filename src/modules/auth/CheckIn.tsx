@@ -11,16 +11,18 @@ export const CheckIn = () => {
   const appToast = useAppToast();
   const { path: type } = router.query;
   const [value, setValue] = useState('');
-  const { onLoginWithUser } = useAuth({
+  const { onLoginWithUser, tabletLocation } = useAuth({
     handleAuthUserSuccess: () => {
       router.push('/points');
     },
   });
 
   const handleSend = () => {
-    if (value.length < 10)
+    if (value.length < 10) {
       appToast({ severity: 'error', message: 'Phone number is invalid' });
-    else onLoginWithUser(value);
+    } else {
+      onLoginWithUser(value, tabletLocation?.id ?? 0);
+    }
   };
 
   return (

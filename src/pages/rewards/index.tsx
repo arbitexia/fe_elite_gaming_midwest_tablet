@@ -14,19 +14,45 @@ const Rewards = () => {
   const { rewards, onFilterRewards } = useReward();
   const { points, onGetPoints } = usePoint();
   const { me } = useAuth({});
-  const [filterPoint, setFilterPoint] = useState('');
+  const [filterPoint, setFilterPoint] = useState<number>(0);
   const [filterLocation, setFilterLocation] = useState<number>();
   useEffect(() => {
     fetchRewards();
-  }, [filterLocation]);
+  }, [filterLocation, filterPoint]);
 
   const fetchRewards = async () => {
+    let from = 0;
+    let to = 0;
     try {
+      if (filterPoint > 0) {
+        switch (filterPoint) {
+          case 1:
+            from = 0;
+            to = 1000;
+            break;
+          case 2:
+            from = 1000;
+            to = 2000;
+            break;
+          case 3:
+            from = 30000;
+            to = 4000;
+            break;
+          case 4:
+            from = 4000;
+            to = 5000;
+            break;
+          default:
+            from = 5000;
+            to = 1;
+            break;
+        }
+      }
       await onGetPoints({
         userId: Number((me as UserType.User)?.id) ?? 0,
       });
       await onFilterRewards({
-        filterBy: { locationId: filterLocation },
+        filterBy: { locationId: filterLocation, fromPoint: from, toPoint: to },
       });
     } catch (error) {
       console.log(error);
@@ -36,7 +62,11 @@ const Rewards = () => {
   return (
     <DashboardLayout title="My Points">
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
-        <RewardsHeader setFilterLocation={setFilterLocation} />
+        <RewardsHeader
+          setFilterLocation={setFilterLocation}
+          setFilterPoint={setFilterPoint}
+          isFilter={true}
+        />
         <Divider
           sx={{
             mt: '26px',
@@ -45,7 +75,7 @@ const Rewards = () => {
         />
         <RewardsPointsBox />
         <UIWrapPanel itemSpacing={40} paddingY={60}>
-          {rewards.map((item) => {
+          {rewards?.map((item) => {
             const point =
               points.find(
                 (p) => p?.userLocation?.locationId === item.locationId

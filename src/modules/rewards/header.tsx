@@ -18,8 +18,14 @@ type DropboxType = {
 };
 type RewardHeaderProps = {
   setFilterLocation?: (locationId: number) => void;
+  setFilterPoint?: (pointId: number) => void;
+  isFilter?: boolean;
 };
-const RewardsHeader = ({ setFilterLocation }: RewardHeaderProps) => {
+const RewardsHeader = ({
+  setFilterLocation,
+  setFilterPoint,
+  isFilter = false,
+}: RewardHeaderProps) => {
   const router = useRouter();
   const { id } = router.query;
   const { locations } = useLocation();
@@ -64,24 +70,28 @@ const RewardsHeader = ({ setFilterLocation }: RewardHeaderProps) => {
           Rewards
         </Typography>
       )}
-      <UIFlexWrapBox sx={{ gap: '30px' }}>
-        <StyledFilterBox>
-          <Typography>Location</Typography>
-          <UISelectBox
-            items={locationData}
-            onSelectChange={(value) => {
-              setFilterLocation && setFilterLocation(+value);
-            }}
-          />
-        </StyledFilterBox>
-        <StyledFilterBox>
-          <Typography>Points</Typography>
-          <UISelectBox
-            items={pointData}
-            onSelectChange={(value) => console.log(value)}
-          />
-        </StyledFilterBox>
-      </UIFlexWrapBox>
+      {isFilter && (
+        <UIFlexWrapBox sx={{ gap: '30px' }}>
+          <StyledFilterBox>
+            <Typography>Location</Typography>
+            <UISelectBox
+              items={locationData}
+              onSelectChange={(value) => {
+                setFilterLocation && setFilterLocation(+value);
+              }}
+            />
+          </StyledFilterBox>
+          <StyledFilterBox>
+            <Typography>Points</Typography>
+            <UISelectBox
+              items={pointData}
+              onSelectChange={(value) =>
+                setFilterPoint && setFilterPoint(+value)
+              }
+            />
+          </StyledFilterBox>
+        </UIFlexWrapBox>
+      )}
     </UIFlexSpaceBox>
   );
 };

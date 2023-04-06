@@ -19,7 +19,7 @@ function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const time = 30;
+  const time = 30000;
   let timeout: NodeJS.Timeout | null = null;
 
   const restartAutoReset = () => {

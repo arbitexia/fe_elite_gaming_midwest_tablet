@@ -15,7 +15,6 @@ export type RewardsCardProps = {
 };
 
 export const RewardsCard = ({ point, item }: RewardsCardProps) => {
-  const { product } = item;
   const router = useRouter();
   return (
     <StyledRewardsCard>
@@ -27,18 +26,18 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
           objectFit: 'cover',
         }}
         src={
-          product?.gallery?.[0]?.asset?.url
-            ? `${product?.gallery?.[0]?.asset?.url}`
+          item?.product?.gallery?.[0]?.asset?.url
+            ? `${item?.product?.gallery?.[0]?.asset?.url}`
             : 'images/noImage.jpg'
         }
         alt="image"
       />
-      <RewardsCardProgress myPoint={point} itemPoint={product.point} />
-      <RewardsCardPoint itemPoint={product.point} />
+      <RewardsCardProgress myPoint={point} itemPoint={item?.product.point} />
+      <RewardsCardPoint itemPoint={item?.product.point} />
       <StyledRewardsCardPoint>
         Points Completion:{' '}
         <span>
-          {point}/{product.point}
+          {point}/{item?.product.point}
         </span>
       </StyledRewardsCardPoint>
       <StyledCardExchangeOfferButton

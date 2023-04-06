@@ -4,6 +4,7 @@ import { DashboardLayout } from '@/layouts';
 import {
   UIContainer,
   UIDefaultButton,
+  UIDialog,
   UIFlexColumnBox,
   UIFlexWrapBox,
 } from '@/components/UI';
@@ -12,7 +13,6 @@ import { RewardType, TransactionType, UserType } from '@/types';
 import { Divider, Box, Typography } from '@mui/material';
 import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
 import { useReward, usePoint, useTransaction, useAuth } from '@/hooks';
-import { StyledDialog } from './ui';
 import { TransactionStatus } from '@/types/transaction.type';
 
 const RewardsById = () => {
@@ -108,7 +108,7 @@ const RewardsById = () => {
         )}
       </UIContainer>
 
-      <StyledDialog open={openModal}>
+      <UIDialog open={openModal}>
         <UIFlexColumnBox width="100%">
           <Typography
             sx={{
@@ -132,7 +132,7 @@ const RewardsById = () => {
             Close
           </UIDefaultButton>
         </UIFlexColumnBox>
-      </StyledDialog>
+      </UIDialog>
     </DashboardLayout>
   );
 };

@@ -1,12 +1,15 @@
 import { CommonType } from './common.type';
 
 export type LocationType = {
-  name: string;
-  coordinates: { lat: number; lng: number };
   id: number;
+  name: string;
+  coords: { lat: number; lng: number };
   address: CommonType.Address;
-  status: boolean;
+  status: string;
   type: string;
+  description?: string;
+  updatedAt?: string;
+  createdAt?: string;
 };
 
 export type GetLocationsParam = {
@@ -17,4 +20,8 @@ export type GetLocationsParam = {
     page: number;
     size: number;
   };
+};
+
+export type GetLocationParam = {
+  locationId: number;
 };

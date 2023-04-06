@@ -1,25 +1,61 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { DashboardLayout } from '@/layouts';
-import { UIContainer, UIFlexWrapBox, UIImage } from '@/components/UI';
+import {
+  UIContainer,
+  UIDefaultButton,
+  UIFlexColumnBox,
+  UIFlexWrapBox,
+} from '@/components/UI';
 import { RewardsHeader, RewardsPointsBox } from '@/modules/rewards';
-import { rewardsData } from '@/_mock/rewards';
-import { RewardItemType } from '@/types';
-import { Divider, Box } from '@mui/material';
+import { RewardType, TransactionType, UserType } from '@/types';
+import { Divider, Box, Typography } from '@mui/material';
 import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
+import { useReward, usePoint, useTransaction, useAuth } from '@/hooks';
+import { StyledDialog } from './ui';
+import { TransactionStatus } from '@/types/transaction.type';
 
 const RewardsById = () => {
   const router = useRouter();
+  const { me } = useAuth({});
+  const { rewards } = useReward();
+  const { points } = usePoint();
+  const { onCreateTransaction } = useTransaction();
+
   const { id } = router.query;
-  const [rewardItem, setRewardItem] = useState<
-    RewardItemType | undefined | null
-  >(null);
+
+  const [rewardItem, setRewardItem] = useState<RewardType.Data>();
+  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
-    setRewardItem(
-      rewardsData.find((item) => item.id === parseInt(id as string))
-    );
+    setRewardItem(rewards.find((item) => item.id === parseInt(id as string)));
   }, [id]);
 
+  const handleExchangeOffer = async () => {
+    const filteredPoints = points.find(
+      (p) => p?.userLocation?.locationId === rewardItem?.locationId
+    );
+    const amount = rewardItem?.product?.point ?? 0;
+    const thePoint = filteredPoints?.point ?? 0;
+    if (thePoint >= amount) {
+      const dataToSave: TransactionType.Body = {
+        input: {
+          userId: Number((me as UserType.User)?.id) ?? 0,
+          rewardId: rewardItem?.id ?? 0,
+          locationId: rewardItem?.locationId ?? 0,
+          pointId: filteredPoints?.id ?? 0,
+          status: TransactionStatus.WAITING,
+          type: 'POINT',
+          amount,
+          balance: Number(thePoint) - Number(amount),
+        },
+      };
+      await onCreateTransaction(dataToSave);
+      router.push('/rewards');
+    } else {
+      setOpenModal(true);
+    }
+  };
   return (
     <DashboardLayout title="My Points">
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
@@ -43,13 +79,60 @@ const RewardsById = () => {
               gap: '90px',
             }}
           >
-            <UIImage src={rewardItem.url} width={477} height={510} />
+            <Box
+              component="img"
+              sx={{
+                width: '477px',
+                height: '510px',
+                objectFit: 'cover',
+              }}
+              src={
+                rewardItem.product?.gallery?.[0]?.asset?.url
+                  ? `${rewardItem.product?.gallery?.[0]?.asset?.url}`
+                  : 'images/noImage.jpg'
+              }
+              alt="image"
+            />
             <Box mt="35px">
-              <RewardsInfoBox rewardItem={rewardItem} myPoint={29000} />
+              <RewardsInfoBox
+                rewardItem={rewardItem}
+                myPoint={
+                  points.find(
+                    (p) => p?.userLocation?.locationId === rewardItem.locationId
+                  )?.point ?? 0
+                }
+                onExchange={handleExchangeOffer}
+              />
             </Box>
           </UIFlexWrapBox>
         )}
       </UIContainer>
+
+      <StyledDialog open={openModal}>
+        <UIFlexColumnBox width="100%">
+          <Typography
+            sx={{
+              width: '345px',
+              fontWeight: '600',
+              fontSize: '18px',
+              lineHeight: '160%',
+              textAlign: 'center',
+              color: '#6F918A',
+              py: '30px',
+            }}
+          >
+            It is not possible to exchange with the current point. Please gain
+            more points.
+          </Typography>
+          <UIDefaultButton
+            type="button"
+            sx={{ height: '54px' }}
+            onClick={() => setOpenModal(false)}
+          >
+            Close
+          </UIDefaultButton>
+        </UIFlexColumnBox>
+      </StyledDialog>
     </DashboardLayout>
   );
 };

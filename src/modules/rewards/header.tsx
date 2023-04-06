@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   UIFlexSpaceBox,
@@ -8,16 +8,42 @@ import {
 } from '@/components/UI';
 import { StyledFilterBox, StyledPrevButton } from './ui';
 import { Typography } from '@mui/material';
-import { locationData, pointData } from '@/_mock/rewards';
+import { pointData } from '@/_mock/rewards';
+import { useLocation } from '@/hooks';
+import { LocationType } from '@/types';
 
-const RewardsHeader = () => {
-  // const [value, setValue] = useState('');
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValue(event.target.value);
-  // };
-
+type DropboxType = {
+  value: string;
+  label: string;
+};
+type RewardHeaderProps = {
+  setFilterLocation?: (locationId: number) => void;
+};
+const RewardsHeader = ({ setFilterLocation }: RewardHeaderProps) => {
   const router = useRouter();
   const { id } = router.query;
+  const { locations } = useLocation();
+  const [locationData, setLocationData] = useState<DropboxType[]>([
+    {
+      value: '0',
+      label: 'any',
+    },
+  ]);
+
+  useEffect(() => {
+    if (locations?.length > 0) {
+      const filteredLocation = locations?.map((obj: LocationType) => {
+        return { label: obj.name, value: obj.id.toString() };
+      });
+      setLocationData([
+        {
+          value: '0',
+          label: 'any',
+        },
+        ...filteredLocation,
+      ]);
+    }
+  }, [locations]);
 
   return (
     <UIFlexSpaceBox sx={{ mt: '30px' }}>
@@ -41,11 +67,19 @@ const RewardsHeader = () => {
       <UIFlexWrapBox sx={{ gap: '30px' }}>
         <StyledFilterBox>
           <Typography>Location</Typography>
-          <UISelectBox items={locationData} />
+          <UISelectBox
+            items={locationData}
+            onSelectChange={(value) => {
+              setFilterLocation && setFilterLocation(+value);
+            }}
+          />
         </StyledFilterBox>
         <StyledFilterBox>
           <Typography>Points</Typography>
-          <UISelectBox items={pointData} />
+          <UISelectBox
+            items={pointData}
+            onSelectChange={(value) => console.log(value)}
+          />
         </StyledFilterBox>
       </UIFlexWrapBox>
     </UIFlexSpaceBox>

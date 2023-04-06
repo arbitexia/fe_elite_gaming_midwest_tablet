@@ -12,6 +12,10 @@ export enum AuthCallbackStatus {
 }
 
 export declare namespace CommonType {
+  export type Message = {
+    message: string;
+  };
+
   export type Address = {
     address1?: string;
     address2?: string;

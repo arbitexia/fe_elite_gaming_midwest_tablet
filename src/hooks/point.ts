@@ -21,8 +21,14 @@ export const usePoint = () => {
     await dispatch(getPoints(param));
   };
 
+  const onGetPointCount = () => {
+    const totalCount = points?.map((p) => p.point).reduce((a, b) => a + b) ?? 0;
+    return totalCount;
+  };
+
   return {
     points,
     onGetPoints,
+    onGetPointCount,
   };
 };

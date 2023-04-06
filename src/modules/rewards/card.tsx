@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
-import { UIImage } from '@/components/UI';
-import { Typography } from '@mui/material';
-import { RewardItemType } from '@/types';
+import { Box } from '@mui/material';
+import { RewardType } from '@/types';
 import { RewardsCardProgress } from './cardProgress';
 import { RewardsCardPoint } from './cardPoint';
 import {
@@ -12,23 +11,36 @@ import {
 
 export type RewardsCardProps = {
   point: number;
-  item: RewardItemType;
+  item: RewardType.Data;
 };
 
 export const RewardsCard = ({ point, item }: RewardsCardProps) => {
+  const { product } = item;
   const router = useRouter();
   return (
     <StyledRewardsCard>
-      <UIImage src={item.url} width={220} height={235} />
-      <RewardsCardProgress myPoint={point} itemPoint={item.point} />
-      <RewardsCardPoint itemPoint={item.point} />
+      <Box
+        component="img"
+        sx={{
+          width: '220px',
+          height: '235px',
+          objectFit: 'cover',
+        }}
+        src={
+          product?.gallery?.[0]?.asset?.url
+            ? `${product?.gallery?.[0]?.asset?.url}`
+            : 'images/noImage.jpg'
+        }
+        alt="image"
+      />
+      <RewardsCardProgress myPoint={point} itemPoint={product.point} />
+      <RewardsCardPoint itemPoint={product.point} />
       <StyledRewardsCardPoint>
         Points Completion:{' '}
         <span>
-          {point}/{item.point}
+          {point}/{product.point}
         </span>
       </StyledRewardsCardPoint>
-      <Typography sx={{}}></Typography>
       <StyledCardExchangeOfferButton
         onClick={() => router.push(`/rewards/${item.id}`)}
       >

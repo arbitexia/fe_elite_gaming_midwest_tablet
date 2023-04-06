@@ -12,4 +12,12 @@ export declare namespace AssetType {
     type: string;
     url: string;
   };
+
+  type Gallery = {
+    id: number;
+    assetId: number;
+    victimId?: number;
+    asset?: Asset;
+    model?: string;
+  };
 }

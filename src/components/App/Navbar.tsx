@@ -1,9 +1,13 @@
+import { useAuth } from '@/hooks';
 import { UIFlexSpaceBox, UIFlexWrapBox, UIImage } from '../UI';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
+import { formatPhoneNumber } from '@/libs/data-helper';
+import { UserType } from '@/types';
 
 const AppNavbar = () => {
   const router = useRouter();
+  const { me } = useAuth({});
   const isPointPage = router.pathname === '/points';
   return (
     <UIFlexSpaceBox
@@ -77,7 +81,7 @@ const AppNavbar = () => {
               gap: '12px',
             }}
           >
-            (123) 456-7890
+            {formatPhoneNumber((me as UserType.User)?.phone)}
           </Typography>
         </Box>
       </UIFlexWrapBox>

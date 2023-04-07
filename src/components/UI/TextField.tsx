@@ -73,16 +73,21 @@ export const UISearchBox = ({ value, onChange }: UISearchBoxProps) => {
 
 export type UISelectBoxProps = {
   items: { value: string; label: string }[];
+  selectedDefaultValue?: number;
   onSelectChange: (value: string) => void;
 };
 
-export const UISelectBox = ({ items, onSelectChange }: UISelectBoxProps) => {
+export const UISelectBox = ({
+  items,
+  onSelectChange,
+  selectedDefaultValue = 0,
+}: UISelectBoxProps) => {
   return (
     <UIDefaultTextField
       id="input-with-icon-textfield"
       placeholder="Search"
       select
-      defaultValue={0}
+      defaultValue={selectedDefaultValue}
       onChange={(e) => onSelectChange(e.target.value)}
       sx={{
         '.MuiOutlinedInput-input': {

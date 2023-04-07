@@ -9,7 +9,7 @@ import {
 import { StyledFilterBox, StyledPrevButton } from './ui';
 import { Typography } from '@mui/material';
 import { pointData } from '@/_mock/rewards';
-import { useLocation } from '@/hooks';
+import { useAuth, useLocation } from '@/hooks';
 import { LocationType } from '@/types';
 
 type DropboxType = {
@@ -28,26 +28,15 @@ const RewardsHeader = ({
 }: RewardHeaderProps) => {
   const router = useRouter();
   const { id } = router.query;
+  const { tabletLocation } = useAuth({});
   const { locations } = useLocation();
-  const [locationData, setLocationData] = useState<DropboxType[]>([
-    {
-      value: '0',
-      label: 'any',
-    },
-  ]);
-
+  const [locationData, setLocationData] = useState<DropboxType[]>([]);
   useEffect(() => {
     if (locations?.length > 0) {
       const filteredLocation = locations?.map((obj: LocationType) => {
         return { label: obj.name, value: obj.id.toString() };
       });
-      setLocationData([
-        {
-          value: '0',
-          label: 'any',
-        },
-        ...filteredLocation,
-      ]);
+      setLocationData(filteredLocation);
     }
   }, [locations]);
 
@@ -79,6 +68,10 @@ const RewardsHeader = ({
               onSelectChange={(value) => {
                 setFilterLocation && setFilterLocation(+value);
               }}
+              selectedDefaultValue={
+                locations?.find((obj) => obj.id === tabletLocation?.id ?? 0)
+                  ?.id ?? 0
+              }
             />
           </StyledFilterBox>
           <StyledFilterBox>

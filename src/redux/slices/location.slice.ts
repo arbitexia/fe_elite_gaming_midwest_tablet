@@ -3,32 +3,27 @@ import { locationApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
 import { RootState, AppDispatch } from '@/redux/store';
 import {
-  CommonType,
-  GetLocationsParam,
-  LocationType,
   ReduxJson,
+  GetLocationsParam,
+  ResponseStatus,
+  LocationType,
 } from '@/types';
-
-export enum ResponseStatus {
-  PENDING = 'pending',
-  FAILED = 'failed',
-  SUCCESS = 'success',
-}
 
 // Initial state
 const initialState: ReduxJson.LocationState = {
   loading: true,
   status: null,
-  message: '',
+  locations: [],
   pageInfo: null,
+  message: null,
   error: null,
 };
 
 export const getLocations = createAsyncThunk<
-  CommonType.Pagination<LocationType>,
+  LocationType[],
   GetLocationsParam,
   { dispatch: AppDispatch; state: RootState }
->('user/getLocations', async (params: GetLocationsParam, thunkAPI) => {
+>('location/getLocations', async (params: GetLocationsParam, thunkAPI) => {
   try {
     return await locationApi.getLocations(params);
   } catch (error) {
@@ -37,33 +32,43 @@ export const getLocations = createAsyncThunk<
   }
 });
 
-export const getLocationById = createAsyncThunk<
-  LocationType,
-  number,
-  { dispatch: AppDispatch; state: RootState }
->('user/getLocationById', async (locationId: number, thunkAPI) => {
-  try {
-    return await locationApi.getLocationById(locationId);
-  } catch (error) {
-    const err = error as AxiosError;
-    return thunkAPI.rejectWithValue(err.response?.data);
-  }
-});
-
+// Actual Slice
 export const locationSlice = createSlice({
   name: 'location',
   initialState,
   reducers: {
-    clearLocationMessage: (
-      state: ReduxJson.LocationState,
-      { payload }: PayloadAction<string>
-    ) => {
-      state.error = payload;
-      state.message = payload;
+    resetLocationMessage: (state: ReduxJson.LocationState, _payload) => {
+      state.error = null;
+      state.message = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getLocations.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        getLocations.fulfilled,
+        (state, { payload }: PayloadAction<LocationType[]>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.locations = payload?.filter((obj) => obj.status === 'OPEN');
+        }
+      )
+      .addCase(getLocations.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      });
   },
 });
 
-export const { clearLocationMessage } = locationSlice.actions;
+export const { resetLocationMessage } = locationSlice.actions;
+
+export const locationSelector = (state: RootState) => state.location;
 
 export default locationSlice.reducer;

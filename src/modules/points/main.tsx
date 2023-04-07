@@ -72,7 +72,7 @@ const PointsMain = ({ points }: PointsMainProps) => {
           {points.map((item, index) => {
             return (
               <PointsCard
-                key={item.id}
+                key={index}
                 index={index}
                 deg={rotateAngle}
                 item={item}

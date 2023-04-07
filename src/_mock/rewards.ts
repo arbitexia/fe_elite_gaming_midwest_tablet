@@ -1,4 +1,4 @@
-import { RewardItemType } from '@/types';
+// import { RewardItemType } from '@/types';
 
 export const locationData = [
   { value: '0', label: 'any' },
@@ -13,7 +13,7 @@ export const pointData = [
   { value: '5', label: '5000 -' },
 ];
 
-export const rewardsData: RewardItemType[] = [
+export const rewardsData = [
   {
     id: 1,
     name: 'AirPods 2',

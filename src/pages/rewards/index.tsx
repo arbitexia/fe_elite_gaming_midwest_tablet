@@ -13,12 +13,18 @@ import { UserType } from '@/types';
 const Rewards = () => {
   const { rewards, onFilterRewards } = useReward();
   const { points, onGetPoints } = usePoint();
-  const { me } = useAuth({});
+  const { me, tabletLocation } = useAuth({});
   const [filterPoint, setFilterPoint] = useState<number>(0);
   const [filterLocation, setFilterLocation] = useState<number>();
   useEffect(() => {
     fetchRewards();
   }, [filterLocation, filterPoint]);
+
+  useEffect(() => {
+    if (tabletLocation) {
+      setFilterLocation(tabletLocation.id);
+    }
+  }, [tabletLocation]);
 
   const fetchRewards = async () => {
     let from = 0;
@@ -51,9 +57,15 @@ const Rewards = () => {
       await onGetPoints({
         userId: Number((me as UserType.User)?.id) ?? 0,
       });
-      await onFilterRewards({
-        filterBy: { locationId: filterLocation, fromPoint: from, toPoint: to },
-      });
+      if (filterLocation) {
+        await onFilterRewards({
+          filterBy: {
+            locationId: filterLocation,
+            fromPoint: from,
+            toPoint: to,
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
     }

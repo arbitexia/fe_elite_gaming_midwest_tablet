@@ -30,7 +30,7 @@ const PointsCard = ({ index, deg, item }: PointsCardProps) => {
           <Typography
             sx={{
               fontWeight: '700',
-              fontSize: '106px',
+              fontSize: '120px',
               lineHeight: '110%',
               textAlign: 'center',
               background:
@@ -44,24 +44,6 @@ const PointsCard = ({ index, deg, item }: PointsCardProps) => {
             }}
           >
             {item.point}
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: '700',
-              fontSize: '64px',
-              lineHeight: '110%',
-              textAlign: 'center',
-              background:
-                'linear-gradient(166.49deg, #4eecb1 9.69%, #00F0FF 84.46%)',
-              backgroundClip: 'text',
-              textFillColor: 'transparent',
-              textShadow: '0px 4px 30px rgba(23, 52, 51, 0.15)',
-              WebkitTextStroke: '5px rgba(139, 127, 16, 0.7)',
-              borderImageSource:
-                'radial-gradient(68.72% 68.72% at 50% 38.27%, #4eecb1 0%, #01efff 100%)',
-            }}
-          >
-            points
           </Typography>
         </UIFlexColumnBox>
       </UIFlexCenterBox>

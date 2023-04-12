@@ -32,22 +32,39 @@ const RewardsById = () => {
   }, [id]);
 
   const handleExchangeOffer = async () => {
-    const filteredPoints = points.find(
+    const filteredUserPoints = points.find(
       (p) => p?.userLocation?.locationId === rewardItem?.locationId
     );
-    const amount = rewardItem?.product?.point ?? 0;
-    const thePoint = filteredPoints?.point ?? 0;
-    if (thePoint >= amount) {
+    const rewardPoint = rewardItem?.point ?? 0;
+    const rewardCoupon = rewardItem?.coupon ?? 0;
+    const userPoint = filteredUserPoints?.point ?? 0;
+    const userCoupon = (me as UserType.User)?.coupon ?? 0;
+    if (userPoint >= rewardPoint) {
       const dataToSave: TransactionType.Body = {
         input: {
           userId: Number((me as UserType.User)?.id) ?? 0,
           rewardId: rewardItem?.id ?? 0,
           locationId: rewardItem?.locationId ?? 0,
-          pointId: filteredPoints?.id ?? 0,
+          pointId: filteredUserPoints?.id ?? 0,
           status: TransactionStatus.WAITING,
           type: 'POINT',
-          amount,
-          balance: Number(thePoint) - Number(amount),
+          amount: rewardPoint,
+          balance: Number(userPoint) - Number(rewardPoint),
+        },
+      };
+      await onCreateTransaction(dataToSave);
+      router.push('/rewards');
+    } else if (userCoupon >= rewardCoupon) {
+      const dataToSave: TransactionType.Body = {
+        input: {
+          userId: Number((me as UserType.User)?.id) ?? 0,
+          rewardId: rewardItem?.id ?? 0,
+          locationId: rewardItem?.locationId ?? 0,
+          pointId: 0,
+          status: TransactionStatus.WAITING,
+          type: 'COUPON',
+          amount: rewardCoupon,
+          balance: Number(userPoint) - Number(rewardCoupon),
         },
       };
       await onCreateTransaction(dataToSave);
@@ -89,14 +106,14 @@ const RewardsById = () => {
               src={
                 rewardItem.product?.gallery?.[0]?.asset?.url
                   ? `${rewardItem.product?.gallery?.[0]?.asset?.url}`
-                  : 'images/noImage.jpg'
+                  : '/images/noImage.jpg'
               }
               alt="image"
             />
             <Box mt="35px">
               <RewardsInfoBox
                 rewardItem={rewardItem}
-                myPoint={
+                userPoint={
                   points.find(
                     (p) => p?.userLocation?.locationId === rewardItem.locationId
                   )?.point ?? 0

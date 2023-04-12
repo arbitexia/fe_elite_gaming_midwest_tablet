@@ -9,16 +9,17 @@ import {
   StyledDetailExchangeOfferButton,
 } from './ui';
 import { UIFlexWrapBox } from '@/components/UI';
-import { Box } from '@mui/material';
+import { Typography } from '@mui/material';
+import { Redeem } from '@mui/icons-material';
 
 export type RewardsInfoBoxProps = {
-  myPoint: number;
+  userPoint: number;
   rewardItem: RewardType.Data;
   onExchange: () => void;
 };
 
 export const RewardsInfoBox = ({
-  myPoint,
+  userPoint,
   rewardItem,
   onExchange,
 }: RewardsInfoBoxProps) => {
@@ -33,35 +34,36 @@ export const RewardsInfoBox = ({
           location?.address?.zipcode ?? ''
         } ${location?.address?.country ?? ''}`}
       </StyledRewardsLocation>
-      <Box mt="29px">
-        <RewardsCardPoint itemPoint={product.point} />
-      </Box>
+      <UIFlexWrapBox sx={{ mt: '29px', gap: 4, alignItems: 'center' }}>
+        <RewardsCardPoint itemPoint={rewardItem?.point} />
+        {rewardItem?.coupon && (
+          <UIFlexWrapBox
+            sx={{
+              alignItems: 'center',
+              mt: '12px',
+              color: 'rgba(137, 200, 198, 0.8)',
+            }}
+          >
+            <Redeem style={{ fontSize: '20px' }} />
+            <Typography sx={{ fontWeight: 600, mt: '4px' }}>
+              {rewardItem?.coupon} Coupons
+            </Typography>
+          </UIFlexWrapBox>
+        )}
+      </UIFlexWrapBox>
 
-      <RewardsCardProgress myPoint={myPoint} itemPoint={product.point} />
+      <RewardsCardProgress
+        myPoint={userPoint}
+        itemPoint={rewardItem?.point ?? 0}
+      />
       <StyledRewardsCardPoint sx={{ fontSize: '16px' }}>
         Points Completion:{' '}
         <span>
-          {myPoint}/{product.point}
+          {userPoint}/{rewardItem?.point}
         </span>
       </StyledRewardsCardPoint>
       <UIFlexWrapBox mt="20px">
         <StyledRewardsSpecKey>{product.short}</StyledRewardsSpecKey>
-        {/* <Box>
-          {Object.keys(product.short).map((key, index) => {
-            return (
-              <StyledRewardsSpecKey key={index}>{key}: </StyledRewardsSpecKey>
-            );
-          })}
-        </Box>
-        <Box>
-          {Object.values(product.short).map((value, index) => {
-            return (
-              <StyledRewardsSpecValue key={index}>
-                {value}
-              </StyledRewardsSpecValue>
-            );
-          })}
-        </Box> */}
       </UIFlexWrapBox>
       <StyledDetailExchangeOfferButton onClick={onExchange}>
         Exchange Offer

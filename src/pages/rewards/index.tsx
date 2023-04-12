@@ -88,11 +88,13 @@ const Rewards = () => {
         <RewardsPointsBox />
         <UIWrapPanel itemSpacing={40} paddingY={60}>
           {rewards?.map((item) => {
-            const point =
+            const userPoint =
               points.find(
                 (p) => p?.userLocation?.locationId === item.locationId
               )?.point ?? 0;
-            return <RewardsCard key={item.id} point={point} item={item} />;
+            return (
+              <RewardsCard key={item.id} userPoint={userPoint} item={item} />
+            );
           })}
         </UIWrapPanel>
       </UIContainer>

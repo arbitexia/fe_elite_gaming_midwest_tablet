@@ -7,14 +7,17 @@ import {
   StyledRewardsCardPoint,
   StyledRewardsCard,
   StyledCardExchangeOfferButton,
+  StyledRewardsCardCoupon,
 } from './ui';
+import { Redeem } from '@mui/icons-material';
+import { UIFlexWrapBox } from '@/components/UI';
 
 export type RewardsCardProps = {
-  point: number;
+  userPoint: number;
   item: RewardType.Data;
 };
 
-export const RewardsCard = ({ point, item }: RewardsCardProps) => {
+export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
   const router = useRouter();
   return (
     <StyledRewardsCard>
@@ -32,14 +35,24 @@ export const RewardsCard = ({ point, item }: RewardsCardProps) => {
         }
         alt="image"
       />
-      <RewardsCardProgress myPoint={point} itemPoint={item?.product.point} />
-      <RewardsCardPoint itemPoint={item?.product.point} />
+      <RewardsCardProgress myPoint={userPoint} itemPoint={item?.point ?? 0} />
+      <RewardsCardPoint itemPoint={item?.point} />
       <StyledRewardsCardPoint>
         Points Completion:{' '}
         <span>
-          {point}/{item?.product.point}
+          {userPoint}/{item?.point}
         </span>
       </StyledRewardsCardPoint>
+      {item?.coupon && (
+        <UIFlexWrapBox sx={{ alignItems: 'center', mt: '12px' }}>
+          <Redeem
+            style={{ fontSize: '16px', color: 'rgba(137, 200, 198, 0.8)' }}
+          />
+          <StyledRewardsCardCoupon>
+            {item?.coupon} Coupons
+          </StyledRewardsCardCoupon>
+        </UIFlexWrapBox>
+      )}
       <StyledCardExchangeOfferButton
         onClick={() => router.push(`/rewards/${item.id}`)}
       >

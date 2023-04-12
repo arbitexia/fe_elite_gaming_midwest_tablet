@@ -5,7 +5,6 @@ export declare namespace ProductType {
     id: number;
     name: string;
     amount: number;
-    point: number;
     status: string;
     short: string;
     description: string;
@@ -20,7 +19,6 @@ export declare namespace ProductType {
     input: {
       name?: string;
       amount?: number;
-      point?: number;
       status?: string;
       short?: string;
       description?: string;

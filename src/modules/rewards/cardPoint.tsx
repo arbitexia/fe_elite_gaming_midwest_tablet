@@ -1,21 +1,26 @@
 import { UIFlexWrapBox, UIImage } from '@/components/UI';
 import { Typography } from '@mui/material';
 
-export const RewardsCardPoint = ({ itemPoint }: { itemPoint: number }) => {
+type RewardsCardPointProps = {
+  itemPoint?: number;
+};
+export const RewardsCardPoint = ({ itemPoint }: RewardsCardPointProps) => {
   return (
-    <UIFlexWrapBox
-      sx={{
-        mt: '14px',
-        alignItems: 'center',
-        fontWeight: '600',
-        fontSize: '18px',
-        lineHeight: '27px',
-        display: 'flex',
-        color: '#FFFFFF',
-      }}
-    >
-      <UIImage src="images/icons/coin.png" width={20} height={20} />
-      <Typography>{itemPoint} points</Typography>
-    </UIFlexWrapBox>
+    <>
+      {itemPoint && (
+        <UIFlexWrapBox
+          sx={{
+            mt: '14px',
+            fontWeight: '600',
+            fontSize: '18px',
+            lineHeight: '27px',
+            color: '#FFFFFF',
+          }}
+        >
+          <UIImage src="images/icons/coin.png" width={20} height={20} />
+          <Typography>{itemPoint} points</Typography>
+        </UIFlexWrapBox>
+      )}
+    </>
   );
 };

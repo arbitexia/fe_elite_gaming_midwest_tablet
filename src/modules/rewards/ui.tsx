@@ -3,7 +3,7 @@ import { UIFlexWrapBox } from '@/components/UI';
 
 export const StyledRewardsCard = styled(UIFlexWrapBox)({
   width: '260px',
-  height: '460px',
+  height: '470px',
   background: 'rgba(255, 255, 255, 0.05)',
   border: '2px solid rgba(137, 200, 198, 0.1)',
   backdropFilter: 'blur(20px)',
@@ -30,6 +30,13 @@ export const StyledRewardsCardPoint = styled(Typography)({
   span: {
     color: 'rgba(137, 200, 198, 0.8)',
   },
+});
+
+export const StyledRewardsCardCoupon = styled(Typography)({
+  fontWeight: '600',
+  fontSize: '12px',
+  lineHeight: '14px',
+  color: 'rgba(137, 200, 198, 0.8)',
 });
 
 export const StyledRewardsName = styled(Typography)({
@@ -62,7 +69,7 @@ export const StyledRewardsSpecValue = styled(Typography)({
 });
 
 export const StyledCardExchangeOfferButton = styled(Button)({
-  marginTop: '30px',
+  marginTop: '12px',
   width: '220px',
   height: '42px',
   background: 'rgba(137, 200, 198, 0.2)',

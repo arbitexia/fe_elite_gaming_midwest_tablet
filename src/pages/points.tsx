@@ -13,11 +13,14 @@ const MyPoints = () => {
   const { me } = useAuth({});
   useEffect(() => {
     if (!me) return;
-    const param: GetPointParam = {
-      userId: parseInt((me as UserType.User).id),
+    const loadData = async () => {
+      const param: GetPointParam = {
+        userId: parseInt((me as UserType.User).id),
+      };
+      await onGetPoints(param);
+      await onGetLocations({ filterBy: { search: '' } });
     };
-    onGetPoints(param);
-    onGetLocations({ filterBy: { search: '' } });
+    loadData();
   }, [me]);
 
   useEffect(() => {

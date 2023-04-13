@@ -22,6 +22,7 @@ export declare namespace UserType {
     address?: CommonType.Address;
     birthday: string;
     status: Status;
+    coupon?: number;
     role: RoleType.Role;
     createdAt?: string;
     updatedAt?: string;

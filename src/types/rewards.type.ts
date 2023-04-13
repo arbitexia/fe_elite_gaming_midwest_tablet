@@ -7,6 +7,8 @@ export declare namespace RewardType {
     productId?: number;
     location?: LocationType;
     product: ProductType.Data;
+    point?: number;
+    coupon?: number;
     createdAt?: string;
     updatedAt?: string;
   };

@@ -12,6 +12,8 @@ import { StyledDialog } from './ui';
 import { useAuth } from '@/hooks/auth';
 import { useFormik } from 'formik';
 import { useAppToast } from '@/providers';
+import { useTranslation } from 'next-i18next';
+import { i18translateType } from '@/types';
 
 export interface AppLockScreenProps {
   open: boolean;
@@ -19,6 +21,7 @@ export interface AppLockScreenProps {
 }
 
 export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
+  const { t }: i18translateType = useTranslation(['common']);
   const appToast = useAppToast();
   const { onLoginWithTablet } = useAuth({
     handleAuthTabletSuccess: () => {
@@ -47,13 +50,13 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
   ) => {
     let error = '';
     if (name === 'identifier') {
-      if (!value) error = 'ID is required';
+      if (!value) error = t('error-tablet-id');
     }
     if (name === 'password') {
       if (!value) {
-        error = 'Password is required';
+        error = t('error-password');
       } else if (value.length < 8) {
-        error = 'Password should be of minimum 8 characters length';
+        error = error = t('error-password-length');
       }
     }
 
@@ -78,7 +81,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
                 paddingTop: '50px',
               }}
             >
-              Maximizing Your Revenue by Providing the Most Detailed Reporting
+              {t('desc-checkin')}
             </Typography>
           </UIFlexColumnBox>
         </UIAuthLogoContent>
@@ -87,7 +90,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
             <UIDefaultTextField
               name="identifier"
               value={formik.values.identifier}
-              placeholder="Talbet ID"
+              placeholder={t('tablet-id')}
               onBlur={(e) => {
                 handleFormikChange('identifier', e.target.value, true);
               }}
@@ -96,7 +99,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
               }}
             />
             <UIDefaultTextField
-              placeholder="Password"
+              placeholder={t('password')}
               name="password"
               type="password"
               value={formik.values.password}
@@ -109,7 +112,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
               }}
             />
             <UIDefaultButton type="submit" sx={{ mt: '70px' }}>
-              Login
+              {t('login')}
             </UIDefaultButton>
           </Box>
         </UIAuthMainContent>

@@ -1,4 +1,4 @@
-export type { CommonType } from './common.type';
+export type { CommonType, i18translateType } from './common.type';
 export { ResponseStatus, AuthCallbackStatus } from './common.type';
 export type { RewardType } from './rewards.type';
 export type {

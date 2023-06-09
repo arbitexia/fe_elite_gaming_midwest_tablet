@@ -1,0 +1,23 @@
+{
+  "checkin": "Registrarse",
+  "signup": "Inscribirse",
+  "error-phone-number": "El número de teléfono no es válido",
+  "placeholder-phone-number": "Ingrese su número telefónico",
+  "go-to-points": "Ir a puntos",
+  "desc-checkin": "Maximice sus ingresos proporcionando los informes más detallados",
+  "tablet-id": "Identificación de Talbet",
+  "password": "Contraseña",
+  "login": "Acceso",
+  "error-tablet-id": "Se requiere ID",
+  "error-password": "Se requiere contraseña",
+  "error-password-length": "La contraseña debe tener una longitud mínima de 8 caracteres",
+  "my-points": "Mis Puntos",
+  "rewards": "Recompensas",
+  "my-total-points": "Mi total de puntos",
+  "send-email": "Enviar correo electrónico",
+  "points": "puntos",
+  "close": "Cerca",
+  "alert-time": "¿Necesitas más tiempo?",
+  "yes": "Sí",
+  "no": "No"
+}

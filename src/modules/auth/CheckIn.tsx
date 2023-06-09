@@ -5,8 +5,11 @@ import { AuthTextField } from './AuthTextField';
 import { useRouter } from 'next/router';
 import { useAppToast } from '@/providers';
 import { useAuth } from '@/hooks/auth';
+import { useTranslation } from 'next-i18next';
+import { i18translateType } from '@/types';
 
 export const CheckIn = () => {
+  const { t }: i18translateType = useTranslation();
   const router = useRouter();
   const appToast = useAppToast();
   const { path: type } = router.query;
@@ -19,7 +22,7 @@ export const CheckIn = () => {
 
   const handleSend = () => {
     if (value.length < 10) {
-      appToast({ severity: 'error', message: 'Phone number is invalid' });
+      appToast({ severity: 'error', message: t('error-phone-number') });
     } else {
       onLoginWithUser(value, tabletLocation?.id ?? 0);
     }
@@ -32,7 +35,7 @@ export const CheckIn = () => {
       </Box>
       <Box sx={{ marginTop: '40px', width: '100%' }}>
         <AuthTextField
-          placeholder="Enter your phone number"
+          placeholder={t('placeholder-phone-number')}
           mask="(XXX) XXX-XXXX"
           value={value}
           setValue={setValue}
@@ -40,7 +43,7 @@ export const CheckIn = () => {
       </Box>
 
       <UIDefaultButton sx={{ mt: '50px' }} onClick={handleSend}>
-        Go to points
+        {t('go-to-points')}
       </UIDefaultButton>
     </Box>
   );

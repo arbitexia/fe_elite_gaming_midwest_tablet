@@ -10,7 +10,8 @@ import { StyledFilterBox, StyledPrevButton } from './ui';
 import { Typography } from '@mui/material';
 import { pointData } from '@/_mock/rewards';
 import { useAuth, useLocation } from '@/hooks';
-import { LocationType } from '@/types';
+import { LocationType, i18translateType } from '@/types';
+import { useTranslation } from 'next-i18next';
 
 type DropboxType = {
   value: string;
@@ -26,6 +27,7 @@ const RewardsHeader = ({
   setFilterPoint,
   isFilter = false,
 }: RewardHeaderProps) => {
+  const { t }: i18translateType = useTranslation(['reward']);
   const router = useRouter();
   const { id } = router.query;
   const { tabletLocation } = useAuth({});
@@ -56,13 +58,13 @@ const RewardsHeader = ({
             color: '#89C8C6',
           }}
         >
-          Rewards
+          {t('rewards')}
         </Typography>
       )}
       {isFilter && (
         <UIFlexWrapBox sx={{ gap: '30px' }}>
           <StyledFilterBox>
-            <Typography>Location</Typography>
+            <Typography>{t('location')}</Typography>
             <UISelectBox
               items={locationData}
               onSelectChange={(value) => {
@@ -75,7 +77,7 @@ const RewardsHeader = ({
             />
           </StyledFilterBox>
           <StyledFilterBox>
-            <Typography>Points</Typography>
+            <Typography>{t('points')}</Typography>
             <UISelectBox
               items={pointData}
               onSelectChange={(value) =>

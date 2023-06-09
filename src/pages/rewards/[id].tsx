@@ -9,14 +9,25 @@ import {
   UIFlexWrapBox,
 } from '@/components/UI';
 import { RewardsHeader, RewardsPointsBox } from '@/modules/rewards';
-import { RewardType, TransactionType, UserType } from '@/types';
+import {
+  RewardType,
+  TransactionType,
+  UserType,
+  i18translateType,
+} from '@/types';
 import { Divider, Box, Typography } from '@mui/material';
 import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
 import { useReward, usePoint, useTransaction, useAuth } from '@/hooks';
 import { TransactionStatus } from '@/types/transaction.type';
+import { useAppToast } from '@/providers';
+import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const RewardsById = () => {
+  const { t }: i18translateType = useTranslation(['common', 'reward']);
   const router = useRouter();
+  const appToast = useAppToast();
   const { me } = useAuth({});
   const { rewards } = useReward();
   const { points } = usePoint();
@@ -53,6 +64,10 @@ const RewardsById = () => {
         },
       };
       await onCreateTransaction(dataToSave);
+      appToast({
+        severity: 'success',
+        message: 'The product has been Requested.',
+      });
       router.push('/rewards');
     } else if (userCoupon >= rewardCoupon) {
       const dataToSave: TransactionType.Body = {
@@ -68,13 +83,17 @@ const RewardsById = () => {
         },
       };
       await onCreateTransaction(dataToSave);
+      appToast({
+        severity: 'success',
+        message: 'The product has been Requested.',
+      });
       router.push('/rewards');
     } else {
       setOpenModal(true);
     }
   };
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title={t('common:my-points')}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader />
         <Divider
@@ -138,15 +157,14 @@ const RewardsById = () => {
               py: '30px',
             }}
           >
-            It is not possible to exchange with the current point. Please gain
-            more points.
+            {t('reward:alert-desc-exchange-offer')}
           </Typography>
           <UIDefaultButton
             type="button"
             sx={{ height: '54px' }}
             onClick={() => setOpenModal(false)}
           >
-            Close
+            {t('common:close')}
           </UIDefaultButton>
         </UIFlexColumnBox>
       </UIDialog>
@@ -155,3 +173,14 @@ const RewardsById = () => {
 };
 
 export default RewardsById;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(context?.locale ?? 'es', [
+        'common',
+        'reward',
+      ])),
+    },
+  };
+};

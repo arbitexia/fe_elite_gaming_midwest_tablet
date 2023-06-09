@@ -2,12 +2,15 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { Box, Typography } from '@mui/material';
 import { UIFlexSpaceBox } from './Box';
+import { useTranslation } from 'next-i18next';
+import { i18translateType } from '@/types';
 
 export type UIAuthTabsProps = {
   isCheckIn: boolean;
 };
 
 export const UIAuthTabs = ({ isCheckIn }: UIAuthTabsProps) => {
+  const { t }: i18translateType = useTranslation();
   const router = useRouter();
   return (
     <UIFlexSpaceBox
@@ -47,7 +50,7 @@ export const UIAuthTabs = ({ isCheckIn }: UIAuthTabsProps) => {
           router.push('/');
         }}
       >
-        Check In
+        {t('checkin')}
       </Typography>
       <Typography
         sx={{ width: '50%', zIndex: 2, cursor: 'pointer' }}
@@ -55,7 +58,7 @@ export const UIAuthTabs = ({ isCheckIn }: UIAuthTabsProps) => {
           router.push('/?path=signup');
         }}
       >
-        Sign Up
+        {t('signup')}
       </Typography>
     </UIFlexSpaceBox>
   );

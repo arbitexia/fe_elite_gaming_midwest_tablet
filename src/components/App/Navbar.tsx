@@ -3,9 +3,11 @@ import { UIFlexSpaceBox, UIFlexWrapBox, UIImage } from '../UI';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { formatPhoneNumber } from '@/libs/data-helper';
-import { UserType } from '@/types';
+import { UserType, i18translateType } from '@/types';
+import { useTranslation } from 'next-i18next';
 
 const AppNavbar = () => {
+  const { t }: i18translateType = useTranslation('common');
   const router = useRouter();
   const { me } = useAuth({});
   const isPointPage = router.pathname === '/points';
@@ -25,7 +27,7 @@ const AppNavbar = () => {
       }}
     >
       <Box onClick={() => router.push('/points')} sx={{ cursor: 'pointer' }}>
-        <UIImage src={'images/icons/logo.svg'} width={56} height={54} />
+        <UIImage src={'/images/icons/logo.svg'} width={56} height={54} />
       </Box>
       <UIFlexWrapBox>
         <Box sx={{ display: 'flex' }}>
@@ -43,11 +45,11 @@ const AppNavbar = () => {
             }}
           >
             <UIImage
-              src={`images/icons/points${isPointPage ? '' : '-dark'}.svg`}
+              src={`/images/icons/points${isPointPage ? '' : '-dark'}.svg`}
               width={29}
               height={23}
             />
-            <Typography>My Points</Typography>
+            <Typography>{t('my-points')}</Typography>
           </Box>
           <Box
             onClick={() => router.push('/rewards')}
@@ -63,11 +65,11 @@ const AppNavbar = () => {
             }}
           >
             <UIImage
-              src={`images/icons/rewards${isPointPage ? '-dark' : ''}.svg`}
+              src={`/images/icons/rewards${isPointPage ? '-dark' : ''}.svg`}
               width={29}
               height={23}
             />
-            <Typography>Rewards</Typography>
+            <Typography>{t('rewards')}</Typography>
           </Box>
           <Typography
             sx={{

@@ -2,7 +2,7 @@ import { UIFlexCenterBox } from '@/components/UI';
 import { styled, Box, Button } from '@mui/material';
 
 export const StyledCardWrapper = styled(Box)({
-  background: 'url(images/PointBack.png)',
+  background: 'url(/images/PointBack.png)',
   backgroundSize: 'cover',
   position: 'absolute',
   width: '50vw',

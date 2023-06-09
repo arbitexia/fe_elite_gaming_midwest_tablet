@@ -7,6 +7,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { UIFlexCenterBox, UIFlexWrapBox } from '../UI';
+import { useTranslation } from 'next-i18next';
+import { i18translateType } from '@/types';
 
 interface AppConfirmProps {
   open: boolean;
@@ -15,6 +17,7 @@ interface AppConfirmProps {
 }
 
 export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
+  const { t }: i18translateType = useTranslation('common');
   const [progress, setProgress] = useState(0);
   const time = 30;
   useEffect(() => {
@@ -99,7 +102,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
               color: '#FFFFFF',
             }}
           >
-            Do you need more time?
+            {t('alert-time')}
           </Typography>
         </Box>
         <UIFlexWrapBox sx={{ gap: '30px', mt: '60px' }}>
@@ -117,7 +120,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
             }}
             onClick={() => handleYes()}
           >
-            Yes
+            {t('yes')}
           </Button>
           <Button
             sx={{
@@ -133,7 +136,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
             }}
             onClick={() => handleNo()}
           >
-            No
+            {t('no')}
           </Button>
         </UIFlexWrapBox>
       </UIFlexCenterBox>

@@ -2,8 +2,11 @@ import { UIFlexWrapBox, UIFlexSpaceBox } from '@/components/UI';
 import { Typography } from '@mui/material';
 import { MyLocation as MyLocationIcon } from '@mui/icons-material';
 import { useAuth } from '@/hooks';
+import { useTranslation } from 'next-i18next';
+import { i18translateType } from '@/types';
 
 const PointsHeader = () => {
+  const { t }: i18translateType = useTranslation(['common']);
   const { tabletLocation } = useAuth({});
   return (
     <UIFlexSpaceBox>
@@ -17,7 +20,7 @@ const PointsHeader = () => {
           color: '#89C8C6',
         }}
       >
-        My Points
+        {t('my-total-points')}
       </Typography>
       <UIFlexWrapBox sx={{ mt: '30px', alignItems: 'center', gap: '12px' }}>
         <MyLocationIcon

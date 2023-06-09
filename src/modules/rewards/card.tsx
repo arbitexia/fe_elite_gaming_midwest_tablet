@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
-import { RewardType } from '@/types';
+import { RewardType, i18translateType } from '@/types';
 import { RewardsCardProgress } from './cardProgress';
 import { RewardsCardPoint } from './cardPoint';
 import {
@@ -11,6 +11,7 @@ import {
 } from './ui';
 import { Redeem } from '@mui/icons-material';
 import { UIFlexWrapBox } from '@/components/UI';
+import { useTranslation } from 'next-i18next';
 
 export type RewardsCardProps = {
   userPoint: number;
@@ -18,6 +19,8 @@ export type RewardsCardProps = {
 };
 
 export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
+  const { t }: i18translateType = useTranslation(['reward']);
+
   const router = useRouter();
   return (
     <StyledRewardsCard>
@@ -31,14 +34,14 @@ export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
         src={
           item?.product?.gallery?.[0]?.asset?.url
             ? `${item?.product?.gallery?.[0]?.asset?.url}`
-            : 'images/noImage.jpg'
+            : '/images/noImage.jpg'
         }
         alt="image"
       />
       <RewardsCardProgress myPoint={userPoint} itemPoint={item?.point ?? 0} />
       <RewardsCardPoint itemPoint={item?.point} />
       <StyledRewardsCardPoint>
-        Points Completion:{' '}
+        {t('point-completion')}:{' '}
         <span>
           {userPoint}/{item?.point}
         </span>
@@ -49,14 +52,14 @@ export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
             style={{ fontSize: '16px', color: 'rgba(137, 200, 198, 0.8)' }}
           />
           <StyledRewardsCardCoupon>
-            {item?.coupon} Coupons
+            {item?.coupon} {t('coupons')}
           </StyledRewardsCardCoupon>
         </UIFlexWrapBox>
       )}
       <StyledCardExchangeOfferButton
         onClick={() => router.push(`/rewards/${item.id}`)}
       >
-        Exchange Offer
+        {t('exchange-offer')}
       </StyledCardExchangeOfferButton>
     </StyledRewardsCard>
   );

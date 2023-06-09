@@ -10,12 +10,14 @@ import {
 } from './ui';
 import { PointType } from '@/types';
 import { useAuth } from '@/hooks';
+import { useTranslation } from 'next-i18next';
 
 interface PointsMainProps {
   points: PointType[];
 }
 
 const PointsMain = ({ points }: PointsMainProps) => {
+  const { t } = useTranslation(['common']);
   const { tabletLocation } = useAuth({});
   const [currDeg, setCurrDeg] = useState(0);
   const [second, setSecond] = useState(1);
@@ -107,7 +109,7 @@ const PointsMain = ({ points }: PointsMainProps) => {
             WebkitTextStroke: '1px rgba(19, 90, 86, 0.56)',
           }}
         >
-          Send Email
+          {t('send-email')}
         </Typography>
       </StyledSendButton>
     </>

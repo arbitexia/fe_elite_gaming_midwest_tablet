@@ -22,6 +22,9 @@ export const usePoint = () => {
   };
 
   const onGetPointCount = () => {
+    if (points && points.length <= 0) {
+      return 0;
+    }
     const totalCount = points?.map((p) => p.point).reduce((a, b) => a + b) ?? 0;
     return totalCount;
   };

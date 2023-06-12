@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { UIImage } from '@/components/UI';
 import { languageMenuItems } from '@/_mock/checkin';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
+import { useSelectedLanguage, LanguageSwitcher } from 'next-export-i18n';
 
 const AppLanguageSelector = () => {
-  const { i18n } = useTranslation();
-  const router = useRouter();
   const [anchorElLanguage, setAnchorElLanguage] = useState<null | HTMLElement>(
     null
   );
+  const { lang } = useSelectedLanguage();
   const isLanguageMenuOpen = Boolean(anchorElLanguage);
+
   return (
     <Box sx={{ position: 'absolute', left: '75px', top: '75px' }}>
       <Button
@@ -20,11 +19,7 @@ const AppLanguageSelector = () => {
           setAnchorElLanguage(e.currentTarget);
         }}
         startIcon={
-          <UIImage
-            src={`images/icons/${i18n.language}.svg`}
-            width={24}
-            height={24}
-          />
+          <UIImage src={`images/icons/${lang}.svg`} width={24} height={24} />
         }
       >
         <Typography
@@ -37,7 +32,7 @@ const AppLanguageSelector = () => {
             textTransform: 'none',
           }}
         >
-          {i18n.language === 'en' ? 'English' : 'Español'}
+          {lang === 'en' ? 'English' : 'Español'}
         </Typography>
       </Button>
       <Menu
@@ -52,31 +47,30 @@ const AppLanguageSelector = () => {
           setAnchorElLanguage(null);
         }}
         onClick={() => {
-          router.push(router.asPath, undefined, {
-            locale: i18n.language === 'en' ? 'es' : 'en',
-          });
           setAnchorElLanguage(null);
         }}
       >
         {languageMenuItems.map((languageItem, index) => (
-          <MenuItem key={index}>
-            <Box sx={{ borderRadius: '50%' }}>
-              <UIImage src={languageItem.icon} width={24} height={24} />
-            </Box>
-            <Typography
-              sx={{
-                fontStyle: 'normal',
-                fontWeight: '400',
-                fontSize: '14px',
-                lineHeight: '21px',
-                color: '#83A9A8',
-                textTransform: 'none',
-                marginLeft: '8px',
-              }}
-            >
-              {languageItem.text}
-            </Typography>
-          </MenuItem>
+          <LanguageSwitcher key={index} lang={languageItem.key}>
+            <MenuItem>
+              <Box sx={{ borderRadius: '50%' }}>
+                <UIImage src={languageItem.icon} width={24} height={24} />
+              </Box>
+              <Typography
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: '400',
+                  fontSize: '14px',
+                  lineHeight: '21px',
+                  color: '#83A9A8',
+                  textTransform: 'none',
+                  marginLeft: '8px',
+                }}
+              >
+                {languageItem.text}
+              </Typography>
+            </MenuItem>
+          </LanguageSwitcher>
         ))}
       </Menu>
     </Box>

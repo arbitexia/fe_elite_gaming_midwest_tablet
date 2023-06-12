@@ -5,24 +5,29 @@ import { AuthTextField } from './AuthTextField';
 import { useRouter } from 'next/router';
 import { useAppToast } from '@/providers';
 import { useAuth } from '@/hooks/auth';
-import { useTranslation } from 'next-i18next';
-import { i18translateType } from '@/types';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 export const CheckIn = () => {
-  const { t }: i18translateType = useTranslation();
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const appToast = useAppToast();
   const { path: type } = router.query;
   const [value, setValue] = useState('');
   const { onLoginWithUser, tabletLocation } = useAuth({
     handleAuthUserSuccess: () => {
-      router.push('/points');
+      router.push({
+        pathname: '/points',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
     },
   });
 
   const handleSend = () => {
     if (value.length < 10) {
-      appToast({ severity: 'error', message: t('error-phone-number') });
+      appToast({ severity: 'error', message: t('common.error-phone-number') });
     } else {
       onLoginWithUser(value, tabletLocation?.id ?? 0);
     }
@@ -35,7 +40,7 @@ export const CheckIn = () => {
       </Box>
       <Box sx={{ marginTop: '40px', width: '100%' }}>
         <AuthTextField
-          placeholder={t('placeholder-phone-number')}
+          placeholder={t('common.placeholder-phone-number')}
           mask="(XXX) XXX-XXXX"
           value={value}
           setValue={setValue}
@@ -43,7 +48,7 @@ export const CheckIn = () => {
       </Box>
 
       <UIDefaultButton sx={{ mt: '50px' }} onClick={handleSend}>
-        {t('go-to-points')}
+        {t('common.go-to-points')}
       </UIDefaultButton>
     </Box>
   );

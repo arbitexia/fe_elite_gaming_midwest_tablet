@@ -2,15 +2,15 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { Box, Typography } from '@mui/material';
 import { UIFlexSpaceBox } from './Box';
-import { useTranslation } from 'next-i18next';
-import { i18translateType } from '@/types';
+import { useTranslation, useSelectedLanguage } from 'next-export-i18n';
 
 export type UIAuthTabsProps = {
   isCheckIn: boolean;
 };
 
 export const UIAuthTabs = ({ isCheckIn }: UIAuthTabsProps) => {
-  const { t }: i18translateType = useTranslation();
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   return (
     <UIFlexSpaceBox
@@ -47,18 +47,29 @@ export const UIAuthTabs = ({ isCheckIn }: UIAuthTabsProps) => {
       <Typography
         sx={{ width: '50%', zIndex: 2, cursor: 'pointer' }}
         onClick={() => {
-          router.push('/');
+          router.push({
+            pathname: '/',
+            query: {
+              ...(lang === 'es' && { lang }),
+            },
+          });
         }}
       >
-        {t('checkin')}
+        {t('common.checkin')}
       </Typography>
       <Typography
         sx={{ width: '50%', zIndex: 2, cursor: 'pointer' }}
         onClick={() => {
-          router.push('/?path=signup');
+          router.push({
+            pathname: '/',
+            query: {
+              path: 'signup',
+              ...(lang === 'es' && { lang }),
+            },
+          });
         }}
       >
-        {t('signup')}
+        {t('common.signup')}
       </Typography>
     </UIFlexSpaceBox>
   );

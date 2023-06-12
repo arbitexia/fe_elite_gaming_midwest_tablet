@@ -9,23 +9,17 @@ import {
   UIFlexWrapBox,
 } from '@/components/UI';
 import { RewardsHeader, RewardsPointsBox } from '@/modules/rewards';
-import {
-  RewardType,
-  TransactionType,
-  UserType,
-  i18translateType,
-} from '@/types';
+import { RewardType, TransactionType, UserType } from '@/types';
 import { Divider, Box, Typography } from '@mui/material';
 import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
 import { useReward, usePoint, useTransaction, useAuth } from '@/hooks';
 import { TransactionStatus } from '@/types/transaction.type';
 import { useAppToast } from '@/providers';
-import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 const RewardsById = () => {
-  const { t }: i18translateType = useTranslation(['common', 'reward']);
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const appToast = useAppToast();
   const { me } = useAuth({});
@@ -68,7 +62,12 @@ const RewardsById = () => {
         severity: 'success',
         message: 'The product has been Requested.',
       });
-      router.push('/rewards');
+      router.push({
+        pathname: '/rewards',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
     } else if (userCoupon >= rewardCoupon) {
       const dataToSave: TransactionType.Body = {
         input: {
@@ -87,13 +86,18 @@ const RewardsById = () => {
         severity: 'success',
         message: 'The product has been Requested.',
       });
-      router.push('/rewards');
+      router.push({
+        pathname: '/rewards',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
     } else {
       setOpenModal(true);
     }
   };
   return (
-    <DashboardLayout title={t('common:my-points')}>
+    <DashboardLayout title={t('common:rewards')}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader />
         <Divider
@@ -173,14 +177,3 @@ const RewardsById = () => {
 };
 
 export default RewardsById;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(context?.locale ?? 'es', [
-        'common',
-        'reward',
-      ])),
-    },
-  };
-};

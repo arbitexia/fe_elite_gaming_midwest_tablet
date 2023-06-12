@@ -12,8 +12,7 @@ import { StyledDialog } from './ui';
 import { useAuth } from '@/hooks/auth';
 import { useFormik } from 'formik';
 import { useAppToast } from '@/providers';
-import { useTranslation } from 'next-i18next';
-import { i18translateType } from '@/types';
+import { useTranslation } from 'next-export-i18n';
 
 export interface AppLockScreenProps {
   open: boolean;
@@ -21,7 +20,7 @@ export interface AppLockScreenProps {
 }
 
 export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
-  const { t }: i18translateType = useTranslation(['common']);
+  const { t } = useTranslation();
   const appToast = useAppToast();
   const { onLoginWithTablet } = useAuth({
     handleAuthTabletSuccess: () => {
@@ -50,13 +49,13 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
   ) => {
     let error = '';
     if (name === 'identifier') {
-      if (!value) error = t('error-tablet-id');
+      if (!value) error = t('common.error-tablet-id');
     }
     if (name === 'password') {
       if (!value) {
-        error = t('error-password');
+        error = t('common.error-password');
       } else if (value.length < 8) {
-        error = error = t('error-password-length');
+        error = error = t('common.error-password-length');
       }
     }
 
@@ -81,7 +80,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
                 paddingTop: '50px',
               }}
             >
-              {t('desc-checkin')}
+              {t('common.desc-checkin')}
             </Typography>
           </UIFlexColumnBox>
         </UIAuthLogoContent>
@@ -90,7 +89,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
             <UIDefaultTextField
               name="identifier"
               value={formik.values.identifier}
-              placeholder={t('tablet-id')}
+              placeholder={t('common.tablet-id')}
               onBlur={(e) => {
                 handleFormikChange('identifier', e.target.value, true);
               }}
@@ -99,7 +98,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
               }}
             />
             <UIDefaultTextField
-              placeholder={t('password')}
+              placeholder={t('common.password')}
               name="password"
               type="password"
               value={formik.values.password}
@@ -112,7 +111,7 @@ export const AppLockScreen = ({ open, handleClose }: AppLockScreenProps) => {
               }}
             />
             <UIDefaultButton type="submit" sx={{ mt: '70px' }}>
-              {t('login')}
+              {t('common.login')}
             </UIDefaultButton>
           </Box>
         </UIAuthMainContent>

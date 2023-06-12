@@ -7,8 +7,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { UIFlexCenterBox, UIFlexWrapBox } from '../UI';
-import { useTranslation } from 'next-i18next';
-import { i18translateType } from '@/types';
+import { useTranslation } from 'next-export-i18n';
 
 interface AppConfirmProps {
   open: boolean;
@@ -17,7 +16,7 @@ interface AppConfirmProps {
 }
 
 export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
-  const { t }: i18translateType = useTranslation('common');
+  const { t } = useTranslation();
   const [progress, setProgress] = useState(0);
   const time = 30;
   useEffect(() => {
@@ -102,7 +101,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
               color: '#FFFFFF',
             }}
           >
-            {t('alert-time')}
+            {t('common.alert-time')}
           </Typography>
         </Box>
         <UIFlexWrapBox sx={{ gap: '30px', mt: '60px' }}>
@@ -120,7 +119,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
             }}
             onClick={() => handleYes()}
           >
-            {t('yes')}
+            {t('common.yes')}
           </Button>
           <Button
             sx={{
@@ -136,7 +135,7 @@ export const AppConfirm = ({ open, handleYes, handleNo }: AppConfirmProps) => {
             }}
             onClick={() => handleNo()}
           >
-            {t('no')}
+            {t('common.no')}
           </Button>
         </UIFlexWrapBox>
       </UIFlexCenterBox>

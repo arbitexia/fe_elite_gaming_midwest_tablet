@@ -5,9 +5,8 @@ import { DashboardLayout } from '@/layouts';
 import { PointsMain, PointsHeader } from '@/modules/points';
 import { usePoint, useAuth, useLocation } from '@/hooks';
 import { GetPointParam, PointType, UserType } from '@/types';
-import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+
+import { useTranslation } from 'next-export-i18n';
 
 const MyPoints = () => {
   const { t } = useTranslation();
@@ -56,7 +55,7 @@ const MyPoints = () => {
     }
   }, [locations]);
   return (
-    <DashboardLayout title={t('my-points')}>
+    <DashboardLayout title={t('common.my-points')}>
       <UIContainer sx={{ height: 'calc(100vh - 86px)' }}>
         <PointsHeader />
         <Divider sx={{ borderColor: 'rgba(137, 200, 198, 0.5)' }} />
@@ -77,11 +76,3 @@ const MyPoints = () => {
 };
 
 export default MyPoints;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(context?.locale ?? 'es', ['common'])),
-    },
-  };
-};

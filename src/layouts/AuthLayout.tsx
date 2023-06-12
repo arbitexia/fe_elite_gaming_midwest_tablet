@@ -14,8 +14,8 @@ import { Box, Typography } from '@mui/material';
 import { useAppLockScreen } from '@/providers';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks';
-import { useTranslation } from 'next-i18next';
-import { i18translateType } from '@/types';
+import { useTranslation } from 'next-export-i18n';
+
 interface Props {
   bg?: string;
   title?: string;
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const AuthLayout = (props: Props) => {
-  const { t }: i18translateType = useTranslation();
+  const { t } = useTranslation();
   const { isTabletAuthenticated } = useAuth({});
   const router = useRouter();
   const appLockScreen = useAppLockScreen();
@@ -79,7 +79,7 @@ const AuthLayout = (props: Props) => {
                     paddingTop: '50px',
                   }}
                 >
-                  {t('desc-checkin')}
+                  {t('common.desc-checkin')}
                 </Typography>
               </UIFlexColumnBox>
             </UIAuthLogoContent>

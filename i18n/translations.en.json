@@ -1,5 +1,50 @@
 {
-  "login": {
-    "login": "en-Login Page"
+  "common": {
+    "checkin": "Check In",
+    "signup": "Sign Up",
+    "error-phone-number": "Phone number is invalid",
+    "placeholder-phone-number": "Enter your phone number",
+    "go-to-points": "Go to points",
+    "desc-checkin": "Maximizing Your Revenue by Providing the Most Detailed Reporting",
+    "tablet-id": "Talbet ID",
+    "password": "Password",
+    "login": "Login",
+    "error-tablet-id": "ID is required",
+    "error-password": "Password is required",
+    "error-password-length": "Password should be of minimum 8 characters length",
+    "my-points": "My Points",
+    "rewards": "Rewards",
+    "my-total-points": "My total points",
+    "send-email": "Send Email",
+    "points": "points",
+    "close": "Close",
+    "alert-time": "Do you need more time?",
+    "yes": "Yes",
+    "no": "No",
+    "invalid-code": "Invalid Code",
+    "placeholder-verify-phone": "Enter the code we sent to your phone number",
+    "verify-code": "Verify Code"
+  },
+  "reward": {
+    "point-completion": "Points Completion",
+    "coupons": "Coupons",
+    "exchange-offer": "Exchange Offer",
+    "location": "Location",
+    "points": "Points",
+    "alert-desc-exchange-offer": "It is not possible to exchange with the current point. Please gain more points."
+  },
+  "signup": {
+    "phone-number": "Phone Number",
+    "email": "Email",
+    "birthday": "Birthday",
+    "desc-checkbox": "By submitting this form, I confirm that I am at least 21 years of age, accept the",
+    "terms-and-condition": "Terms and Conditions.",
+    "join-now": "Join Now",
+    "error-phone-number-empty": "Phonenumber is required",
+    "error-phone-number-valid": "Phonenumber is not valid",
+    "error-email": "Email is required",
+    "invalid-email": "Invalid Email",
+    "error-birthday": "Birthday is required",
+    "invalid-birthday": "Invalid Birthday"
   }
 }

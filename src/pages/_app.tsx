@@ -10,7 +10,6 @@ import {
   AppLockScreenProvider,
 } from '@/providers';
 import { setupJwt } from '@/redux/apis/axios.api';
-import { appWithTranslation } from 'next-i18next';
 
 function EliteApp({ Component, pageProps }: AppProps) {
   const store = useStore();
@@ -30,4 +29,4 @@ function EliteApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default appWithTranslation(wrapper.withRedux(EliteApp));
+export default wrapper.withRedux(EliteApp);

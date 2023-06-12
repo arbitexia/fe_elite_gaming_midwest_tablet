@@ -1,6 +1,6 @@
 import { RewardsCardProgress } from './cardProgress';
 import { RewardsCardPoint } from './cardPoint';
-import { RewardType, i18translateType } from '@/types';
+import { RewardType } from '@/types';
 import {
   StyledRewardsName,
   StyledRewardsLocation,
@@ -11,7 +11,7 @@ import {
 import { UIFlexWrapBox } from '@/components/UI';
 import { Typography } from '@mui/material';
 import { Redeem } from '@mui/icons-material';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-export-i18n';
 
 export type RewardsInfoBoxProps = {
   userPoint: number;
@@ -24,7 +24,7 @@ export const RewardsInfoBox = ({
   rewardItem,
   onExchange,
 }: RewardsInfoBoxProps) => {
-  const { t }: i18translateType = useTranslation(['reward']);
+  const { t } = useTranslation();
   const { product, location } = rewardItem;
   return (
     <>
@@ -48,7 +48,7 @@ export const RewardsInfoBox = ({
           >
             <Redeem style={{ fontSize: '20px' }} />
             <Typography sx={{ fontWeight: 600, mt: '4px' }}>
-              {rewardItem?.coupon} {t('coupons')}
+              {rewardItem?.coupon} {t('reward.coupons')}
             </Typography>
           </UIFlexWrapBox>
         )}
@@ -59,7 +59,7 @@ export const RewardsInfoBox = ({
         itemPoint={rewardItem?.point ?? 0}
       />
       <StyledRewardsCardPoint sx={{ fontSize: '16px' }}>
-        {t('point-completion')}:{' '}
+        {t('reward.point-completion')}:{' '}
         <span>
           {userPoint}/{rewardItem?.point}
         </span>
@@ -68,7 +68,7 @@ export const RewardsInfoBox = ({
         <StyledRewardsSpecKey>{product.short}</StyledRewardsSpecKey>
       </UIFlexWrapBox>
       <StyledDetailExchangeOfferButton onClick={onExchange}>
-        {t('exchange-offer')}
+        {t('reward.exchange-offer')}
       </StyledDetailExchangeOfferButton>
     </>
   );

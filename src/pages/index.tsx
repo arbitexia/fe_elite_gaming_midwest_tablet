@@ -1,18 +1,21 @@
 import { useRouter } from 'next/router';
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { AuthLayout } from '@/layouts';
 import { SignUp, CheckIn } from '@/modules/auth';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-export-i18n';
 
 const HomePage: NextPage = () => {
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation();
   const router = useRouter();
   const { path: pageType } = router.query;
 
   return (
     <AuthLayout
-      title={pageType === 'signup' ? `${t('signup')}` : `${t('checkin')}`}
+      title={
+        pageType === 'signup'
+          ? `${t('common.signup')}`
+          : `${t('common.checkin')}`
+      }
     >
       {pageType === 'signup' ? <SignUp /> : <CheckIn />}
     </AuthLayout>
@@ -20,14 +23,3 @@ const HomePage: NextPage = () => {
 };
 
 export default HomePage;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(context?.locale ?? 'es', [
-        'common',
-        'signup',
-      ])),
-    },
-  };
-};

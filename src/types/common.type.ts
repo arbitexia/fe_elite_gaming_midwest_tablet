@@ -11,13 +11,6 @@ export enum AuthCallbackStatus {
   VERIFY = 'verify',
 }
 
-export type i18translateType = {
-  t: (
-    key: string | TemplateStringsArray | (string | TemplateStringsArray)[],
-    options?: string | undefined
-  ) => string;
-};
-
 export declare namespace CommonType {
   export type Message = {
     message: string;

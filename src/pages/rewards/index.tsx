@@ -9,9 +9,7 @@ import {
 import { DashboardLayout } from '@/layouts';
 import { useAuth, usePoint, useReward } from '@/hooks';
 import { UserType } from '@/types';
-import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-export-i18n';
 
 const Rewards = () => {
   const { t } = useTranslation();
@@ -76,7 +74,7 @@ const Rewards = () => {
   };
 
   return (
-    <DashboardLayout title={t('my-points')}>
+    <DashboardLayout title={t('common.rewards')}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader
           setFilterLocation={setFilterLocation}
@@ -106,14 +104,3 @@ const Rewards = () => {
   );
 };
 export default Rewards;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(context?.locale ?? 'es', [
-        'common',
-        'reward',
-      ])),
-    },
-  };
-};

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
-import { RewardType, i18translateType } from '@/types';
+import { RewardType } from '@/types';
 import { RewardsCardProgress } from './cardProgress';
 import { RewardsCardPoint } from './cardPoint';
 import {
@@ -11,7 +11,7 @@ import {
 } from './ui';
 import { Redeem } from '@mui/icons-material';
 import { UIFlexWrapBox } from '@/components/UI';
-import { useTranslation } from 'next-i18next';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 export type RewardsCardProps = {
   userPoint: number;
@@ -19,8 +19,8 @@ export type RewardsCardProps = {
 };
 
 export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
-  const { t }: i18translateType = useTranslation(['reward']);
-
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   return (
     <StyledRewardsCard>
@@ -41,7 +41,7 @@ export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
       <RewardsCardProgress myPoint={userPoint} itemPoint={item?.point ?? 0} />
       <RewardsCardPoint itemPoint={item?.point} />
       <StyledRewardsCardPoint>
-        {t('point-completion')}:{' '}
+        {t('reward.point-completion')}:{' '}
         <span>
           {userPoint}/{item?.point}
         </span>
@@ -52,14 +52,21 @@ export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
             style={{ fontSize: '16px', color: 'rgba(137, 200, 198, 0.8)' }}
           />
           <StyledRewardsCardCoupon>
-            {item?.coupon} {t('coupons')}
+            {item?.coupon} {t('reward.coupons')}
           </StyledRewardsCardCoupon>
         </UIFlexWrapBox>
       )}
       <StyledCardExchangeOfferButton
-        onClick={() => router.push(`/rewards/${item.id}`)}
+        onClick={() => {
+          router.push({
+            pathname: `/rewards/${item.id}`,
+            query: {
+              ...(lang === 'es' && { lang }),
+            },
+          });
+        }}
       >
-        {t('exchange-offer')}
+        {t('reward.exchange-offer')}
       </StyledCardExchangeOfferButton>
     </StyledRewardsCard>
   );

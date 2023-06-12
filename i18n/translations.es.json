@@ -1,5 +1,50 @@
 {
-  "login": {
-    "login": "es-Login Page"
+  "common": {
+    "checkin": "Registrarse",
+    "signup": "Inscribirse",
+    "error-phone-number": "El número de teléfono no es válido",
+    "placeholder-phone-number": "Ingrese su número telefónico",
+    "go-to-points": "Ir a puntos",
+    "desc-checkin": "Maximice sus ingresos proporcionando los informes más detallados",
+    "tablet-id": "Identificación de Talbet",
+    "password": "Contraseña",
+    "login": "Acceso",
+    "error-tablet-id": "Se requiere ID",
+    "error-password": "Se requiere contraseña",
+    "error-password-length": "La contraseña debe tener una longitud mínima de 8 caracteres",
+    "my-points": "Mis Puntos",
+    "rewards": "Recompensas",
+    "my-total-points": "Mi total de puntos",
+    "send-email": "Enviar correo electrónico",
+    "points": "puntos",
+    "close": "Cerca",
+    "alert-time": "¿Necesitas más tiempo?",
+    "yes": "Sí",
+    "no": "No",
+    "invalid-code": "Código no válido",
+    "placeholder-verify-phone": "Ingrese el código que le enviamos a su número de teléfono",
+    "verify-code": "Verificar código"
+  },
+  "reward": {
+    "point-completion": "Finalización de puntos",
+    "coupons": "Cupones",
+    "exchange-offer": "Oferta de intercambio",
+    "location": "Ubicación",
+    "points": "Puntos",
+    "alert-desc-exchange-offer": "No es posible intercambiar con el punto actual. Por favor gana más puntos."
+  },
+  "signup": {
+    "phone-number": "Número de teléfono",
+    "email": "Correo electrónico",
+    "birthday": "Cumpleaños",
+    "desc-checkbox": "Al enviar este formulario, confirmo que tengo al menos 21 años, estoy de acuerdo",
+    "terms-and-condition": "Términos y Condiciones.",
+    "join-now": "Únete ahora",
+    "error-phone-number-empty": "Se requiere el número de teléfono",
+    "error-phone-number-valid": "El número de teléfono no es válido",
+    "error-email": "Se requiere correo electrónico",
+    "invalid-email": "Correo electrónico no válido",
+    "error-birthday": "Se requiere cumpleaños",
+    "invalid-birthday": "Cumpleaños no válido"
   }
 }

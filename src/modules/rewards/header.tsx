@@ -10,8 +10,8 @@ import { StyledFilterBox, StyledPrevButton } from './ui';
 import { Typography } from '@mui/material';
 import { pointData } from '@/_mock/rewards';
 import { useAuth, useLocation } from '@/hooks';
-import { LocationType, i18translateType } from '@/types';
-import { useTranslation } from 'next-i18next';
+import { LocationType } from '@/types';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 type DropboxType = {
   value: string;
@@ -27,7 +27,8 @@ const RewardsHeader = ({
   setFilterPoint,
   isFilter = false,
 }: RewardHeaderProps) => {
-  const { t }: i18translateType = useTranslation(['reward']);
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const { id } = router.query;
   const { tabletLocation } = useAuth({});
@@ -45,7 +46,16 @@ const RewardsHeader = ({
   return (
     <UIFlexSpaceBox sx={{ mt: '30px' }}>
       {id ? (
-        <StyledPrevButton onClick={() => router.push('/rewards')}>
+        <StyledPrevButton
+          onClick={() => {
+            router.push({
+              pathname: '/rewards',
+              query: {
+                ...(lang === 'es' && { lang }),
+              },
+            });
+          }}
+        >
           <UIImage src="images/icons/prev.svg" width={15} height={34} />
         </StyledPrevButton>
       ) : (
@@ -58,13 +68,13 @@ const RewardsHeader = ({
             color: '#89C8C6',
           }}
         >
-          {t('rewards')}
+          {t('common.rewards')}
         </Typography>
       )}
       {isFilter && (
         <UIFlexWrapBox sx={{ gap: '30px' }}>
           <StyledFilterBox>
-            <Typography>{t('location')}</Typography>
+            <Typography>{t('reward.location')}</Typography>
             <UISelectBox
               items={locationData}
               onSelectChange={(value) => {
@@ -77,7 +87,7 @@ const RewardsHeader = ({
             />
           </StyledFilterBox>
           <StyledFilterBox>
-            <Typography>{t('points')}</Typography>
+            <Typography>{t('reward.points')}</Typography>
             <UISelectBox
               items={pointData}
               onSelectChange={(value) =>

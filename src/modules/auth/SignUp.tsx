@@ -16,8 +16,10 @@ import InputMask from 'react-input-mask';
 import { Moment } from 'moment';
 import { useAuth } from '@/hooks/auth';
 import { phoneNumberToString } from '@/libs/data-helper';
+import { useTranslation } from 'next-export-i18n';
 
 export const SignUp = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const appToast = useAppToast();
   const [checked, setChecked] = useState(false);
@@ -58,25 +60,25 @@ export const SignUp = () => {
     let error = '';
     if (name === 'phoneNumber') {
       const phoneRegExp = /^\([0-9]{3}\) [0-9]{3} [0-9]{4}$/i;
-      if (!value) error = 'Phonenumber is required';
+      if (!value) error = t('signup.error-phone-number-empty');
       else if (!value.match(phoneRegExp) || value.length < 10)
-        error = 'Phonenumber is not valid';
+        error = t('signup.error-phone-number-valid');
     }
     if (name === 'email') {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
       if (!value) {
-        error = 'Email is required';
+        error = t('signup.error-email');
       } else if (!regex.test(value)) {
-        error = 'Invalid Email';
+        error = t('signup.invalid-email');
       }
     }
     if (name === 'birthday') {
       const regex =
         /^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\d\d$/i;
       if (!value) {
-        error = 'Birthday is required';
+        error = t('signup.error-birthday');
       } else if (!regex.test(value)) {
-        error = 'Invalid Birthday';
+        error = t('signup.invalid-birthday');
       }
     }
     if (error) appToast({ severity: 'error', message: error, isOnBlur });
@@ -99,7 +101,7 @@ export const SignUp = () => {
           <UIFlexWrapBox sx={{ marginTop: '50px', width: '100%', gap: '15px' }}>
             <UIDefaultTextField
               name="phoneNumber"
-              placeholder="Phone Number"
+              placeholder={t('signup.phone-number')}
               value={formik.values.phoneNumber}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 formik.handleChange(e);
@@ -114,7 +116,7 @@ export const SignUp = () => {
             />
 
             <UIDefaultTextField
-              placeholder="Email"
+              placeholder={t('signup.email')}
               id="email"
               name="email"
               value={formik.values.email}
@@ -137,7 +139,10 @@ export const SignUp = () => {
                 }}
                 renderInput={(params) => {
                   return (
-                    <UIDefaultTextField {...params} placeholder="Birthday" />
+                    <UIDefaultTextField
+                      {...params}
+                      placeholder={t('signup.birthday')}
+                    />
                   );
                 }}
               />
@@ -162,8 +167,8 @@ export const SignUp = () => {
                 span: { color: '#008A83' },
               }}
             >
-              By submitting this form, I confirm that I am at least 21 years of
-              age, accept the <span>Terms and Conditions.</span>
+              {t('signup.desc-checkbox')}{' '}
+              <span>{t('signup.terms-and-condition')}</span>
             </Typography>
           </UIFlexWrapBox>
 
@@ -172,7 +177,7 @@ export const SignUp = () => {
             type="submit"
             sx={{ mt: '40px' }}
           >
-            Join Now
+            {t('signup.join-now')}
           </UIDefaultButton>
         </Stack>
       )}

@@ -6,7 +6,10 @@ import { PointsMain, PointsHeader } from '@/modules/points';
 import { usePoint, useAuth, useLocation } from '@/hooks';
 import { GetPointParam, PointType, UserType } from '@/types';
 
+import { useTranslation } from 'next-export-i18n';
+
 const MyPoints = () => {
+  const { t } = useTranslation();
   const { points, onGetPoints } = usePoint();
   const { locations, onGetLocations } = useLocation();
   const [userPoints, setUserPoint] = useState<PointType[]>();
@@ -52,7 +55,7 @@ const MyPoints = () => {
     }
   }, [locations]);
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title={t('common.my-points')}>
       <UIContainer sx={{ height: 'calc(100vh - 86px)' }}>
         <PointsHeader />
         <Divider sx={{ borderColor: 'rgba(137, 200, 198, 0.5)' }} />

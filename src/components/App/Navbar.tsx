@@ -4,8 +4,11 @@ import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { formatPhoneNumber } from '@/libs/data-helper';
 import { UserType } from '@/types';
+import { useTranslation, useSelectedLanguage } from 'next-export-i18n';
 
 const AppNavbar = () => {
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
   const { me } = useAuth({});
   const isPointPage = router.pathname === '/points';
@@ -24,13 +27,30 @@ const AppNavbar = () => {
         zIndex: '10',
       }}
     >
-      <Box onClick={() => router.push('/points')} sx={{ cursor: 'pointer' }}>
-        <UIImage src={'images/icons/logo.svg'} width={56} height={54} />
+      <Box
+        onClick={() => {
+          router.push({
+            pathname: '/points',
+            query: {
+              ...(lang === 'es' && { lang }),
+            },
+          });
+        }}
+        sx={{ cursor: 'pointer' }}
+      >
+        <UIImage src={'/images/icons/logo.svg'} width={56} height={54} />
       </Box>
       <UIFlexWrapBox>
         <Box sx={{ display: 'flex' }}>
           <Box
-            onClick={() => router.push('/points')}
+            onClick={() =>
+              router.push({
+                pathname: '/points',
+                query: {
+                  ...(lang === 'es' && { lang }),
+                },
+              })
+            }
             sx={{
               marginLeft: '15px',
               display: 'flex',
@@ -43,14 +63,21 @@ const AppNavbar = () => {
             }}
           >
             <UIImage
-              src={`images/icons/points${isPointPage ? '' : '-dark'}.svg`}
+              src={`/images/icons/points${isPointPage ? '' : '-dark'}.svg`}
               width={29}
               height={23}
             />
-            <Typography>My Points</Typography>
+            <Typography>{t('common.my-points')}</Typography>
           </Box>
           <Box
-            onClick={() => router.push('/rewards')}
+            onClick={() => {
+              router.push({
+                pathname: '/rewards',
+                query: {
+                  ...(lang === 'es' && { lang }),
+                },
+              });
+            }}
             sx={{
               marginLeft: '40px',
               display: 'flex',
@@ -63,11 +90,11 @@ const AppNavbar = () => {
             }}
           >
             <UIImage
-              src={`images/icons/rewards${isPointPage ? '-dark' : ''}.svg`}
+              src={`/images/icons/rewards${isPointPage ? '-dark' : ''}.svg`}
               width={29}
               height={23}
             />
-            <Typography>Rewards</Typography>
+            <Typography>{t('common.rewards')}</Typography>
           </Box>
           <Typography
             sx={{

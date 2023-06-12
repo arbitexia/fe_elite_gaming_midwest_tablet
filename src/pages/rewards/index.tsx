@@ -9,8 +9,10 @@ import {
 import { DashboardLayout } from '@/layouts';
 import { useAuth, usePoint, useReward } from '@/hooks';
 import { UserType } from '@/types';
+import { useTranslation } from 'next-export-i18n';
 
 const Rewards = () => {
+  const { t } = useTranslation();
   const { rewards, onFilterRewards } = useReward();
   const { points, onGetPoints } = usePoint();
   const { me, tabletLocation } = useAuth({});
@@ -72,7 +74,7 @@ const Rewards = () => {
   };
 
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title={t('common.rewards')}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader
           setFilterLocation={setFilterLocation}

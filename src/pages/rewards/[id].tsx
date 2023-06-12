@@ -14,9 +14,14 @@ import { Divider, Box, Typography } from '@mui/material';
 import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
 import { useReward, usePoint, useTransaction, useAuth } from '@/hooks';
 import { TransactionStatus } from '@/types/transaction.type';
+import { useAppToast } from '@/providers';
+import { useSelectedLanguage, useTranslation } from 'next-export-i18n';
 
 const RewardsById = () => {
+  const { t } = useTranslation();
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
+  const appToast = useAppToast();
   const { me } = useAuth({});
   const { rewards } = useReward();
   const { points } = usePoint();
@@ -53,7 +58,16 @@ const RewardsById = () => {
         },
       };
       await onCreateTransaction(dataToSave);
-      router.push('/rewards');
+      appToast({
+        severity: 'success',
+        message: 'The product has been Requested.',
+      });
+      router.push({
+        pathname: '/rewards',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
     } else if (userCoupon >= rewardCoupon) {
       const dataToSave: TransactionType.Body = {
         input: {
@@ -68,13 +82,22 @@ const RewardsById = () => {
         },
       };
       await onCreateTransaction(dataToSave);
-      router.push('/rewards');
+      appToast({
+        severity: 'success',
+        message: 'The product has been Requested.',
+      });
+      router.push({
+        pathname: '/rewards',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
     } else {
       setOpenModal(true);
     }
   };
   return (
-    <DashboardLayout title="My Points">
+    <DashboardLayout title={t('common:rewards')}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
         <RewardsHeader />
         <Divider
@@ -138,15 +161,14 @@ const RewardsById = () => {
               py: '30px',
             }}
           >
-            It is not possible to exchange with the current point. Please gain
-            more points.
+            {t('reward:alert-desc-exchange-offer')}
           </Typography>
           <UIDefaultButton
             type="button"
             sx={{ height: '54px' }}
             onClick={() => setOpenModal(false)}
           >
-            Close
+            {t('common:close')}
           </UIDefaultButton>
         </UIFlexColumnBox>
       </UIDialog>

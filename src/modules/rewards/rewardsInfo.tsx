@@ -11,6 +11,7 @@ import {
 import { UIFlexWrapBox } from '@/components/UI';
 import { Typography } from '@mui/material';
 import { Redeem } from '@mui/icons-material';
+import { useTranslation } from 'next-export-i18n';
 
 export type RewardsInfoBoxProps = {
   userPoint: number;
@@ -23,6 +24,7 @@ export const RewardsInfoBox = ({
   rewardItem,
   onExchange,
 }: RewardsInfoBoxProps) => {
+  const { t } = useTranslation();
   const { product, location } = rewardItem;
   return (
     <>
@@ -46,7 +48,7 @@ export const RewardsInfoBox = ({
           >
             <Redeem style={{ fontSize: '20px' }} />
             <Typography sx={{ fontWeight: 600, mt: '4px' }}>
-              {rewardItem?.coupon} Coupons
+              {rewardItem?.coupon} {t('reward.coupons')}
             </Typography>
           </UIFlexWrapBox>
         )}
@@ -57,7 +59,7 @@ export const RewardsInfoBox = ({
         itemPoint={rewardItem?.point ?? 0}
       />
       <StyledRewardsCardPoint sx={{ fontSize: '16px' }}>
-        Points Completion:{' '}
+        {t('reward.point-completion')}:{' '}
         <span>
           {userPoint}/{rewardItem?.point}
         </span>
@@ -66,7 +68,7 @@ export const RewardsInfoBox = ({
         <StyledRewardsSpecKey>{product.short}</StyledRewardsSpecKey>
       </UIFlexWrapBox>
       <StyledDetailExchangeOfferButton onClick={onExchange}>
-        Exchange Offer
+        {t('reward.exchange-offer')}
       </StyledDetailExchangeOfferButton>
     </>
   );

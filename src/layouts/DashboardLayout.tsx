@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import { AppSEO, AppNavbar } from '@/components/App';
 import { useAuth } from '@/hooks/auth';
 import { useAppLockScreen } from '@/providers';
+import { useSelectedLanguage } from 'next-export-i18n';
 
 interface Props {
   title: string;
@@ -12,13 +13,21 @@ interface Props {
 }
 
 function DashboardLayout(props: Props) {
+  const { lang } = useSelectedLanguage();
   const router = useRouter();
-  const isPointPage = router.pathname === '/points';
+  const isPointPage = router.pathname.includes('/points');
   const { isTabletAuthenticated, isUserAuthenticated } = useAuth({});
   const appLockScreen = useAppLockScreen();
   useEffect(() => {
     if (!isTabletAuthenticated) appLockScreen();
-    if (!isUserAuthenticated) router.push('/');
+    if (!isUserAuthenticated) {
+      router.push({
+        pathname: '/',
+        query: {
+          ...(lang === 'es' && { lang }),
+        },
+      });
+    }
   }, [isTabletAuthenticated, isUserAuthenticated, router]);
   return (
     <UIAppLayoutWrapper>

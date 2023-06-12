@@ -3,6 +3,7 @@ import { AppConfirm } from '@/components/App';
 import { useRouter } from 'next/router';
 import { useAppDispatch } from '@/hooks';
 import { logoutUser } from '@/redux/slices/auth.slice';
+import { useSelectedLanguage } from 'next-export-i18n';
 
 const AppTimeoutContext = createContext<any>(null);
 
@@ -17,6 +18,7 @@ const whitelist = ['/'];
 
 function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const router = useRouter();
+  const { lang } = useSelectedLanguage();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
   const time = 30;
@@ -42,7 +44,12 @@ function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const handleNo = () => {
     setOpen(false);
     dispatch(logoutUser());
-    router.push('/');
+    router.push({
+      pathname: '/',
+      query: {
+        ...(lang === 'es' && { lang }),
+      },
+    });
   };
   useEffect(() => {
     let preventReset = false;

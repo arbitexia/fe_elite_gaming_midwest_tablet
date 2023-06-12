@@ -14,6 +14,7 @@ import { Box, Typography } from '@mui/material';
 import { useAppLockScreen } from '@/providers';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks';
+import { useTranslation } from 'next-export-i18n';
 
 interface Props {
   bg?: string;
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const AuthLayout = (props: Props) => {
+  const { t } = useTranslation();
   const { isTabletAuthenticated } = useAuth({});
   const router = useRouter();
   const appLockScreen = useAppLockScreen();
@@ -77,8 +79,7 @@ const AuthLayout = (props: Props) => {
                     paddingTop: '50px',
                   }}
                 >
-                  Maximizing Your Revenue by Providing the Most Detailed
-                  Reporting
+                  {t('common.desc-checkin')}
                 </Typography>
               </UIFlexColumnBox>
             </UIAuthLogoContent>

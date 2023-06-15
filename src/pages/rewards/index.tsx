@@ -10,10 +10,11 @@ import { DashboardLayout } from '@/layouts';
 import { useAuth, usePoint, useReward } from '@/hooks';
 import { UserType } from '@/types';
 import { useTranslation } from 'next-export-i18n';
+import { AppLoadingScreen } from '@/components/App';
 
 const Rewards = () => {
   const { t } = useTranslation();
-  const { rewards, onFilterRewards } = useReward();
+  const { rewards, onFilterRewards, loading } = useReward();
   const { points, onGetPoints } = usePoint();
   const { me, tabletLocation } = useAuth({});
   const [filterPoint, setFilterPoint] = useState<number>(0);
@@ -72,7 +73,6 @@ const Rewards = () => {
       console.log(error);
     }
   };
-
   return (
     <DashboardLayout title={t('common.rewards')}>
       <UIContainer sx={{ minHeight: 'calc(100vh - 86px)' }}>
@@ -89,15 +89,19 @@ const Rewards = () => {
         />
         <RewardsPointsBox />
         <UIWrapPanel itemSpacing={40} paddingY={60}>
-          {rewards?.map((item) => {
-            const userPoint =
-              points.find(
-                (p) => p?.userLocation?.locationId === item.locationId
-              )?.point ?? 0;
-            return (
-              <RewardsCard key={item.id} userPoint={userPoint} item={item} />
-            );
-          })}
+          {loading ? (
+            <AppLoadingScreen />
+          ) : (
+            rewards.map((item) => {
+              const userPoint =
+                points.find(
+                  (p) => p?.userLocation?.locationId === item.locationId
+                )?.point ?? 0;
+              return (
+                <RewardsCard key={item.id} userPoint={userPoint} item={item} />
+              );
+            })
+          )}
         </UIWrapPanel>
       </UIContainer>
     </DashboardLayout>

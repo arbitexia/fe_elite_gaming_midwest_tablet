@@ -14,9 +14,10 @@ import { useTranslation } from 'next-export-i18n';
 
 interface PointsMainProps {
   points: PointType[];
+  onSendEmail: () => void;
 }
 
-const PointsMain = ({ points }: PointsMainProps) => {
+const PointsMain = ({ points, onSendEmail }: PointsMainProps) => {
   const { t } = useTranslation();
   const { tabletLocation } = useAuth({});
   const [currDeg, setCurrDeg] = useState(0);
@@ -99,7 +100,7 @@ const PointsMain = ({ points }: PointsMainProps) => {
           <UIImage src="images/icons/prev.svg" width={30} height={52} />
         </StyledArrowButton>
       </StyledPointsCardArea>
-      <StyledSendButton>
+      <StyledSendButton onClick={onSendEmail}>
         <Typography
           sx={{
             fontWeight: '600',

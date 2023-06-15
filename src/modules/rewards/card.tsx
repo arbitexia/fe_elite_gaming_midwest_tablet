@@ -43,7 +43,7 @@ export const RewardsCard = ({ userPoint, item }: RewardsCardProps) => {
       <StyledRewardsCardPoint>
         {t('reward.point-completion')}:{' '}
         <span>
-          {userPoint}/{item?.point}
+          {userPoint}/{item?.point ?? 0}
         </span>
       </StyledRewardsCardPoint>
       {item?.coupon && (

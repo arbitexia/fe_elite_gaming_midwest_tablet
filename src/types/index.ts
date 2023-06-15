@@ -21,6 +21,11 @@ export type {
 export type { ReduxJson } from './redux.type';
 export type { UserType } from './user.type';
 export type { RoleType } from './role.type';
-export type { UserLocation, PointType, GetPointParam } from './point.type';
+export type {
+  UserLocation,
+  PointType,
+  GetPointParam,
+  CustomerEmailParam,
+} from './point.type';
 export type { ProductType } from './product.type';
 export type { TransactionType } from './transaction.type';

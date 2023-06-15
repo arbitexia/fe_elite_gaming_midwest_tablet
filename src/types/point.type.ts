@@ -24,3 +24,7 @@ export type GetPointParam = {
   userId: number;
   locationId?: number;
 };
+
+export type CustomerEmailParam = {
+  customerId: number;
+};

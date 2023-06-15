@@ -1,7 +1,12 @@
 import { useAppToast } from '@/providers';
-import { getPoints, resetPointMessage, pointSelector } from '@/redux/slices';
+import {
+  getPoints,
+  sendEmailCustomer,
+  resetPointMessage,
+  pointSelector,
+} from '@/redux/slices';
 
-import { GetPointParam } from '@/types';
+import { CustomerEmailParam, GetPointParam } from '@/types';
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from './redux';
 
@@ -29,9 +34,14 @@ export const usePoint = () => {
     return totalCount;
   };
 
+  const onSendEmailCustomer = async (param: CustomerEmailParam) => {
+    await dispatch(sendEmailCustomer(param));
+  };
+
   return {
     points,
     onGetPoints,
     onGetPointCount,
+    onSendEmailCustomer,
   };
 };

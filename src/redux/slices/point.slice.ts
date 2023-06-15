@@ -2,7 +2,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { pointApi } from '@/redux/apis';
 import { AxiosError } from 'axios';
 import { RootState, AppDispatch } from '@/redux/store';
-import { ReduxJson, ResponseStatus, GetPointParam, PointType } from '@/types';
+import {
+  ReduxJson,
+  ResponseStatus,
+  GetPointParam,
+  PointType,
+  CommonType,
+  CustomerEmailParam,
+} from '@/types';
 
 // Initial state
 const initialState: ReduxJson.PointState = {
@@ -20,6 +27,19 @@ export const getPoints = createAsyncThunk<
 >('points', async (params: GetPointParam, thunkAPI) => {
   try {
     return await pointApi.getPoints(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const sendEmailCustomer = createAsyncThunk<
+  CommonType.Message,
+  CustomerEmailParam,
+  { dispatch: AppDispatch; state: RootState }
+>('points/sendEmailCustomer', async (params: CustomerEmailParam, thunkAPI) => {
+  try {
+    return await pointApi.sendEmail(params);
   } catch (error) {
     const err = error as AxiosError;
     return thunkAPI.rejectWithValue(err.response?.data);
@@ -53,6 +73,26 @@ export const pointSlice = createSlice({
         }
       )
       .addCase(getPoints.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(sendEmailCustomer.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        sendEmailCustomer.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(sendEmailCustomer.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

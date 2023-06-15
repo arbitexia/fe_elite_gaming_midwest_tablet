@@ -24,6 +24,7 @@ export {
   default as pointReducer,
   pointSelector,
   getPoints,
+  sendEmailCustomer,
   resetPointMessage,
 } from './point.slice';
 

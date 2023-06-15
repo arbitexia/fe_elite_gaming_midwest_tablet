@@ -44,6 +44,7 @@ export const useReward = () => {
   };
 
   return {
+    loading,
     pageInfo,
     rewards,
     availableRewards,

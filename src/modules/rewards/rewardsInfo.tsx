@@ -61,7 +61,7 @@ export const RewardsInfoBox = ({
       <StyledRewardsCardPoint sx={{ fontSize: '16px' }}>
         {t('reward.point-completion')}:{' '}
         <span>
-          {userPoint}/{rewardItem?.point}
+          {userPoint}/{rewardItem?.point ?? 0}
         </span>
       </StyledRewardsCardPoint>
       <UIFlexWrapBox mt="20px">

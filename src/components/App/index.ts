@@ -3,3 +3,4 @@ export { default as AppToast } from './Toast';
 export { AppConfirm } from './Confirm';
 export { default as AppNavbar } from './Navbar';
 export { default as AppLanguageSelector } from './LanguageSelector';
+export { default as AppLoadingScreen } from './LoadingScreen';

@@ -47,5 +47,6 @@ export {
   default as transactionReducer,
   transactionSelector,
   createTransaction,
+  requestCouponTransaction,
   resetTransactionMessage,
 } from './transaction.slice';

@@ -17,4 +17,12 @@ export declare namespace TransactionType {
       balance: number;
     };
   };
+  type CouponBody = {
+    input: {
+      userId: number;
+      status: TransactionStatus;
+      type: string;
+      amount: number;
+    };
+  };
 }

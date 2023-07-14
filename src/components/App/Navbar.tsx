@@ -1,17 +1,57 @@
-import { useAuth } from '@/hooks';
-import { UIFlexSpaceBox, UIFlexWrapBox, UIImage } from '../UI';
-import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useAuth, useTransaction } from '@/hooks';
+import {
+  UIDefaultButton,
+  UIDefaultTextField,
+  UIDialog,
+  UIFlexColumnBox,
+  UIFlexSpaceBox,
+  UIFlexWrapBox,
+  UIImage,
+} from '../UI';
+import { Box, Button, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { formatPhoneNumber } from '@/libs/data-helper';
-import { UserType } from '@/types';
+import { TransactionType, UserType } from '@/types';
 import { useTranslation, useSelectedLanguage } from 'next-export-i18n';
+import { Close } from '@mui/icons-material';
+import { TransactionStatus } from '@/constants';
+import { useAppToast } from '@/providers';
 
 const AppNavbar = () => {
   const { t } = useTranslation();
   const { lang } = useSelectedLanguage();
   const router = useRouter();
   const { me } = useAuth({});
+  const appToast = useAppToast();
+  const { onRequestCouponTransaction } = useTransaction();
+
   const isPointPage = router.pathname === '/points';
+
+  const [openModal, setOpenModal] = useState(false);
+  const [coupon, setCoupon] = useState<number>();
+
+  const handleRequestCoupon = async () => {
+    if (coupon && coupon > 0) {
+      const dataToSave: TransactionType.CouponBody = {
+        input: {
+          userId: Number((me as UserType.User)?.id) ?? 0,
+          status: TransactionStatus.WAITING,
+          type: 'COUPON',
+          amount: coupon,
+        },
+      };
+      await onRequestCouponTransaction(dataToSave);
+      resetCoupon();
+    } else {
+      appToast({ severity: 'error', message: t('common.invalid-coupon') });
+    }
+  };
+
+  const resetCoupon = () => {
+    setOpenModal(false);
+    setCoupon(undefined);
+  };
   return (
     <UIFlexSpaceBox
       px="30px"
@@ -96,6 +136,25 @@ const AppNavbar = () => {
             />
             <Typography>{t('common.rewards')}</Typography>
           </Box>
+          <Box
+            onClick={() => {
+              setOpenModal(true);
+            }}
+            sx={{
+              marginLeft: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
+              color: '#FFFFFF',
+              fontSize: '18px',
+              fontWeight: '600px',
+              lineHeight: '27px',
+              gap: '12px',
+            }}
+          >
+            <UIImage src={`/images/icons/coin.png`} width={29} height={29} />
+            <Typography>{t('common.request-coupon')}</Typography>
+          </Box>
           <Typography
             sx={{
               marginLeft: '40px',
@@ -112,6 +171,44 @@ const AppNavbar = () => {
           </Typography>
         </Box>
       </UIFlexWrapBox>
+
+      <UIDialog open={openModal}>
+        <UIFlexColumnBox sx={{ gap: 4 }}>
+          <Button
+            disableFocusRipple
+            disableRipple
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              color: '#001c1a',
+              '&:hover': { background: 'transparent' },
+            }}
+            onClick={resetCoupon}
+          >
+            <Close sx={{ width: 32, height: 32 }} />
+          </Button>
+          <UIDefaultTextField
+            placeholder={t('reward.coupons')}
+            name="requestCoupon"
+            type="number"
+            value={coupon ?? ''}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setCoupon(Number(e.target.value));
+            }}
+            onBlur={(e) => {
+              setCoupon(Number(e.target.value));
+            }}
+          />
+          <UIDefaultButton
+            type="button"
+            onClick={handleRequestCoupon}
+            sx={{ height: '60px' }}
+          >
+            {t('common.request')}
+          </UIDefaultButton>
+        </UIFlexColumnBox>
+      </UIDialog>
     </UIFlexSpaceBox>
   );
 };

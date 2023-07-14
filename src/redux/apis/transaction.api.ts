@@ -8,3 +8,12 @@ export const createTransaction = async (params: TransactionType.Body) => {
   });
   return response.data;
 };
+
+export const requestCouponTransaction = async (
+  params: TransactionType.CouponBody
+) => {
+  const response = await jwtAxios.post(`/request_coupon`, params, {
+    headers: getAuthorizeHeader(),
+  });
+  return response.data;
+};

@@ -161,14 +161,14 @@ const RewardsById = () => {
               py: '30px',
             }}
           >
-            {t('reward:alert-desc-exchange-offer')}
+            {t('reward.alert-desc-exchange-offer')}
           </Typography>
           <UIDefaultButton
             type="button"
             sx={{ height: '54px' }}
             onClick={() => setOpenModal(false)}
           >
-            {t('common:close')}
+            {t('common.close')}
           </UIDefaultButton>
         </UIFlexColumnBox>
       </UIDialog>

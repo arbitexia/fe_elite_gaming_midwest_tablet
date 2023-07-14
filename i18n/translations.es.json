@@ -23,7 +23,10 @@
     "no": "No",
     "invalid-code": "Código no válido",
     "placeholder-verify-phone": "Ingrese el código que le enviamos a su número de teléfono",
-    "verify-code": "Verificar código"
+    "verify-code": "Verificar código",
+    "request-coupon": "Solicitar cupón",
+    "request": "Solicitar",
+    "invalid-coupon": "Cupón no válido"
   },
   "reward": {
     "point-completion": "Finalización de puntos",

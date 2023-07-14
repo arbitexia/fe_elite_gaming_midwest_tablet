@@ -33,6 +33,22 @@ export const createTransaction = createAsyncThunk<
   }
 );
 
+export const requestCouponTransaction = createAsyncThunk<
+  CommonType.Message,
+  TransactionType.CouponBody,
+  { dispatch: AppDispatch; state: RootState }
+>(
+  'transaction/requestCouponTransaction',
+  async (params: TransactionType.CouponBody, thunkAPI) => {
+    try {
+      return await transactionApi.requestCouponTransaction(params);
+    } catch (error) {
+      const err = error as AxiosError;
+      return thunkAPI.rejectWithValue(err.response?.data);
+    }
+  }
+);
+
 // Actual Slice
 export const transactionSlice = createSlice({
   name: 'Transaction',
@@ -60,6 +76,26 @@ export const transactionSlice = createSlice({
         }
       )
       .addCase(createTransaction.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.error = payload as string;
+        state.message = null;
+      })
+      .addCase(requestCouponTransaction.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(
+        requestCouponTransaction.fulfilled,
+        (state, { payload }: PayloadAction<CommonType.Message>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.message = payload.message;
+        }
+      )
+      .addCase(requestCouponTransaction.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.error = payload as string;

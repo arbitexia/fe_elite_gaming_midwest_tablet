@@ -4,6 +4,7 @@ import {
   createTransaction,
   resetTransactionMessage,
   transactionSelector,
+  requestCouponTransaction,
 } from '@/redux/slices';
 import { TransactionType } from '@/types';
 import { useAppSelector, useAppDispatch } from './redux';
@@ -24,7 +25,14 @@ export const useTransaction = () => {
     await dispatch(createTransaction(param));
   };
 
+  const onRequestCouponTransaction = async (
+    param: TransactionType.CouponBody
+  ) => {
+    await dispatch(requestCouponTransaction(param));
+  };
+
   return {
     onCreateTransaction,
+    onRequestCouponTransaction,
   };
 };

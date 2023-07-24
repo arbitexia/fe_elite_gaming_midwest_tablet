@@ -9,7 +9,7 @@ import {
   UIFlexWrapBox,
 } from '@/components/UI';
 import { RewardsHeader, RewardsPointsBox } from '@/modules/rewards';
-import { RewardType, TransactionType, UserType } from '@/types';
+import { RewardType, TransactionType, UserCouponType, UserType } from '@/types';
 import { Divider, Box, Typography } from '@mui/material';
 import { RewardsInfoBox } from '@/modules/rewards/rewardsInfo';
 import { useReward, usePoint, useTransaction, useAuth } from '@/hooks';
@@ -31,7 +31,6 @@ const RewardsById = () => {
 
   const [rewardItem, setRewardItem] = useState<RewardType.Data>();
   const [openModal, setOpenModal] = useState(false);
-
   useEffect(() => {
     setRewardItem(rewards.find((item) => item.id === parseInt(id as string)));
   }, [id]);
@@ -43,7 +42,11 @@ const RewardsById = () => {
     const rewardPoint = rewardItem?.point ?? 0;
     const rewardCoupon = rewardItem?.coupon ?? 0;
     const userPoint = filteredUserPoints?.point ?? 0;
-    const userCoupon = (me as UserType.User)?.coupon ?? 0;
+    const userCoupon =
+      me?.userCoupons
+        ?.filter((c) => c.status === 1)
+        ?.map((obj) => obj.amount)
+        .reduce((a, b) => a + b, 0) ?? 0;
     if (userPoint >= rewardPoint) {
       const dataToSave: TransactionType.Body = {
         input: {
@@ -78,7 +81,11 @@ const RewardsById = () => {
           status: TransactionStatus.WAITING,
           type: 'COUPON',
           amount: rewardCoupon,
-          balance: Number(userPoint) - Number(rewardCoupon),
+          balance: Number(userCoupon) - Number(rewardCoupon),
+          userCouponCodes: filterCouponCodes(
+            me?.userCoupons ?? [],
+            Number(rewardCoupon)
+          ),
         },
       };
       await onCreateTransaction(dataToSave);
@@ -95,6 +102,20 @@ const RewardsById = () => {
     } else {
       setOpenModal(true);
     }
+  };
+
+  const filterCouponCodes = (coupons: UserCouponType[], targetSum: number) => {
+    let currentSum = 0;
+    let filteredCodes = [];
+    for (const coupon of coupons) {
+      currentSum += coupon.amount;
+      if (currentSum <= targetSum) {
+        filteredCodes.push(coupon.code);
+      } else {
+        break;
+      }
+    }
+    return filteredCodes;
   };
   return (
     <DashboardLayout title={t('common:rewards')}>

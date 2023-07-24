@@ -3,6 +3,7 @@ import { CommonType, ResponseStatus } from './common.type';
 import { LocationType } from './location.type';
 import { PointType } from './point.type';
 import { RewardType } from './rewards.type';
+import { UserType } from './user.type';
 
 export declare namespace ReduxJson {
   export type CommonReduxData<T> = {
@@ -23,7 +24,7 @@ export declare namespace ReduxJson {
     status: ResponseStatus | null;
     accessToken: string;
     refreshToken: string;
-    user: object | null;
+    user: UserType.User | null;
     location: LocationType | null;
     role: object;
     message: string;

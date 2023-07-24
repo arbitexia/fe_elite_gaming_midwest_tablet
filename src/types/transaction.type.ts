@@ -15,6 +15,7 @@ export declare namespace TransactionType {
       type: string;
       amount: number;
       balance: number;
+      userCouponCodes?: string[];
     };
   };
   type CouponBody = {

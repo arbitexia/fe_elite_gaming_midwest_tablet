@@ -23,8 +23,18 @@ export declare namespace UserType {
     birthday: string;
     status: Status;
     coupon?: number;
+    userCoupons?: UserCouponType[];
     role: RoleType.Role;
     createdAt?: string;
     updatedAt?: string;
   };
 }
+
+export type UserCouponType = {
+  id: number;
+  code: string;
+  type: 'FREE' | 'MATCH';
+  expirationDate: string;
+  amount: number;
+  status: number;
+};

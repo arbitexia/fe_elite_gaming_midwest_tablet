@@ -21,7 +21,7 @@ function AppTimeoutProvider({ children }: AppTimeoutProviderProps) {
   const { lang } = useSelectedLanguage();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const time = 3000;
+  const time = 30;
   let timeout: NodeJS.Timeout | null = null;
 
   const restartAutoReset = () => {

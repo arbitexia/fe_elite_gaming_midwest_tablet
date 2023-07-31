@@ -37,4 +37,9 @@ export type UserCouponType = {
   expirationDate: string;
   amount: number;
   status: number;
+  metadata: any;
+};
+
+export type GetUserParam = {
+  userId: number;
 };

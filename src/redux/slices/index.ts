@@ -18,6 +18,7 @@ export {
   clearAuthMessage,
   refreshToken,
   logoutTablet,
+  retrieveCustomer,
 } from './auth.slice';
 
 export {

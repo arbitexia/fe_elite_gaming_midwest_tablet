@@ -29,6 +29,7 @@ export const CheckIn = () => {
     if (value.length < 10) {
       appToast({ severity: 'error', message: t('common.error-phone-number') });
     } else {
+      console.log('tablet_location_id', tabletLocation?.id);
       if (tabletLocation?.id) {
         onLoginWithUser(value, tabletLocation.id);
       }

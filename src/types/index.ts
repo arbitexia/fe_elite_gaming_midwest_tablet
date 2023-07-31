@@ -19,7 +19,7 @@ export type {
 } from './auth.type';
 
 export type { ReduxJson } from './redux.type';
-export type { UserType, UserCouponType } from './user.type';
+export type { UserType, UserCouponType, GetUserParam } from './user.type';
 export type { RoleType } from './role.type';
 export type {
   UserLocation,

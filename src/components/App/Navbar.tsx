@@ -1,20 +1,75 @@
-import { useAuth } from '@/hooks';
-import { UIFlexSpaceBox, UIFlexWrapBox } from '../UI';
-import { Box, Typography } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { useAuth, useTransaction } from '@/hooks';
+import {
+  UIDialog,
+  UIFlexColumnBox,
+  UIFlexSpaceBox,
+  UIFlexWrapBox,
+} from '../UI';
+
+import { Box, Button, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { formatCurrency, formatPhoneNumber } from '@/libs/data-helper';
-import { UserType } from '@/types';
+import { TransactionType, UserType } from '@/types';
 import { useTranslation, useSelectedLanguage } from 'next-export-i18n';
+import { Close } from '@mui/icons-material';
+import { TransactionStatus, UserCouponStatus } from '@/constants';
+import { useAppToast } from '@/providers';
+import moment from 'moment';
+
 const AppNavbar = () => {
   const { t } = useTranslation();
   const { lang } = useSelectedLanguage();
   const router = useRouter();
-  const { me } = useAuth({});
-
+  const { me, onGetUserById } = useAuth({});
+  const appToast = useAppToast();
+  const { onRequestCouponTransaction } = useTransaction();
   const isPointPage = router.pathname === '/points';
+  const [openModal, setOpenModal] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    if (me?.id && isChanged) {
+      onGetUserById(Number(me.id));
+      setIsChanged(false);
+    }
+  }, [isChanged]);
+
+  const handleRequestCoupon = async (
+    userCouponId: number,
+    coupon: number,
+    metadata: any
+  ) => {
+    if (coupon > 0) {
+      const dataToSave: TransactionType.CouponBody = {
+        input: {
+          userCouponId,
+          userId: Number((me as UserType.User)?.id) ?? 0,
+          status: TransactionStatus.WAITING,
+          type: 'COUPON',
+          amount: coupon,
+          metadata: { ...metadata, userCouponId },
+        },
+      };
+      await onRequestCouponTransaction(dataToSave);
+      setIsChanged(true);
+      resetCoupon();
+    } else {
+      appToast({ severity: 'error', message: t('common.invalid-coupon') });
+    }
+  };
+
+  const resetCoupon = () => {
+    setOpenModal(false);
+  };
 
   const currentUserCoupon = me?.userCoupons
-    ?.filter((c) => c.status === 1)
+    ?.filter(
+      (c) =>
+        (c.status === UserCouponStatus.REQUEST &&
+          moment(c.expirationDate).diff(moment(), 'days') > 0) ||
+        c.status === UserCouponStatus.REQUESTED
+    )
     ?.map((obj) => obj.amount)
     ?.reduce((a, b) => a + b, 0);
 
@@ -45,7 +100,6 @@ const AppNavbar = () => {
         sx={{ cursor: 'pointer' }}
       >
         <img src={'/images/icons/logo.svg'} width={56} height={54} alt="logo" />
-        {/* <UIImage src={'/images/icons/logo.svg'} width={56} height={54} /> */}
       </Box>
       <UIFlexWrapBox>
         <Box sx={{ display: 'flex' }}>
@@ -75,11 +129,6 @@ const AppNavbar = () => {
               height={23}
               alt="points"
             />
-            {/* <UIImage
-              src={`/images/icons/points${isPointPage ? '' : '-dark'}.svg`}
-              width={29}
-              height={23}
-            /> */}
             <Typography>{t('common.my-points')}</Typography>
           </Box>
           <Box
@@ -108,11 +157,6 @@ const AppNavbar = () => {
               height={23}
               alt="reward"
             />
-            {/* <UIImage
-              src={`/images/icons/rewards${isPointPage ? '-dark' : ''}.svg`}
-              width={29}
-              height={23}
-            /> */}
             <Typography>{t('common.rewards')}</Typography>
           </Box>
           <Box
@@ -125,6 +169,10 @@ const AppNavbar = () => {
               fontWeight: '600px',
               lineHeight: '27px',
               gap: '12px',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              setOpenModal(true);
             }}
           >
             <img
@@ -133,8 +181,6 @@ const AppNavbar = () => {
               height={29}
               alt="coupon"
             />
-            {/* <UIImage src={`/images/icons/coin.png`} width={29} height={29} /> */}
-            {/* <Typography>{t('common.request-coupon')}</Typography> */}
             <Typography>{formatCurrency(currentUserCoupon ?? 0)}</Typography>
           </Box>
           <Typography
@@ -149,10 +195,103 @@ const AppNavbar = () => {
               gap: '12px',
             }}
           >
-            {formatPhoneNumber((me as UserType.User)?.phone)}
+            {me && formatPhoneNumber(me.phone)}
           </Typography>
         </Box>
       </UIFlexWrapBox>
+
+      <UIDialog open={openModal}>
+        <UIFlexColumnBox sx={{ gap: 4 }}>
+          <Button
+            disableFocusRipple
+            disableRipple
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              color: '#ddd',
+              '&:hover': { background: 'transparent' },
+            }}
+            onClick={resetCoupon}
+          >
+            <Close sx={{ width: 32, height: 32 }} />
+          </Button>
+          <UIFlexWrapBox>
+            {me?.userCoupons
+              ?.filter(
+                (c) =>
+                  (c.status === UserCouponStatus.REQUEST &&
+                    moment(c.expirationDate).diff(moment(), 'days') > 0) ||
+                  c.status === UserCouponStatus.REQUESTED
+              )
+              ?.map((obj) => {
+                return (
+                  <UIFlexColumnBox
+                    key={`userCoupon-${obj.id}`}
+                    sx={{
+                      border: 'solid 3px #013430',
+                      borderRadius: '6px',
+                      padding: '8px',
+                      gap: '2px',
+                      cursor:
+                        obj.status === UserCouponStatus.REQUEST
+                          ? 'pointer'
+                          : 'initial',
+                      transitionDuration: '0.1s',
+                      '&:hover': {
+                        transform:
+                          obj.status === UserCouponStatus.REQUEST
+                            ? 'scale(1.02)'
+                            : 'none',
+                      },
+                      opacity:
+                        obj.status === UserCouponStatus.REQUEST ? 1 : 0.5,
+                    }}
+                    onClick={() => {
+                      if (obj.status == UserCouponStatus.REQUEST) {
+                        handleRequestCoupon(obj.id, obj.amount, obj.metadata);
+                      }
+                    }}
+                  >
+                    <img
+                      src={`/images/icons/coin.png`}
+                      width={40}
+                      height={40}
+                      alt="coupon"
+                    />
+                    <Typography
+                      sx={{
+                        color: '#FFE600',
+                        fontWeight: 700,
+                        fontSize: '24px',
+                      }}
+                    >
+                      {formatCurrency(obj.amount)}
+                    </Typography>
+                    <UIFlexSpaceBox>
+                      <Typography sx={{ color: '#FFF', fontSize: '12px' }}>
+                        Expiry:
+                      </Typography>
+                      <Typography sx={{ color: '#FFF', fontSize: '12px' }}>
+                        {moment(obj.expirationDate).format('MM/DD/YYYY')}
+                      </Typography>
+                    </UIFlexSpaceBox>
+                    <UIFlexWrapBox sx={{ width: '100%' }}>
+                      <Typography sx={{ color: '#FFF', fontSize: '12px' }}>
+                        Status:
+                      </Typography>
+                      <Typography sx={{ color: '#FFF', fontSize: '12px' }}>
+                        {obj.status === UserCouponStatus.REQUEST
+                          ? 'Request'
+                          : 'Requested'}
+                      </Typography>
+                    </UIFlexWrapBox>
+                  </UIFlexColumnBox>
+                );
+              })}
+          </UIFlexWrapBox>
+        </UIFlexColumnBox>
+      </UIDialog>
     </UIFlexSpaceBox>
   );
 };

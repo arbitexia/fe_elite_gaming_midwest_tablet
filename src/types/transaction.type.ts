@@ -20,10 +20,12 @@ export declare namespace TransactionType {
   };
   type CouponBody = {
     input: {
+      userCouponId: number;
       userId: number;
       status: TransactionStatus;
       type: string;
       amount: number;
+      metadata: any;
     };
   };
 }

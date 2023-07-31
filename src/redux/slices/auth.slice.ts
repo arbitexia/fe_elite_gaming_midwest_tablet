@@ -12,6 +12,8 @@ import {
   RegisterType,
   VerifyPhoneParams,
   VerifyPhoneType,
+  GetUserParam,
+  UserType,
 } from '@/types';
 
 export enum ResponseStatus {
@@ -53,6 +55,20 @@ export const authorizeCustomer = createAsyncThunk<
 >('auth/authorizeCustomer', async (params: CustomerAuthParams, thunkAPI) => {
   try {
     return await authApi.authorizeCustomer(params);
+  } catch (error) {
+    const err = error as AxiosError;
+    err.response?.status === 403 && thunkAPI.dispatch(logoutTablet);
+    return thunkAPI.rejectWithValue(err.response?.data);
+  }
+});
+
+export const retrieveCustomer = createAsyncThunk<
+  UserType.User,
+  GetUserParam,
+  { dispatch: AppDispatch; state: RootState }
+>('auth/retrieveCustomer', async (params: GetUserParam, thunkAPI) => {
+  try {
+    return await authApi.getUser(params);
   } catch (error) {
     const err = error as AxiosError;
     err.response?.status === 403 && thunkAPI.dispatch(logoutTablet);
@@ -163,6 +179,24 @@ export const authSlice = createSlice({
         }
       )
       .addCase(authorizeCustomer.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.status = ResponseStatus.FAILED;
+        state.errorMessage = payload as string;
+      })
+      .addCase(retrieveCustomer.pending, (state) => {
+        state.loading = true;
+        state.status = ResponseStatus.PENDING;
+        state.errorMessage = null;
+      })
+      .addCase(
+        retrieveCustomer.fulfilled,
+        (state, { payload }: PayloadAction<UserType.User>) => {
+          state.loading = false;
+          state.status = ResponseStatus.SUCCESS;
+          state.user = payload;
+        }
+      )
+      .addCase(retrieveCustomer.rejected, (state, { payload }) => {
         state.loading = false;
         state.status = ResponseStatus.FAILED;
         state.errorMessage = payload as string;

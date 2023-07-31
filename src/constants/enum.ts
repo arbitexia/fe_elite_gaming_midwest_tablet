@@ -47,3 +47,10 @@ export enum TransactionStatus {
   DECLINED = 'DECLINED',
   WAITING = 'WAITING',
 }
+
+export enum UserCouponStatus {
+  INIT = 0,
+  REQUEST = 1,
+  REQUESTED = 2,
+  ACCEPTED = 3,
+}

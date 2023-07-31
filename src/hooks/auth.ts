@@ -7,6 +7,7 @@ import {
   clearAuthMessage,
   verifyPhone,
   register,
+  retrieveCustomer,
 } from '@/redux/slices';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from './redux';
@@ -84,6 +85,10 @@ export const useAuth = ({
     router.push('/');
   };
 
+  const onGetUserById = async (id: number) => {
+    await dispatch(retrieveCustomer({ userId: id }));
+  };
+
   return {
     isTabletAuthenticated: authState.accessToken ? true : false,
     isUserAuthenticated: authState.user ? true : false,
@@ -95,6 +100,7 @@ export const useAuth = ({
     onVerifyPhone,
     onLogoutFromTablet,
     onRegister,
+    onGetUserById,
     onLogout: () => {
       router.push('/');
     },
